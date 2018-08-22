@@ -1,0 +1,5 @@
+
+
+-DmevenkWebAppLogsDirectoryLoaction="C:\Users\venky\RABOTA\workspaces\MeVenk\WebApp\Logs" -DmevenkWebAppLog4jSocketHost="VENKATESH-LENOVO" -DmevenkWebAppLog4jSocketPort="9898"
+
+

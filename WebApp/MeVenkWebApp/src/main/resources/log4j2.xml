@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE Configuration SYSTEM "log4j.dtd"> -->
+<Configuration>
+	<Properties>
+
+		<Property name="mevenkWebAppLog4jSocketHost">${sys:mevenkWebAppLog4jSocketHost}</Property>
+		<Property name="mevenkWebAppLog4jSocketPort">${sys:mevenkWebAppLog4jSocketPort}</Property>
+
+		<Property name="mevenkWebAppLogsDir">${sys:mevenkWebAppLogsDirectoryLoaction}
+		</Property>
+
+		<Property name="utilLogFilesDir">${mevenkWebAppLogsDir}/utilLogs
+		</Property>
+		<Property name="utilLogFileName">mevenkWebAppUtil.log</Property>
+
+		<Property name="appLogFilesDir">${mevenkWebAppLogsDir}/appLogs
+		</Property>
+		<Property name="appLogFileName">mevenkWebAppApp.log</Property>
+
+		<Property name="errorLogFilesDir">${mevenkWebAppLogsDir}/errorLogs
+		</Property>
+		<Property name="errorLogFileName">mevenkWebAppError.log</Property>
+
+		<Property name="htmlLogFilesDir">${mevenkWebAppLogsDir}/htmlLogs
+		</Property>
+		<Property name="htmlLogFileName">mevenkWebAppLog.html</Property>
+
+		<Property name="pollingLogFilesDir">${mevenkWebAppLogsDir}/pollingLogs
+		</Property>
+		<Property name="pollingLogFileName">mevenkWebAppPolling.log</Property>
+
+		<Property name="triggerLogFilesDir">${mevenkWebAppLogsDir}/triggerLogs
+		</Property>
+		<Property name="triggerLogFileName">mevenkWebAppTrigger.log</Property>
+
+		<Property name="configLogFilesDir">${mevenkWebAppLogsDir}/configLogs
+		</Property>
+		<Property name="configLogFileName">mevenkWebAppConfig.log</Property>
+
+		<!-- <Property name="mevenkWebAppLogPatternLayout"><![CDATA[%d{MMM dd,
+			yyyy HH:mm:ss.SSS} #MeVenkWebApp# [%X{MeVenkWebAppCorrelationId}] - [%t]
+			%-5level %logger{36} - %msg%n]]></Property> -->
+		<Property name="mevenkWebAppLogPatternLayout"><![CDATA[%d{MMM dd,yyyy-HH:mm:ss.SSS}#MeVenkWebApp#[%X{MeVenkWebAppCorrelationId}][%t]|%-5level|%C{1}#%M-%msg%n]]></Property>
+
+	</Properties>
+
+	<Appenders>
+
+		<!-- appLogRollingFile -->
+		<RollingFile name="appLogRollingFile" fileName="${appLogFilesDir}/${appLogFileName}"
+			filePattern="${appLogFilesDir}/${appLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Filters>
+				<ThresholdFilter level="FATAL" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${appLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- utilLogRollingFile -->
+		<RollingFile name="utilLogRollingFile" fileName="${utilLogFilesDir}/${utilLogFileName}"
+			filePattern="${utilLogFilesDir}/${utilLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Filters>
+				<ThresholdFilter level="FATAL" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${utilLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- errorLogRollingFile -->
+		<RollingFile name="errorLogRollingFile"
+			fileName="${errorLogFilesDir}/${errorLogFileName}" filePattern="${errorLogFilesDir}/${errorLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${errorLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<!-- htmlLogRollingFile -->
+		<RollingFile name="htmlLogRollingFile" fileName="${htmlLogFilesDir}/${htmlLogFileName}"
+			filePattern="${htmlLogFilesDir}/${htmlLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<Filters>
+				<ThresholdFilter level="FATAL" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="ERROR" onMatch="ACCEPT"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="WARN" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="INFO" onMatch="ACCEPT"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="TRACE" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="ALL" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+
+			<HTMLLayout charset="UTF-8" title="MeVenkWebApp Logs"
+				locationInfo="false" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+
+			<DefaultRolloverStrategy>
+				<Delete basePath="${htmlLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingFile>
+
+
+		<!-- pollingLogRollingFile -->
+		<RollingFile name="pollingLogRollingFile"
+			fileName="${pollingLogFilesDir}/${pollingLogFileName}"
+			filePattern="${pollingLogFilesDir}/${pollingLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+
+			<DefaultRolloverStrategy>
+				<Delete basePath="${pollingLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingFile>
+
+
+		<!-- triggerLogRollingFile -->
+		<RollingFile name="triggerLogRollingFile"
+			fileName="${triggerLogFilesDir}/${triggerLogFileName}"
+			filePattern="${triggerLogFilesDir}/${triggerLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+
+			<DefaultRolloverStrategy>
+				<Delete basePath="${triggerLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1M" />
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingFile>
+
+		<!-- configLogRollingFile -->
+		<RollingFile name="configLogRollingFile"
+			fileName="${configLogFilesDir}/${configLogFileName}"
+			filePattern="${configLogFilesDir}/${configLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<Filters>
+				<ThresholdFilter level="FATAL" onMatch="DENY"
+					onMismatch="NEUTRAL" />
+			</Filters>
+
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+
+			<DefaultRolloverStrategy>
+				<Delete basePath="${configLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingFile>
+
+		<!-- Console -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+		</Console>
+
+		<!-- Socket -->
+		<Socket name="Socket" host="${mevenkWebAppLog4jSocketHost}"
+			port="${mevenkWebAppLog4jSocketPort}">
+			<SerializedLayout />
+		</Socket>
+
+	</Appenders>
+
+	<Loggers>
+
+		<!-- utilLogRollingFile should be added to all child loggers -->
+
+		<Logger name="com.mevenk.webapp" level="ALL" additivity="false">
+			<!-- <AppenderRef ref="utilLogRollingFile" level="TRACE" /> -->
+			<AppenderRef ref="appLogRollingFile" level="INFO" />
+			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
+			<AppenderRef ref="htmlLogRollingFile" level="INFO" />
+		</Logger>
+
+		<Logger name="com.mevenk.webapp.controller" level="TRACE">
+			<AppenderRef ref="utilLogRollingFile" level="DEBUG" />
+		</Logger>
+
+		<Logger name="com.mevenk.webapp.service" level="TRACE">
+			<AppenderRef ref="utilLogRollingFile" level="DEBUG" />
+		</Logger>
+
+		<Logger name="com.mevenk.webapp.exception" level="TRACE">
+			<AppenderRef ref="utilLogRollingFile" level="TRACE" />
+		</Logger>
+
+		<!-- Independent of other loggers. -->
+		<Logger name="com.mevenk.webapp.config" level="TRACE"
+			additivity="false">
+			<AppenderRef ref="configLogRollingFile" level="TRACE" />
+		</Logger>
+
+		<!-- Independent of other loggers. -->
+		<Logger name="com.mevenk.webapp.service.impl.ClientUtilServiceimpl"
+			level="TRACE" additivity="false">
+			<AppenderRef ref="utilLogRollingFile" level="TRACE" />
+		</Logger>
+
+		<!-- Independent of other loggers. -->
+		<Logger name="com.mevenk.webapp.polling" level="POLLING"
+			additivity="false">
+			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
+			<AppenderRef ref="pollingLogRollingFile" level="POLLING" />
+		</Logger>
+
+		<!-- Independent of other loggers. -->
+		<Logger name="com.mevenk.webapp.trigger" level="TRIGGER"
+			additivity="false">
+			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
+			<AppenderRef ref="triggerLogRollingFile" level="TRIGGER" />
+		</Logger>
+
+		<Logger name="org.springframework" level="ALL">
+			<AppenderRef ref="configLogRollingFile" level="ALL" />
+		</Logger>
+
+		<Root level="ALL">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>
