@@ -25,13 +25,11 @@ public class MeVenkWebAppHTTPSessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		HttpSessionListener.super.sessionCreated(se);
 		LOG.info("HTTP Session Created:" + se.getSession());
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		HttpSessionListener.super.sessionDestroyed(se);
 		LOG.info("HTTP Session Destroyed:" + se.getSession());
 	}
 

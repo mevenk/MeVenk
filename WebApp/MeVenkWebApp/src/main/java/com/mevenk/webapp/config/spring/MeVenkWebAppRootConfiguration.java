@@ -3,6 +3,7 @@
  */
 package com.mevenk.webapp.config.spring;
 
+import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.BASE_PACKAGE;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
 import java.util.concurrent.Executor;
@@ -20,7 +21,7 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
  */
 @Configuration
 @EnableScheduling
-@ComponentScan(basePackages = "com.mevenk.webapp")
+@ComponentScan(basePackages = BASE_PACKAGE)
 public class MeVenkWebAppRootConfiguration implements SchedulingConfigurer {
 
 	/*

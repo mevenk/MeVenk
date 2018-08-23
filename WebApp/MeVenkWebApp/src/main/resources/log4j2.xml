@@ -238,6 +238,7 @@
 			<AppenderRef ref="appLogRollingFile" level="INFO" />
 			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="htmlLogRollingFile" level="INFO" />
+			<AppenderRef ref="Console" level="TRACE" />
 		</Logger>
 
 		<Logger name="com.mevenk.webapp.controller" level="TRACE">

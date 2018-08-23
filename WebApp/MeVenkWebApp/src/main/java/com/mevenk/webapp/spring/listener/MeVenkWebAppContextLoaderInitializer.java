@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.mevenk.webapp.config.spring.listener;
+package com.mevenk.webapp.spring.listener;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -24,13 +24,11 @@ public class MeVenkWebAppContextLoaderInitializer extends ContextLoaderListener 
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		//super.contextInitialized(event);
 		LOG.info("Context Initialized:" + event);
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		//super.contextDestroyed(event);
 		LOG.info("Context Destroyed:" + event);
 	}
 

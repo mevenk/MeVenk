@@ -11,14 +11,18 @@ import org.apache.logging.log4j.Level;
  * @author venky
  *
  */
-public abstract class MeVenkWebAppLogger {
+public final class MeVenkWebAppLogger {
+
+	private MeVenkWebAppLogger() throws IllegalAccessException {
+		throw new IllegalAccessException("Logger Class!!");
+	}
+
+	public static final String THREAD_CONTEXT_KEY = "MeVenkWebAppCorrelationId";
 
 	/*
 	 * OFF 0 | FATAL 100 | ERROR 200 | WARN 300 | INFO 400 | POLLING 470 | TRIGGER
 	 * 490 | DEBUG 500 | CONFIG 590 | TRACE 600 | ALL Integer.MAX_VALUE
 	 */
-
-	public static final String THREAD_CONTEXT_KEY = "TypicalWebAppCorrelationId";
 
 	private static final String LOG_LEVEL_POLLING = "POLLING";
 	public static final Level POLLING = forName(LOG_LEVEL_POLLING, 470);

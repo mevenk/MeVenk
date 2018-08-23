@@ -17,8 +17,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.mevenk.webapp.config.spring.listener.MeVenkWebAppContextLoaderInitializer;
-
 /**
  * @author venky
  *
@@ -36,7 +34,6 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 		WebApplicationContext webApplicationDispatcherContext = getDispatcherContext();
 
 		servletContext.addListener(new ContextLoaderListener(webApplicationDispatcherContext));
-		// servletContext.addListener(MeVenkWebAppContextLoaderInitializer.class);
 
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationDispatcherContext);
 		dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
@@ -48,7 +45,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 	}
 
-	private AnnotationConfigWebApplicationContext getDispatcherContext() {
+	private static AnnotationConfigWebApplicationContext getDispatcherContext() {
 		AnnotationConfigWebApplicationContext annotationConfigWebApplicationDispatcherContext = new AnnotationConfigWebApplicationContext();
 		annotationConfigWebApplicationDispatcherContext.register(MeVenkWebAppRootConfiguration.class);
 		annotationConfigWebApplicationDispatcherContext.register(MeVenkWebAppServletConfiguration.class);
