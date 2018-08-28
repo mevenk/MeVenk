@@ -39,7 +39,7 @@ public final class WebApplicationInitializer {
 	private static void loadCacheMasterData(ApplicationContext applicationContext) throws InterruptedException {
 		LOG.log(CONFIG, "Spring Application Context:" + applicationContext);
 
-		int loopCounter = 10;
+		int loopCounter = 5;
 		while (loopCounter > -1) {
 			System.out.println("Sleeping " + new Date());
 			Thread.sleep(2000);

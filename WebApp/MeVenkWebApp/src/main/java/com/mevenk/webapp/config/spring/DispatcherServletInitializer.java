@@ -48,7 +48,6 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 	private static AnnotationConfigWebApplicationContext getDispatcherContext() {
 		AnnotationConfigWebApplicationContext annotationConfigWebApplicationDispatcherContext = new AnnotationConfigWebApplicationContext();
 		annotationConfigWebApplicationDispatcherContext.register(MeVenkWebAppRootConfiguration.class);
-		annotationConfigWebApplicationDispatcherContext.register(MeVenkWebAppServletConfiguration.class);
 		return annotationConfigWebApplicationDispatcherContext;
 	}
 
@@ -59,7 +58,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] { MeVenkWebAppServletConfiguration.class };
+		return new Class[] { MeVenkWebAppServletConfiguration.class, TilesConfiguration.class };
 	}
 
 	@Override
