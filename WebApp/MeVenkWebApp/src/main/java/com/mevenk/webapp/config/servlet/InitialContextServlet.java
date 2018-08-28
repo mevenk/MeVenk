@@ -32,7 +32,12 @@ public class InitialContextServlet extends HttpServlet {
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
 		LOG.log(CONFIG, "Initializing Servlet[" + this + "]");
-		runInitialActivities(servletConfig);
+		try {
+			runInitialActivities(servletConfig);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			LOG.error("ERROR Loading Master Data!!!!");
+		}
 	}
 
 	@Override

@@ -7,6 +7,8 @@ import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 
+import java.util.Date;
+
 import javax.servlet.ServletConfig;
 
 import org.apache.logging.log4j.Logger;
@@ -24,7 +26,7 @@ public final class WebApplicationInitializer {
 
 	}
 
-	public static void runInitialActivities(ServletConfig servletConfig) {
+	public static void runInitialActivities(ServletConfig servletConfig) throws InterruptedException {
 
 		LOG.log(CONFIG, "Application initiated|" + servletConfig);
 
@@ -34,8 +36,15 @@ public final class WebApplicationInitializer {
 
 	}
 
-	private static void loadCacheMasterData(ApplicationContext applicationContext) {
+	private static void loadCacheMasterData(ApplicationContext applicationContext) throws InterruptedException {
 		LOG.log(CONFIG, "Spring Application Context:" + applicationContext);
+
+		int loopCounter = 10;
+		while (loopCounter > -1) {
+			System.out.println("Sleeping " + new Date());
+			Thread.sleep(2000);
+			System.out.println("Remaining loops:" + --loopCounter);
+		}
 
 	}
 

@@ -31,10 +31,19 @@ public final class MeVenkWebAppUtil {
 		throw new IllegalStateException("Utility class");
 	}
 
+	/**
+	 *
+	 * @param prefix
+	 * @return
+	 */
 	public static String appendSuffixPoundSign(String prefix) {
 		return prefix + POUND_SIGN;
 	}
 
+	/**
+	 *
+	 * @param httpServletRequest
+	 */
 	public static void logClientDetails(HttpServletRequest httpServletRequest) {
 
 		UserAgent userAgent = parseUserAgentString(httpServletRequest.getHeader("User-Agent"));
@@ -55,6 +64,11 @@ public final class MeVenkWebAppUtil {
 
 	}
 
+	/**
+	 *
+	 * @param exception
+	 * @return
+	 */
 	public static String exceptionStactTraceAsString(Exception exception) {
 		StringWriter stringWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(stringWriter));
