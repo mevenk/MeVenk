@@ -1,0 +1,7 @@
+
+https://jdbc.postgresql.org/documentation/80/connect.html
+https://stackoverflow.com/questions/3582552/postgresql-connection-url
+
+DRIVER_CLASS_NAME = "org.postgresql.Driver";
+URL = "jdbc:postgresql://VENKATESH-NUC:5432/mevenk?application_name=webapp";
+DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
