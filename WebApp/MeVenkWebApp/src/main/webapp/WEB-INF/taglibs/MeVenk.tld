@@ -7,6 +7,23 @@
 	<description>MeVenk WebApp functions</description>
 	<tlib-version>2.1</tlib-version>
 	<short-name>mevenk</short-name>
+
+	<tag>
+		<name>comment</name>
+		<tag-class>com.mevenk.webapp.controller.jsp.taglib.UnParsableComment</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>simpleComment</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
 	<function>
 		<description>
       Print Current Date
