@@ -8,6 +8,14 @@
 <title>MeVenk WebApp - Welcome</title>
 </head>
 <body>
-	<h1>${welcomeMessage } - ${mevenk:printDate() }</h1>
+
+	<mevenk:comment id="simpleComment" simpleComment="A Simple Comment" />
+
+	<mevenk:comment id="multiLineComment">
+		Unparsable comment
+	</mevenk:comment>
+
+	<h1>${welcomeMessage }-${mevenk:printDate() }</h1>
+	<h5>DB Time: ${databaseTime }</h5>
 </body>
 </html>

@@ -17,6 +17,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.mevenk.webapp.config.spring.database.MeVenkDatabaseConfiguration;
+
 /**
  * @author venky
  *
@@ -53,7 +55,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { MeVenkWebAppRootConfiguration.class };
+		return new Class[] { MeVenkWebAppRootConfiguration.class, MeVenkDatabaseConfiguration.class };
 	}
 
 	@Override
