@@ -37,12 +37,16 @@ public abstract class AbstractDatabaseConfigurationBase {
 	protected static Properties getHibernateProperties() {
 		Properties properties = new Properties();
 		properties.setProperty(HIBERNATE_DIALECT, DIALECT);
+		properties.setProperty("hibernate.jdbc.lob.non_contextual_creation", "true");
 		properties.setProperty(SHOW_SQL, SHOWSQL);
 		properties.setProperty("hibernate.format_sql", "true");
 		properties.setProperty("hibernate.use_sql_comments", "true");
 		properties.setProperty(HBM2DDL_AUTO, "validate");
 		properties.setProperty(HIBERNATE_GENERATE_STATICS, GENERATE_STATICS);
-		properties.setProperty("hibernate.cache.use_second_level_cache", "false");
+		properties.setProperty("hibernate.cache.use_second_level_cache", "true");
+		properties.setProperty("hibernate.cache.use_query_cache", "true");
+		properties.setProperty("hibernate.cache.region.factory_class",
+				"org.hibernate.cache.ehcache.EhCacheRegionFactory");
 		return properties;
 	}
 }

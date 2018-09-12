@@ -23,6 +23,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
+import com.mevenk.webapp.config.spring.database.cache.CacheManagerConfig;
 
 /**
  * @author venky
@@ -33,6 +34,11 @@ import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
 @Import(MeVenkWebAppRootConfiguration.class)
 @EnableTransactionManagement
 public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBase {
+
+	@Bean
+	public CacheManagerConfig cacheManagerConfig() {
+		return new CacheManagerConfig();
+	}
 
 	@Bean
 	@DependsOn("dataSource")
