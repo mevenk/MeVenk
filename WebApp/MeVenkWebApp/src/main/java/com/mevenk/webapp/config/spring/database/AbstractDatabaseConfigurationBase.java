@@ -8,8 +8,8 @@ public abstract class AbstractDatabaseConfigurationBase {
 	protected static final String URL = "jdbc:postgresql://VENKATESH-NUC:5432/mevenk?application_name=webapp";
 	protected static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
 
-	protected static final String USERNAME = "venkatesh";
-	protected static final String PASSWORD = "venkatesh";
+	protected static final String USERNAME = "mevenk_webapp_application";
+	protected static final String PASSWORD = "mevenk_webapp_application";
 
 	protected static final String SHOWSQL = "true";
 	protected static final int CONNECTION_TIMEOUT = 1000;

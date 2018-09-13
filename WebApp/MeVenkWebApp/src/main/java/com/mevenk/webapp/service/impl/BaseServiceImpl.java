@@ -3,6 +3,8 @@
  */
 package com.mevenk.webapp.service.impl;
 
+import static org.springframework.transaction.annotation.Propagation.SUPPORTS;
+
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class BaseServiceImpl implements BaseService {
 	 * @see com.mevenk.webapp.service.BaseService#databaseTime()
 	 */
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, propagation = SUPPORTS)
 	public Date databaseTime() {
 		return baseDao.databaseTime();
 	}
