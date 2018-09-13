@@ -32,6 +32,8 @@ public final class WebApplicationInitializer {
 
 		ApplicationContext applicationContext = getRequiredWebApplicationContext(servletConfig.getServletContext());
 
+		LOG.log(CONFIG, "Spring ApplicationContext[WebApplicationContext]|" + applicationContext);
+
 		loadCacheMasterData(applicationContext);
 
 	}

@@ -4,7 +4,7 @@
 package com.mevenk.webapp.config.servlet;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.logClientDetails;
+import static com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil.logClientDetails;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 import java.io.IOException;
