@@ -12,4 +12,7 @@ import java.util.Date;
 public interface BaseBDO {
 
 	public Date databaseTime();
+
+	public String databaseTimeFormatted();
+
 }

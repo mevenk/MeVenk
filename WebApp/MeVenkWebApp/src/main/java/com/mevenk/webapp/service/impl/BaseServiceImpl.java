@@ -35,4 +35,13 @@ public class BaseServiceImpl implements BaseService {
 		return baseDao.databaseTime();
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	@Transactional(readOnly = true, propagation = SUPPORTS)
+	public String databaseTimeFormatted() {
+		return baseDao.databaseTimeFormatted();
+	}
+
 }

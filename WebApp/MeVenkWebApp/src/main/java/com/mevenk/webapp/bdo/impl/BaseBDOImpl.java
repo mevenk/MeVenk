@@ -31,4 +31,12 @@ public class BaseBDOImpl implements BaseBDO {
 		return baseService.databaseTime();
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public String databaseTimeFormatted() {
+		return baseService.databaseTimeFormatted();
+	}
+
 }

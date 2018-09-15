@@ -13,4 +13,6 @@ public interface BaseService {
 
 	public Date databaseTime();
 
+	public String databaseTimeFormatted();
+
 }

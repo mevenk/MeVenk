@@ -13,4 +13,6 @@ public interface BaseDao {
 
 	public Date databaseTime();
 
+	public String databaseTimeFormatted();
+
 }

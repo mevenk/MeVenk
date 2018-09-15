@@ -34,7 +34,9 @@ public class BaseController {
 		ModelAndView modelAndViewWelcome = new ModelAndView(WELCOME);
 		modelAndViewWelcome.addObject("welcomeMessage", "Hello!!" + new Date());
 		Date databaseTime = baseBDO.databaseTime();
+		String databaseTimeFormatted = baseBDO.databaseTimeFormatted();
 		modelAndViewWelcome.addObject("databaseTime", databaseTime);
+		modelAndViewWelcome.addObject("databaseTimeFormatted", databaseTimeFormatted);
 		return modelAndViewWelcome;
 	}
 
