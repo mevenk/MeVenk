@@ -55,7 +55,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { MeVenkWebAppRootConfiguration.class, MeVenkDatabaseConfiguration.class };
+		return new Class[] { MeVenkWebAppRootConfiguration.class, MeVenkWebAppAspectConfiguration.class, MeVenkDatabaseConfiguration.class };
 	}
 
 	@Override
