@@ -12,6 +12,14 @@
 		<put-attribute name="footer" value="/views/footer.jsp" />
 	</definition>
 
+	<definition id="ERROR_PAGE" name="applicationException"
+		extends="base.definition">
+		<put-attribute name="title"
+			expression="${applicationExceptionPageTitle}" />
+		<put-attribute id="BODY_ERROR_PAGE" name="body"
+			value="/views/applicationException.jsp" />
+	</definition>
+
 	<definition name="welcome" extends="base.definition">
 		<put-attribute name="title" value="Welcome" />
 		<put-attribute name="body" value="/views/welcome.jsp" />
