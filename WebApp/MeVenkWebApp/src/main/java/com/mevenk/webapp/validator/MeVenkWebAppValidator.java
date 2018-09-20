@@ -32,11 +32,12 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	 */
 	public MeVenkWebAppValidator(Errors errors, Object form, HttpServletRequest request) {
 
-		if (errors.hasErrors()) {
+		this.errors = errors;
+
+		if (hasErrors()) {
 			return;
 		}
 
-		this.errors = errors;
 		this.request = request;
 		applicationContext = getRequiredWebApplicationContext(request.getServletContext());
 		validate(form, errors);
