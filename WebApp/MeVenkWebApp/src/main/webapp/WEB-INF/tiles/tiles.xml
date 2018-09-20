@@ -25,4 +25,11 @@
 		<put-attribute name="body" value="/views/welcome.jsp" />
 	</definition>
 
+	<definition name="sampleFormSubmission"
+		extends="base.definition">
+		<put-attribute name="title" value="Sample Form" />
+		<put-attribute name="body"
+			value="/views/sampleFormSubmission.jsp" />
+	</definition>
+
 </tiles-definitions>
