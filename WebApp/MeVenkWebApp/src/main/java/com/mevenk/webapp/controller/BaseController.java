@@ -7,6 +7,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,24 +49,40 @@ public class BaseController {
 
 	@RequestMapping(value = "/sampleFormSubmitter", method = GET)
 	public ModelAndView sampleFormSubmitter(ModelMap modelMap, HttpServletRequest httpServletRequest) {
-		ModelAndView modelAndViewWelcome = new ModelAndView("sampleFormSubmission");
+		ModelAndView modelAndViewSampleFormSubmitter = new ModelAndView("sampleFormSubmission");
 
-		modelAndViewWelcome.addObject("sampleForm", new SampleForm());
-		return modelAndViewWelcome;
+		modelAndViewSampleFormSubmitter.addObject("sampleForm", new SampleForm());
+
+		updateModelAndViewForViewParameters(modelAndViewSampleFormSubmitter);
+
+		return modelAndViewSampleFormSubmitter;
 	}
 
 	@RequestMapping(value = "/sampleFormSubmit", method = POST)
 	public ModelAndView sampleFormSubmit(ModelMap modelMap, HttpServletRequest httpServletRequest,
 			@ModelAttribute("sampleForm") SampleForm sampleForm, BindingResult bindingResult) {
 
-		ModelAndView modelAndViewWelcome = new ModelAndView("sampleFormSubmission");
+		ModelAndView modelAndViewSampleFormSubmit = new ModelAndView("sampleFormSubmission");
+
+		updateModelAndViewForViewParameters(modelAndViewSampleFormSubmit);
 
 		if (new SampleFormValidator(bindingResult, sampleForm, httpServletRequest).hasErrors()) {
 			System.out.println("Validator ERRORS!!!");
 		}
 
-		modelAndViewWelcome.addObject("sampleForm", sampleForm);
-		return modelAndViewWelcome;
+		modelAndViewSampleFormSubmit.addObject("sampleForm", sampleForm);
+		return modelAndViewSampleFormSubmit;
+	}
+
+	/**
+	 * @return
+	 */
+	private static void updateModelAndViewForViewParameters(ModelAndView modelAndView) {
+		Map<String, Integer> radioButtonItems = new HashMap<>();
+		for (int indexRadioButtonItems = 1; indexRadioButtonItems <= 10; indexRadioButtonItems++) {
+			radioButtonItems.put(String.valueOf(indexRadioButtonItems), indexRadioButtonItems);
+		}
+		modelAndView.addObject("radioButtonItems", radioButtonItems);
 	}
 
 }

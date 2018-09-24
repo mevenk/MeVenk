@@ -11,7 +11,7 @@ public class SampleForm {
 
 	private Integer number;
 	private String name;
-	private Boolean radioBoolean;
+	private Integer radioButton;
 	private Boolean checkBoxBoolean;
 	private Integer hiddenNumber;
 	private String hiddenString;
@@ -48,15 +48,15 @@ public class SampleForm {
 	/**
 	 * @return the radioBoolean
 	 */
-	public Boolean getRadioBoolean() {
-		return radioBoolean;
+	public Integer getRadioButton() {
+		return radioButton;
 	}
 
 	/**
 	 * @param radioBoolean the radioBoolean to set
 	 */
-	public void setRadioBoolean(Boolean radioBoolean) {
-		this.radioBoolean = radioBoolean;
+	public void setRadioButton(Integer radioButton) {
+		this.radioButton = radioButton;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class SampleForm {
 	 */
 	@Override
 	public String toString() {
-		return "SampleForm [number=" + number + ", name=" + name + ", radioBoolean=" + radioBoolean
+		return "SampleForm [number=" + number + ", name=" + name + ", radioBoolean=" + radioButton
 				+ ", checkBoxBoolean=" + checkBoxBoolean + ", hiddenNumber=" + hiddenNumber + ", hiddenString="
 				+ hiddenString + ", hiddenBoolean=" + hiddenBoolean + "]";
 	}

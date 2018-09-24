@@ -31,11 +31,40 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 	public void validate(Object form, Errors errors) {
 
 		BaseService baseService = (BaseService) getBean(BaseService.class, null);
+		String databaseTimeFormatted = baseService.databaseTimeFormatted();
 
 		SampleForm sampleForm = (SampleForm) form;
 
 		if (sampleForm.getHiddenString() == null) {
-			rejectFormFieldValue("hiddenString", "NULL Not Allowed");
+			rejectFormFieldValue("hiddenString", "Hidden String - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getHiddenNumber() == null) {
+			rejectFormFieldValue("hiddenNumber", "Hidden Number - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getHiddenBoolean() == null) {
+			rejectFormFieldValue("hiddenBoolean", "Hidden Boolean - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getCheckBoxBoolean() == null) {
+			rejectFormFieldValue("checkBoxBoolean", "Checkbox Boolean - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getRadioButton() == null) {
+			rejectFormFieldValue("radioButton", "Radio Number - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (!hasFormFieldErrors("radioButton") && sampleForm.getRadioButton() == 10) {
+			rejectFormFieldValue("radioButton", "Radio Number - 10 Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getName() == null) {
+			rejectFormFieldValue("name", "Name - NULL Not Allowed " + databaseTimeFormatted);
+		}
+
+		if (sampleForm.getNumber() == null) {
+			rejectFormFieldValue("number", "Number - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
 	}

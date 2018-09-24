@@ -6,8 +6,6 @@ package com.mevenk.webapp.validator;
 import static org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils.qualifiedBeanOfType;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
@@ -55,7 +53,6 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	}
 
 	protected final Object getBean(Class<?> requiredType, String qualifier) {
-		Map<String, ?> beansOfType = applicationContext.getBeansOfType(requiredType);
 		if (qualifier == null) {
 			return applicationContext.getBean(requiredType);
 		} else {
@@ -69,6 +66,10 @@ public abstract class MeVenkWebAppValidator implements Validator {
 
 	public final boolean hasErrors() {
 		return errors.hasErrors();
+	}
+
+	protected final boolean hasFormFieldErrors(String field) {
+		return errors.hasFieldErrors(field);
 	}
 
 	protected final void setRequestAttribute(String name, Object object) {
