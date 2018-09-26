@@ -3,10 +3,14 @@
  */
 package com.mevenk.webapp.controller.jsp.taglib;
 
+import static org.apache.logging.log4j.LogManager.getLogger;
+
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
+
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author venky
@@ -14,21 +18,23 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
  */
 public class UnParsableComment extends BodyTagSupport {
 
-	private String id;
+	private static final Logger LOG = getLogger(UnParsableComment.class);
+
+	private String commentId;
 	private String simpleComment;
 
 	/**
-	 * @return the id
+	 * @return the commentId
 	 */
-	public String getId() {
-		return id;
+	public String getCommentId() {
+		return commentId;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param commentId the commentId to set
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
 	}
 
 	/**
@@ -54,7 +60,7 @@ public class UnParsableComment extends BodyTagSupport {
 	public int doStartTag() throws JspException {
 
 		try {
-			System.out.println(id + "|" + simpleComment);
+			LOG.debug(commentId + "|" + simpleComment);
 			pageContext.getOut().println("");
 		} catch (IOException ioException) {
 			throw new JspException("Exception reading  un parsable comment: " + ioException.getMessage());

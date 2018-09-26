@@ -9,9 +9,9 @@
 </head>
 <body>
 
-	<mevenk:comment id="simpleComment" simpleComment="A Simple Comment" />
+	<mevenk:comment commentId="simpleComment" simpleComment="A Simple Comment" />
 
-	<mevenk:comment id="multiLineComment">
+	<mevenk:comment commentId="multiLineComment">
 		Unparsable comment
 	</mevenk:comment>
 

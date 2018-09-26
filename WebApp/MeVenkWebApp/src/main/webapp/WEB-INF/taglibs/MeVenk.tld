@@ -13,7 +13,7 @@
 		<tag-class>com.mevenk.webapp.controller.jsp.taglib.UnParsableComment</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>id</name>
+			<name>commentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
