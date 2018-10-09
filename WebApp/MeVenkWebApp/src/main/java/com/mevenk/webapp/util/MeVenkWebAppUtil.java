@@ -4,6 +4,7 @@
 package com.mevenk.webapp.util;
 
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.POUND_SIGN;
+import static java.lang.System.lineSeparator;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -13,6 +14,8 @@ import java.io.StringWriter;
  *
  */
 public final class MeVenkWebAppUtil {
+
+	public static final String LINE_SEPARATOR = lineSeparator();
 
 	private MeVenkWebAppUtil() {
 		throw new IllegalStateException("Utility class");
