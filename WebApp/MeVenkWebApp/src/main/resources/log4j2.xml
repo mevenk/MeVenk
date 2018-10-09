@@ -37,6 +37,10 @@
 		</Property>
 		<Property name="configLogFileName">mevenkWebAppConfig.log</Property>
 
+		<Property name="rootLogFilesDir">${mevenkWebAppLogsDir}/rootLogs
+		</Property>
+		<Property name="rootLogFileName">mevenkWebAppRoot.log</Property>
+
 		<!-- <Property name="mevenkWebAppLogPatternLayout"><![CDATA[%d{MMM dd,
 			yyyy HH:mm:ss.SSS} #MeVenkWebApp# [%X{MeVenkWebAppCorrelationId}] - [%t]
 			%-5level %logger{36} - %msg%n]]></Property> -->
@@ -44,13 +48,17 @@
 
 	</Properties>
 
+	<ThresholdFilter level="ALL" />
+
 	<Appenders>
 
 		<!-- appLogRollingFile -->
-		<RollingFile name="appLogRollingFile" fileName="${appLogFilesDir}/${appLogFileName}"
+		<RollingFile name="appLogRollingFile"
+			fileName="${appLogFilesDir}/${appLogFileName}"
 			filePattern="${appLogFilesDir}/${appLogFileName}_%d{yyyy-MM-dd}_%i">
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Filters>
 				<ThresholdFilter level="FATAL" onMatch="DENY"
@@ -70,10 +78,12 @@
 		</RollingFile>
 
 		<!-- utilLogRollingFile -->
-		<RollingFile name="utilLogRollingFile" fileName="${utilLogFilesDir}/${utilLogFileName}"
+		<RollingFile name="utilLogRollingFile"
+			fileName="${utilLogFilesDir}/${utilLogFileName}"
 			filePattern="${utilLogFilesDir}/${utilLogFileName}_%d{yyyy-MM-dd}_%i">
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Filters>
 				<ThresholdFilter level="FATAL" onMatch="DENY"
@@ -94,9 +104,11 @@
 
 		<!-- errorLogRollingFile -->
 		<RollingFile name="errorLogRollingFile"
-			fileName="${errorLogFilesDir}/${errorLogFileName}" filePattern="${errorLogFilesDir}/${errorLogFileName}_%d{yyyy-MM-dd}_%i">
+			fileName="${errorLogFilesDir}/${errorLogFileName}"
+			filePattern="${errorLogFilesDir}/${errorLogFileName}_%d{yyyy-MM-dd}_%i">
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Policies>
 				<SizeBasedTriggeringPolicy size="100 MB" />
@@ -111,7 +123,8 @@
 		</RollingFile>
 
 		<!-- htmlLogRollingFile -->
-		<RollingFile name="htmlLogRollingFile" fileName="${htmlLogFilesDir}/${htmlLogFileName}"
+		<RollingFile name="htmlLogRollingFile"
+			fileName="${htmlLogFilesDir}/${htmlLogFileName}"
 			filePattern="${htmlLogFilesDir}/${htmlLogFileName}_%d{yyyy-MM-dd}_%i">
 
 			<Filters>
@@ -152,7 +165,8 @@
 			fileName="${pollingLogFilesDir}/${pollingLogFileName}"
 			filePattern="${pollingLogFilesDir}/${pollingLogFileName}_%d{yyyy-MM-dd}_%i">
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Policies>
 				<SizeBasedTriggeringPolicy size="100 MB" />
@@ -174,7 +188,8 @@
 			fileName="${triggerLogFilesDir}/${triggerLogFileName}"
 			filePattern="${triggerLogFilesDir}/${triggerLogFileName}_%d{yyyy-MM-dd}_%i">
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Policies>
 				<SizeBasedTriggeringPolicy size="100 MB" />
@@ -200,7 +215,8 @@
 					onMismatch="NEUTRAL" />
 			</Filters>
 
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 
 			<Policies>
 				<SizeBasedTriggeringPolicy size="100 MB" />
@@ -216,9 +232,32 @@
 
 		</RollingFile>
 
+		<!-- rootLogRollingFile -->
+		<RollingFile name="rootLogRollingFile"
+			fileName="${rootLogFilesDir}/${rootLogFileName}"
+			filePattern="${rootLogFilesDir}/${rootLogFileName}_%d{yyyy-MM-dd}_%i">
+
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
+
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="false" />
+			</Policies>
+
+			<DefaultRolloverStrategy>
+				<Delete basePath="${rootLogFilesDir}" maxDepth="1">
+					<IfLastModified age="1d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+
+		</RollingFile>
+
 		<!-- Console -->
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="${mevenkWebAppLogPatternLayout}" />
+			<PatternLayout
+				pattern="${mevenkWebAppLogPatternLayout}" />
 		</Console>
 
 		<!-- Socket -->
@@ -233,12 +272,10 @@
 
 		<!-- utilLogRollingFile should be added to all child loggers -->
 
-		<Logger name="com.mevenk.webapp" level="ALL" additivity="false">
-			<!-- <AppenderRef ref="utilLogRollingFile" level="TRACE" /> -->
+		<Logger name="com.mevenk.webapp" level="ALL">
 			<AppenderRef ref="appLogRollingFile" level="INFO" />
 			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="htmlLogRollingFile" level="INFO" />
-			<AppenderRef ref="Console" level="TRACE" />
 		</Logger>
 
 		<Logger name="com.mevenk.webapp.controller" level="TRACE">
@@ -257,12 +294,25 @@
 		<Logger name="com.mevenk.webapp.config" level="TRACE"
 			additivity="false">
 			<AppenderRef ref="configLogRollingFile" level="TRACE" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
 		</Logger>
 
 		<!-- Independent of other loggers. -->
-		<Logger name="com.mevenk.webapp.service.impl.ClientUtilServiceimpl"
+		<Logger name="com.mevenk.webapp.cache" level="TRACE"
+			additivity="false">
+			<AppenderRef ref="configLogRollingFile" level="TRACE" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
+		</Logger>
+
+		<!-- Independent of other loggers. -->
+		<Logger
+			name="com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil"
 			level="TRACE" additivity="false">
 			<AppenderRef ref="utilLogRollingFile" level="TRACE" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
 		</Logger>
 
 		<!-- Independent of other loggers. -->
@@ -270,6 +320,8 @@
 			additivity="false">
 			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="pollingLogRollingFile" level="POLLING" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
 		</Logger>
 
 		<!-- Independent of other loggers. -->
@@ -277,13 +329,20 @@
 			additivity="false">
 			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="triggerLogRollingFile" level="TRIGGER" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Socket" />
 		</Logger>
 
 		<Logger name="org.springframework" level="ALL">
-			<AppenderRef ref="configLogRollingFile" level="ALL" />
+			<AppenderRef ref="rootLogRollingFile" level="ALL" />
 		</Logger>
 
-		<Root level="ALL">
+		<Logger name="org.apache" level="ALL">
+			<AppenderRef ref="rootLogRollingFile" level="ALL" />
+		</Logger>
+
+		<Root level="TRACE">
+			<AppenderRef ref="rootLogRollingFile" level="ALL" />
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="Socket" />
 		</Root>
