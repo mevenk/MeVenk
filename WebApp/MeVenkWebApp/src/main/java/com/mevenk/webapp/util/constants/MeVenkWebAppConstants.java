@@ -3,6 +3,8 @@
  */
 package com.mevenk.webapp.util.constants;
 
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS;
+
 import java.io.File;
 
 /**
@@ -12,7 +14,7 @@ import java.io.File;
 public final class MeVenkWebAppConstants {
 
 	private MeVenkWebAppConstants() {
-		throw new IllegalStateException("Utility class");
+		throw ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS;
 	}
 
 	public static final String BASE_PACKAGE = "com.mevenk.webapp";
