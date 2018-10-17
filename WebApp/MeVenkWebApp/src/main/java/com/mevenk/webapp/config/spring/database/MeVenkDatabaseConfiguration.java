@@ -3,6 +3,9 @@
  */
 package com.mevenk.webapp.config.spring.database;
 
+import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.BEAN_DATABASE_PROPERTIES;
+import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.maxPoolSize;
+import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.minPoolSize;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.BASE_PACKAGE;
 
 import java.beans.PropertyVetoException;
@@ -45,11 +48,11 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 	public SessionFactory sessionFactory() {
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource());
 		sessionBuilder.addProperties(getHibernateProperties());
-
 		return sessionBuilder.buildSessionFactory();
 	}
 
 	@Bean
+	@DependsOn(BEAN_DATABASE_PROPERTIES)
 	public DataSource dataSource() {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		try {
@@ -57,8 +60,8 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 			comboPooledDataSource.setJdbcUrl(URL);
 			comboPooledDataSource.setUser(USERNAME);
 			comboPooledDataSource.setPassword(PASSWORD);
-			comboPooledDataSource.setMinPoolSize(10);
-			comboPooledDataSource.setMaxPoolSize(50);
+			comboPooledDataSource.setMinPoolSize(minPoolSize);
+			comboPooledDataSource.setMaxPoolSize(maxPoolSize);
 			comboPooledDataSource.setIdleConnectionTestPeriod(CONNECTION_TEST);
 			comboPooledDataSource.setMaxIdleTime(MAX_IDLE_TIME);
 			comboPooledDataSource.setAcquireRetryDelay(ACQUIRE_RETRY_DELAY);
