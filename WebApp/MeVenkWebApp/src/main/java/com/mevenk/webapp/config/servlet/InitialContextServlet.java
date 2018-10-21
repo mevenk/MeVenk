@@ -4,6 +4,7 @@
 package com.mevenk.webapp.config.servlet;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
+import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID;
 import static com.mevenk.webapp.config.servlet.WebApplicationInitializer.runInitialActivities;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 
 /**
  * @author venky
@@ -33,6 +35,7 @@ public class InitialContextServlet extends HttpServlet {
 		super.init(servletConfig);
 		LOG.log(CONFIG, "Initializing Servlet[" + this + "]");
 		try {
+			ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, "INITIAL_ACTIVITIES");
 			runInitialActivities(servletConfig);
 		} catch (Exception exception) {
 			exception.printStackTrace();

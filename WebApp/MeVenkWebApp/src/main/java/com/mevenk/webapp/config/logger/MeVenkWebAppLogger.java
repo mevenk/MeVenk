@@ -17,7 +17,7 @@ public final class MeVenkWebAppLogger {
 		throw new IllegalAccessException("Logger Class!!");
 	}
 
-	public static final String THREAD_CONTEXT_KEY = "MeVenkWebAppCorrelationId";
+	public static final String THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID = "MeVenkWebAppCorrelationId";
 
 	/*
 	 * OFF 0 | FATAL 100 | ERROR 200 | WARN 300 | INFO 400 | POLLING 470 | TRIGGER
