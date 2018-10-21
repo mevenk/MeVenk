@@ -3,7 +3,7 @@
  */
 package com.mevenk.webapp.util.http.client;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.LINE_SEPARATOR;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SPACE_AROUND_DOUBLE_COLUN;
 import static eu.bitwalker.useragentutils.UserAgent.parseUserAgentString;
@@ -26,10 +26,11 @@ public final class MeVenkWebAppClientUtil {
 	private static final Logger LOG = getLogger(MeVenkWebAppClientUtil.class);
 
 	/**
+	 * @throws IllegalAccessException
 	 *
 	 */
-	private MeVenkWebAppClientUtil() {
-		throw ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS;
+	private MeVenkWebAppClientUtil() throws IllegalAccessException {
+		throw ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 	}
 
 	/**

@@ -18,11 +18,11 @@ public abstract class MeVenkWebAppUtil {
 
 	public static final String LINE_SEPARATOR = lineSeparator();
 
-	public static final IllegalStateException ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS = new IllegalStateException(
+	public static final IllegalAccessException ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS = new IllegalAccessException(
 			"Utility class");
 
-	private MeVenkWebAppUtil() {
-		throw ILLEGAL_STATE_EXCEPTION_UTILITY_CLASS;
+	private MeVenkWebAppUtil() throws IllegalAccessException {
+		throw ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 	}
 
 	/**
