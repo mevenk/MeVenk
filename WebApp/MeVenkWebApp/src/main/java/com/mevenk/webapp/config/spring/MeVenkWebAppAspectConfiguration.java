@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
-import com.mevenk.webapp.trigger.LoggingAspect;
+import com.mevenk.webapp.trigger.MethodLoggingTrigger;
 
 /**
  * @author venky
@@ -20,8 +20,8 @@ import com.mevenk.webapp.trigger.LoggingAspect;
 public class MeVenkWebAppAspectConfiguration {
 
 	@Bean
-	public LoggingAspect loggingAspect() {
-		return new LoggingAspect();
+	public MethodLoggingTrigger loggingAspect() {
+		return new MethodLoggingTrigger();
 	}
 
 }

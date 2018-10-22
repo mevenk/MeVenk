@@ -22,9 +22,9 @@ import org.springframework.core.annotation.Order;
  */
 @Aspect
 @Order(1)
-public class LoggingAspect {
+public class MethodLoggingTrigger {
 
-	private static final Logger LOG = getLogger(LoggingAspect.class);
+	private static final Logger LOG = getLogger(MethodLoggingTrigger.class);
 
 	private static final String POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS = "allBeanMethodsExceptConfigAndTriggers()";
 
