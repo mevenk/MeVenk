@@ -5,6 +5,7 @@ package com.mevenk.webapp.config.spring.properties;
 
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.isAnyStringEmptyOrNull;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.loadPropertiesDependantStaticUtilData;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -143,6 +144,15 @@ public abstract class PropertiesLoaderHelper {
 		protected InvalidNumberException(String propertyName, String propertyValue) {
 			super("Invalid number[" + propertyValue + "] set for property [" + propertyName + "]");
 		}
+
+	}
+
+	/**
+	 *
+	 */
+	public static void loadPropertiesDependantStaticData() {
+
+		loadPropertiesDependantStaticUtilData();
 
 	}
 

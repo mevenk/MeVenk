@@ -4,6 +4,7 @@
 package com.mevenk.webapp.config.servlet;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
+import static com.mevenk.webapp.config.spring.properties.PropertiesLoaderHelper.loadPropertiesDependantStaticData;
 import static com.mevenk.webapp.util.DateTimeUtil.getStartDateEndDateDifferences;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
@@ -33,11 +34,22 @@ public final class WebApplicationInitializer {
 
 		LOG.log(CONFIG, "Application initiated|" + servletConfig);
 
+		loadStaticData();
+
 		ApplicationContext applicationContext = getRequiredWebApplicationContext(servletConfig.getServletContext());
 
 		LOG.log(CONFIG, "Spring ApplicationContext[WebApplicationContext]|" + applicationContext);
 
 		loadCacheMasterData(applicationContext);
+
+	}
+
+	/**
+	 *
+	 */
+	private static void loadStaticData() {
+
+		loadPropertiesDependantStaticData();
 
 	}
 
