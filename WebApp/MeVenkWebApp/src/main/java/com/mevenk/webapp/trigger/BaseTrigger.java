@@ -5,7 +5,6 @@ import static com.mevenk.webapp.util.MeVenkWebAppUtil.resetCorrelationIdThreadCo
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 
 /**
  *
@@ -25,9 +24,9 @@ public abstract class BaseTrigger {
 	 *
 	 * @param proceedingJoinPoint
 	 */
-	protected void updateCorrelationIdThreadContext(ProceedingJoinPoint proceedingJoinPoint) {
+	protected void updateCorrelationIdThreadContext(JoinPoint joinPoint) {
 		StringBuilder stringBuilderCorreltionIdPrefix = new StringBuilder();
-		stringBuilderCorreltionIdPrefix.append(proceedingJoinPoint.getSignature().getName());
+		stringBuilderCorreltionIdPrefix.append(joinPoint.getSignature().getName());
 		resetCorrelationIdThreadContext(stringBuilderCorreltionIdPrefix.toString());
 	}
 
