@@ -21,7 +21,7 @@ import org.springframework.core.annotation.Order;
  *
  */
 @Aspect
-@Order(1)
+@Order(2)
 public class MethodLoggingTrigger extends BaseTrigger {
 
 	private static final Logger LOG = getLogger(MethodLoggingTrigger.class);

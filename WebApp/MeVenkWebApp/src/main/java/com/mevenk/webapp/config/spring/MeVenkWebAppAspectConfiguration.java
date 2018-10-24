@@ -9,6 +9,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
 import com.mevenk.webapp.trigger.MethodLoggingTrigger;
+import com.mevenk.webapp.trigger.controller.ControllerTrigger;
+import com.mevenk.webapp.trigger.controller.impl.ControllerRequestTrigger;
 
 /**
  * @author venky
@@ -19,9 +21,14 @@ import com.mevenk.webapp.trigger.MethodLoggingTrigger;
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class MeVenkWebAppAspectConfiguration {
 
-	@Bean
-	public MethodLoggingTrigger loggingAspect() {
+	@Bean(name = "methodLoggingTrigger")
+	public MethodLoggingTrigger methodLoggingTrigger() {
 		return new MethodLoggingTrigger();
+	}
+
+	@Bean(name = "controllerRequestTrigger")
+	public ControllerTrigger controllerRequestTrigger() {
+		return new ControllerRequestTrigger();
 	}
 
 }
