@@ -22,7 +22,7 @@ import org.springframework.core.annotation.Order;
  */
 @Aspect
 @Order(1)
-public class MethodLoggingTrigger {
+public class MethodLoggingTrigger extends BaseTrigger {
 
 	private static final Logger LOG = getLogger(MethodLoggingTrigger.class);
 
@@ -35,29 +35,21 @@ public class MethodLoggingTrigger {
 
 	@Before(POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS)
 	protected void logEnteringMethod(JoinPoint joinPoint) {
-		LOG.log(TRIGGER, "Entered " + generateJointPointDetail(joinPoint));
+		LOG.log(TRIGGER, "Entered " + generateJoinPointDetailWithArguments(joinPoint));
 	}
 
 	@After(POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS)
 	protected void logExitingMethod(JoinPoint joinPoint) {
-		LOG.log(TRIGGER, "Exited " + generateJointPointDetail(joinPoint));
+		LOG.log(TRIGGER, "Exited " + generateJoinPointDetail(joinPoint));
 	}
 
 	@AfterReturning(pointcut = POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS, returning = "retVal")
 	protected void logIfMethodValueReturned(JoinPoint joinPoint, Object retVal) {
-		LOG.log(TRIGGER, "Returned " + generateJointPointDetail(joinPoint) + "|" + retVal);
+		LOG.log(TRIGGER, "Returned " + generateJoinPointDetail(joinPoint) + "|" + retVal);
 	}
 
 	@AfterThrowing(pointcut = POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS, throwing = "exception")
 	protected void logIfMethodException(JoinPoint joinPoint, Exception exception) {
-		LOG.log(TRIGGER, "Exception " + generateJointPointDetail(joinPoint) + "|" + exception.getMessage());
-	}
-
-	private String generateJointPointDetail(JoinPoint joinPoint) {
-		StringBuilder stringBuilderJoinPoint = new StringBuilder();
-		stringBuilderJoinPoint.append(joinPoint.getKind());
-		stringBuilderJoinPoint.append("-" + joinPoint.toShortString());
-		return stringBuilderJoinPoint.toString();
-
+		LOG.log(TRIGGER, "Exception " + generateJoinPointDetail(joinPoint) + "|" + exception.getMessage());
 	}
 }
