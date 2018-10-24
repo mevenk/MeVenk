@@ -11,6 +11,8 @@ import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACK
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.COMMA_AND_SPACE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.EMPTY_STRING;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
+import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.PARENTHESES_CLOSE;
+import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.PARENTHESES_OPEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.POUND_SIGN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SQUARE_BRACKET_CLOSE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SQUARE_BRACKET_OPEN;
@@ -188,6 +190,26 @@ public abstract class MeVenkWebAppUtil {
 			stringBuilderRandomString.append(ALL_CHARS.charAt(RANDOM.nextInt(ALL_CHARS.length() - 1)));
 		}
 		return stringBuilderRandomString.toString();
+	}
+
+	/**
+	 *
+	 * @param objects
+	 * @return
+	 */
+	public static String methodArgumentsAsString(Object... objects) {
+		if (objects.length <= 0) {
+			return EMPTY_STRING;
+		}
+		StringBuilder stringBuilderObjects = new StringBuilder();
+		stringBuilderObjects.append(PARENTHESES_OPEN);
+		for (Object object : objects) {
+			stringBuilderObjects.append(object.toString() + COMMA_AND_SPACE);
+
+		}
+		stringBuilderObjects.delete(stringBuilderObjects.lastIndexOf(COMMA_AND_SPACE), stringBuilderObjects.length());
+		stringBuilderObjects.append(PARENTHESES_CLOSE);
+		return stringBuilderObjects.toString();
 	}
 
 	/**
