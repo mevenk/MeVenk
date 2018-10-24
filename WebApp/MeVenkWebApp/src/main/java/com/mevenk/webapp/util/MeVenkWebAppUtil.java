@@ -316,9 +316,10 @@ public abstract class MeVenkWebAppUtil {
 	 *
 	 * @param correlationIdPrefix
 	 */
-	public static void resetCorrelationIdThreadContext(String correlationIdPrefix) {
+	public static String resetCorrelationIdThreadContext(String correlationIdPrefix) {
 		ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID,
 				correlationIdPrefix + UNDERSCORE + simpleDateFormatCorrelationId.format(new Date()));
+		return ThreadContext.get(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
 	}
 
 	/**

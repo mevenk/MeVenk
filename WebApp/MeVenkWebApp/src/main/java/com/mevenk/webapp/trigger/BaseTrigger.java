@@ -24,10 +24,10 @@ public abstract class BaseTrigger {
 	 *
 	 * @param proceedingJoinPoint
 	 */
-	protected void updateCorrelationIdThreadContext(JoinPoint joinPoint) {
+	protected String updateCorrelationIdThreadContext(JoinPoint joinPoint) {
 		StringBuilder stringBuilderCorreltionIdPrefix = new StringBuilder();
 		stringBuilderCorreltionIdPrefix.append(joinPoint.getSignature().getName());
-		resetCorrelationIdThreadContext(stringBuilderCorreltionIdPrefix.toString());
+		return resetCorrelationIdThreadContext(stringBuilderCorreltionIdPrefix.toString());
 	}
 
 	/**
