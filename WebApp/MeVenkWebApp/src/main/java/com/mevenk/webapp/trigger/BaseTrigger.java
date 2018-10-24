@@ -18,6 +18,9 @@ public abstract class BaseTrigger {
 	protected static final String ADVICE_OR = " || ";
 	protected static final String ADVICE_ANY_ARGS = "args(..)";
 
+	protected String joinPointDetail;
+	protected String joinPointDetailWithArguments;
+
 	/**
 	 *
 	 * @param proceedingJoinPoint
@@ -33,11 +36,11 @@ public abstract class BaseTrigger {
 	 * @param joinPoint
 	 * @return
 	 */
-	protected String generateJoinPointDetail(JoinPoint joinPoint) {
+	protected void generateJoinPointDetail(JoinPoint joinPoint) {
 		StringBuilder stringBuilderJoinPoint = new StringBuilder();
 		stringBuilderJoinPoint.append(joinPoint.getKind());
 		stringBuilderJoinPoint.append(HYPHEN + joinPoint.toShortString());
-		return stringBuilderJoinPoint.toString();
+		joinPointDetail = stringBuilderJoinPoint.toString();
 	}
 
 	/**
@@ -45,12 +48,12 @@ public abstract class BaseTrigger {
 	 * @param joinPoint
 	 * @return
 	 */
-	protected String generateJoinPointDetailWithArguments(JoinPoint joinPoint) {
+	protected void generateJoinPointDetailWithArguments(JoinPoint joinPoint) {
 		StringBuilder stringBuilderJoinPoint = new StringBuilder();
 		stringBuilderJoinPoint.append(joinPoint.getKind());
 		stringBuilderJoinPoint.append(joinPoint.toLongString());
 		stringBuilderJoinPoint.append(methodArgumentsAsString(joinPoint.getArgs()));
-		return stringBuilderJoinPoint.toString();
+		joinPointDetailWithArguments = stringBuilderJoinPoint.toString();
 	}
 
 }

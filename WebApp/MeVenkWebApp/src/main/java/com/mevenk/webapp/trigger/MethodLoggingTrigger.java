@@ -35,21 +35,23 @@ public class MethodLoggingTrigger extends BaseTrigger {
 
 	@Before(POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS)
 	protected void logEnteringMethod(JoinPoint joinPoint) {
-		LOG.log(TRIGGER, "Entered " + generateJoinPointDetailWithArguments(joinPoint));
+		generateJoinPointDetail(joinPoint);
+		generateJoinPointDetailWithArguments(joinPoint);
+		LOG.log(TRIGGER, "Entered " + joinPointDetailWithArguments);
 	}
 
 	@After(POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS)
 	protected void logExitingMethod(JoinPoint joinPoint) {
-		LOG.log(TRIGGER, "Exited " + generateJoinPointDetail(joinPoint));
+		LOG.log(TRIGGER, "Exited " + joinPointDetail);
 	}
 
 	@AfterReturning(pointcut = POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS, returning = "retVal")
 	protected void logIfMethodValueReturned(JoinPoint joinPoint, Object retVal) {
-		LOG.log(TRIGGER, "Returned " + generateJoinPointDetail(joinPoint) + "|" + retVal);
+		LOG.log(TRIGGER, "Returned " + joinPointDetail + "|" + retVal);
 	}
 
 	@AfterThrowing(pointcut = POINT_CUT_ALL_BEAN_METHODS_EXCEPT_CONFIG_AND_TRIGGERS, throwing = "exception")
 	protected void logIfMethodException(JoinPoint joinPoint, Exception exception) {
-		LOG.log(TRIGGER, "Exception " + generateJoinPointDetail(joinPoint) + "|" + exception.getMessage());
+		LOG.log(TRIGGER, "Exception " + joinPointDetail + "|" + exception.getMessage());
 	}
 }
