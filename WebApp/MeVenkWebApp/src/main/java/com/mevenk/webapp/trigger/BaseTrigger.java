@@ -1,6 +1,6 @@
 package com.mevenk.webapp.trigger;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.objectArrayAsString;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.methodArgumentsAsString;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.resetCorrelationIdThreadContext;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
 
@@ -42,15 +42,15 @@ public abstract class BaseTrigger {
 
 	/**
 	 *
-	 * @param proceedingJoinPoint
+	 * @param joinPoint
 	 * @return
 	 */
-	protected String generateProceedingJoinPointDetail(ProceedingJoinPoint proceedingJoinPoint) {
-		StringBuilder stringBuilderProceedingJoinPoint = new StringBuilder();
-		stringBuilderProceedingJoinPoint.append(proceedingJoinPoint.getKind());
-		stringBuilderProceedingJoinPoint.append(HYPHEN + proceedingJoinPoint.toShortString());
-		stringBuilderProceedingJoinPoint.append(HYPHEN + objectArrayAsString(proceedingJoinPoint.getArgs()));
-		return stringBuilderProceedingJoinPoint.toString();
+	protected String generateJoinPointDetailWithArguments(JoinPoint joinPoint) {
+		StringBuilder stringBuilderJoinPoint = new StringBuilder();
+		stringBuilderJoinPoint.append(joinPoint.getKind());
+		stringBuilderJoinPoint.append(joinPoint.toLongString());
+		stringBuilderJoinPoint.append(methodArgumentsAsString(joinPoint.getArgs()));
+		return stringBuilderJoinPoint.toString();
 	}
 
 }
