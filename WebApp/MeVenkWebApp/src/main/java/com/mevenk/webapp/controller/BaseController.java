@@ -3,9 +3,6 @@
  */
 package com.mevenk.webapp.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mevenk.webapp.bdo.BaseBDO;
@@ -36,7 +34,7 @@ public class BaseController {
 	@Autowired
 	private BaseBDO baseBDO;
 
-	@RequestMapping(value = WELCOME, method = GET)
+	@GetMapping(value = WELCOME)
 	public ModelAndView welcome(ModelMap modelMap, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndViewWelcome = new ModelAndView(WELCOME);
 		modelAndViewWelcome.addObject("welcomeMessage", "Hello!!" + new Date());
@@ -47,7 +45,7 @@ public class BaseController {
 		return modelAndViewWelcome;
 	}
 
-	@RequestMapping(value = "/sampleFormSubmitter", method = GET)
+	@GetMapping(value = "/sampleFormSubmitter")
 	public ModelAndView sampleFormSubmitter(ModelMap modelMap, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndViewSampleFormSubmitter = new ModelAndView("sampleFormSubmission");
 
@@ -58,7 +56,7 @@ public class BaseController {
 		return modelAndViewSampleFormSubmitter;
 	}
 
-	@RequestMapping(value = "/sampleFormSubmit", method = POST)
+	@PostMapping(value = "/sampleFormSubmit")
 	public ModelAndView sampleFormSubmit(ModelMap modelMap, HttpServletRequest httpServletRequest,
 			@ModelAttribute("sampleForm") SampleForm sampleForm, BindingResult bindingResult) {
 

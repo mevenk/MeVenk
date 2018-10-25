@@ -4,6 +4,7 @@
 package com.mevenk.webapp.trigger.controller;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.TRIGGER;
+import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class ControllerTrigger extends BaseTrigger {
 
 	// *******************************POINTCUTS*******************************
 
-	@Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) || @annotation(org.springframework.web.bind.annotation.GetMapping) || @annotation(org.springframework.web.bind.annotation.PostMapping)")
 	private void methodsWithRequestAnnotation() {
 
 	}
@@ -55,6 +56,8 @@ public class ControllerTrigger extends BaseTrigger {
 		generateJoinPointDetailWithArguments(joinPoint);
 		LOG.log(TRIGGER, "Thread Context Key generated:"
 				+ updateCorrelationIdThreadContext(joinPoint, httpRequest.getSession().getId()));
+		LOG.log(TRIGGER, "HTTP Request:" + httpRequest.getMethod() + VERTICAL_BAR + httpRequest.getServletPath()
+				+ VERTICAL_BAR + httpRequest.getContextPath() + VERTICAL_BAR + httpRequest);
 	}
 
 	@Before(POINT_CUT_METHODS_WITH_REQUEST_ANNOTATION)
