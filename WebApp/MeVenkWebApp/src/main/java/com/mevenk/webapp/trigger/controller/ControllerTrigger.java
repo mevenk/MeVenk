@@ -6,6 +6,8 @@ package com.mevenk.webapp.trigger.controller;
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.TRIGGER;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -14,6 +16,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 
 import com.mevenk.webapp.trigger.BaseTrigger;
@@ -27,6 +30,9 @@ import com.mevenk.webapp.trigger.BaseTrigger;
 public class ControllerTrigger extends BaseTrigger {
 
 	private static final Logger LOG = getLogger(ControllerTrigger.class);
+
+	@Autowired
+	private HttpServletRequest httpRequest;
 
 	private static final String POINT_CUT_METHODS_WITH_REQUEST_ANNOTATION = "methodsWithRequestAnnotation()";
 
@@ -47,7 +53,8 @@ public class ControllerTrigger extends BaseTrigger {
 	protected void runTriggerPreRequisites(JoinPoint joinPoint) {
 		generateJoinPointDetail(joinPoint);
 		generateJoinPointDetailWithArguments(joinPoint);
-		LOG.log(TRIGGER, "Thread Context Key generated:" + updateCorrelationIdThreadContext(joinPoint));
+		LOG.log(TRIGGER, "Thread Context Key generated:"
+				+ updateCorrelationIdThreadContext(joinPoint, httpRequest.getSession().getId()));
 	}
 
 	@Before(POINT_CUT_METHODS_WITH_REQUEST_ANNOTATION)
