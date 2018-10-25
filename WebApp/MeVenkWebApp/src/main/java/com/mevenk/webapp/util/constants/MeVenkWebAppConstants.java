@@ -26,6 +26,9 @@ public final class MeVenkWebAppConstants {
 
 	public static final String ERROR = "ERROR";
 
+	public static final String VERTICAL_BAR = "|";
+	public static final String VERTICAL_BAR_TRIPLE = "|||";
+
 	public static final String SLASH = "/";
 	public static final String BACKSLASH = "\\";
 	public static final String ASTERISK = "*";
