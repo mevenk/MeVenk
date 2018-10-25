@@ -36,8 +36,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author venky
@@ -339,6 +343,14 @@ public abstract class MeVenkWebAppUtil {
 		stringBuilderCorrelationIdModified.append(HYPHEN + argumentsAsAppendableString(true, parameters) + HYPHEN);
 		stringBuilderCorrelationIdModified.append(unserscoreAndDate);
 		ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, stringBuilderCorrelationIdModified.toString());
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static HttpServletRequest getHTTPRequest() {
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 	}
 
 }
