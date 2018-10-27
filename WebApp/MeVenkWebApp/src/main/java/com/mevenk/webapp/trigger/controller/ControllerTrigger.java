@@ -4,6 +4,7 @@
 package com.mevenk.webapp.trigger.controller;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.TRIGGER;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.getHTTPSessionId;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -55,7 +56,7 @@ public class ControllerTrigger extends BaseTrigger {
 		generateJoinPointDetail(joinPoint);
 		generateJoinPointDetailWithArguments(joinPoint);
 		LOG.log(TRIGGER, "Thread Context Key generated:"
-				+ updateCorrelationIdThreadContext(joinPoint, httpRequest.getSession().getId()));
+				+ updateCorrelationIdThreadContext(joinPoint, getHTTPSessionId(httpRequest)));
 		LOG.log(TRIGGER, "HTTP Request:" + httpRequest.getMethod() + VERTICAL_BAR + httpRequest.getServletPath()
 				+ VERTICAL_BAR + httpRequest.getContextPath() + VERTICAL_BAR + httpRequest);
 	}
