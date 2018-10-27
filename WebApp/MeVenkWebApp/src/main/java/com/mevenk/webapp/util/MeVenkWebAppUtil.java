@@ -29,6 +29,7 @@ import static java.util.Calendar.YEAR;
 import static java.util.UUID.randomUUID;
 import static org.apache.logging.log4j.LogManager.getLogger;
 import static org.springframework.util.StringUtils.hasLength;
+import static org.springframework.util.StringUtils.isEmpty;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -301,7 +302,7 @@ public abstract class MeVenkWebAppUtil {
 	 * @return
 	 */
 	public static boolean isStringEmptyOrNull(String string) {
-		return hasLength(string);
+		return isEmpty(string) || !hasLength(string.trim());
 	}
 
 	/**
