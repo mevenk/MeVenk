@@ -4,6 +4,7 @@
 package com.mevenk.webapp.util;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
+import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID;
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID;
 import static com.mevenk.webapp.config.spring.properties.BaseProperties.correlationIdDateFormatPattern;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACKET_CLOSE;
@@ -37,6 +38,7 @@ import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
@@ -328,6 +330,23 @@ public abstract class MeVenkWebAppUtil {
 
 	/**
 	 *
+	 * @param key
+	 * @return
+	 */
+	public static String retreiveThreadContextValue(String key) {
+		return ThreadContext.get(key);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static String retreiveThreadContextValueSessionId() {
+		return retreiveThreadContextValue(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID);
+	}
+
+	/**
+	 *
 	 * @param parameters
 	 */
 	public static void addParametersToCorrelationId(Object... parameters) {
@@ -351,6 +370,14 @@ public abstract class MeVenkWebAppUtil {
 	 */
 	public static HttpServletRequest getHTTPRequest() {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static HttpSession getHTTPSession() {
+		return getHTTPRequest().getSession(false);
 	}
 
 }
