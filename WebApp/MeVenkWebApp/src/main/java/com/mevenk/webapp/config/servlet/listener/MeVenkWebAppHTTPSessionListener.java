@@ -3,7 +3,7 @@
  */
 package com.mevenk.webapp.config.servlet.listener;
 
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.populateThreadContextRequiredSessionAttributes;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,8 +31,9 @@ public class MeVenkWebAppHTTPSessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+		logHTTPSessionEvent(httpSessionEvent);
 		HttpSession session = httpSessionEvent.getSession();
-		LOG.info("HTTP Session Created:" + session.getId() + VERTICAL_BAR + new Date(session.getCreationTime())
+		LOG.info("HTTP Session Created:{}", session.getId() + VERTICAL_BAR + new Date(session.getCreationTime())
 				+ VERTICAL_BAR + session.getMaxInactiveInterval() + VERTICAL_BAR + session);
 
 		populateRequiredSessionAttributes(session);
@@ -41,10 +41,20 @@ public class MeVenkWebAppHTTPSessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+		logHTTPSessionEvent(httpSessionEvent);
 		HttpSession session = httpSessionEvent.getSession();
-		LOG.info("HTTP Session Destroyed:" + session.getId() + VERTICAL_BAR + new Date(session.getCreationTime())
-				+ VERTICAL_BAR + new Date(session.getLastAccessedTime()) + VERTICAL_BAR
-				+ session.getMaxInactiveInterval() + VERTICAL_BAR + session);
+		LOG.info("HTTP Session Destroyed:{}",
+				session.getId() + VERTICAL_BAR + new Date(session.getCreationTime()) + VERTICAL_BAR
+						+ new Date(session.getLastAccessedTime()) + VERTICAL_BAR + session.getMaxInactiveInterval()
+						+ VERTICAL_BAR + session);
+	}
+
+	/**
+	 *
+	 * @param httpSessionEvent
+	 */
+	private void logHTTPSessionEvent(HttpSessionEvent httpSessionEvent) {
+		LOG.info("HTTP Session Event:{}", httpSessionEvent);
 	}
 
 	/**
@@ -62,14 +72,6 @@ public class MeVenkWebAppHTTPSessionListener implements HttpSessionListener {
 			LOG.info("HTTP Session attributes created during Session initialization: {}[{}]", sessionAttributeName,
 					session.getAttribute(sessionAttributeName));
 		}
-	}
-
-	/**
-	 *
-	 * @param session
-	 */
-	private void populateThreadContextRequiredSessionAttributes(HttpSession session) {
-		ThreadContext.put(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID, session.getId());
 	}
 
 }
