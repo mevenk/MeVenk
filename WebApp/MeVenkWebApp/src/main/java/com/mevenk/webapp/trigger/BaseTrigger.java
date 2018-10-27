@@ -1,6 +1,6 @@
 package com.mevenk.webapp.trigger;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.isStringEmptyOrNull;
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.methodArgumentsAsString;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.resetCorrelationIdThreadContext;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
@@ -30,7 +30,7 @@ public abstract class BaseTrigger {
 		StringBuilder stringBuilderCorreltionIdPrefix = new StringBuilder();
 		stringBuilderCorreltionIdPrefix.append(joinPoint.getSignature().getName());
 		for (String parameter : correlationIdParameters) {
-			if (isStringEmptyOrNull(parameter)) {
+			if (isAnyStringEmptyOrNull(parameter)) {
 				continue;
 			}
 			stringBuilderCorreltionIdPrefix.append(UNDERSCORE + parameter);

@@ -301,7 +301,7 @@ public abstract class MeVenkWebAppUtil {
 	 * @param string
 	 * @return
 	 */
-	public static boolean isStringEmptyOrNull(String string) {
+	private static boolean isStringEmptyOrNull(String string) {
 		return isEmpty(string) || !hasLength(string.trim());
 	}
 
@@ -313,10 +313,10 @@ public abstract class MeVenkWebAppUtil {
 	public static boolean isAnyStringEmptyOrNull(String... strings) {
 		for (String string : strings) {
 			if (isStringEmptyOrNull(string)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
