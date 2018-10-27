@@ -35,6 +35,23 @@ public final class HTTPUtil {
 
 	/**
 	 *
+	 * @param httpServletRequest
+	 * @return
+	 */
+	public static HttpSession createHTTPSession(HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getSession();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static HttpSession createHTTPSession() {
+		return createHTTPSession(getHTTPRequest());
+	}
+
+	/**
+	 *
 	 * @return
 	 */
 	public static HttpSession getHTTPSession(HttpServletRequest httpServletRequest) {
