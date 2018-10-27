@@ -377,8 +377,53 @@ public abstract class MeVenkWebAppUtil {
 	 *
 	 * @return
 	 */
+	public static HttpSession getHTTPSession(HttpServletRequest httpServletRequest) {
+		return httpServletRequest.getSession(false);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
 	public static HttpSession getHTTPSession() {
-		return getHTTPRequest().getSession(false);
+		return getHTTPSession(getHTTPRequest());
+	}
+
+	/**
+	 *
+	 * @param httpSession
+	 * @return
+	 */
+	public static String getHTTPSessionId(HttpSession httpSession) {
+		if (httpSession == null) {
+			return null;
+		}
+		return httpSession.getId();
+	}
+
+	/**
+	 *
+	 * @param httpServletRequest
+	 * @return
+	 */
+	public static String getHTTPSessionId(HttpServletRequest httpServletRequest) {
+		HttpSession httpSession = getHTTPSession(httpServletRequest);
+		if (httpSession == null) {
+			return null;
+		}
+		return getHTTPSessionId(httpSession);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static String getHTTPSessionId() {
+		HttpSession httpSession = getHTTPSession();
+		if (httpSession == null) {
+			return null;
+		}
+		return getHTTPSessionId(httpSession);
 	}
 
 }
