@@ -15,8 +15,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.mevenk.webapp.spring.interceptor.MeVenkWebAppInterceptor;
-import com.mevenk.webapp.spring.interceptor.MeVenkWebAppWebRequestInterceptor;
+import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppInterceptor;
+import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppWebRequestInterceptor;
 
 /**
  * @author venky

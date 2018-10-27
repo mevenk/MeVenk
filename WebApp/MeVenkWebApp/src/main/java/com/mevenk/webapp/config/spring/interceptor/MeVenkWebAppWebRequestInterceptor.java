@@ -1,4 +1,4 @@
-package com.mevenk.webapp.spring.interceptor;
+package com.mevenk.webapp.config.spring.interceptor;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
