@@ -4,7 +4,7 @@
 package com.mevenk.webapp.config.spring;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID;
+import static com.mevenk.webapp.util.ThreadContextUtil.setCorrelationIdThreadContext;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 import javax.servlet.ServletContext;
@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -34,7 +33,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
-		ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, "STARTUP");
+		setCorrelationIdThreadContext("STARTUP");
 
 		LOG.log(CONFIG, "Dispatcher Servet startup" + this);
 

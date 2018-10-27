@@ -4,20 +4,18 @@
 package com.mevenk.webapp.util;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID;
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID;
 import static com.mevenk.webapp.config.spring.properties.BaseProperties.correlationIdDateFormatPattern;
+import static com.mevenk.webapp.util.StaticData.correlationIdDateFormatPatternLength;
+import static com.mevenk.webapp.util.StaticData.simpleDateFormatCorrelationId;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACKET_CLOSE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACKET_OPEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.COMMA_AND_SPACE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.EMPTY_STRING;
-import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.PARENTHESES_CLOSE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.PARENTHESES_OPEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.POUND_SIGN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SQUARE_BRACKET_CLOSE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SQUARE_BRACKET_OPEN;
-import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.UNDERSCORE;
 import static java.lang.System.lineSeparator;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.HOUR;
@@ -28,8 +26,6 @@ import static java.util.Calendar.SECOND;
 import static java.util.Calendar.YEAR;
 import static java.util.UUID.randomUUID;
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static org.springframework.util.StringUtils.hasLength;
-import static org.springframework.util.StringUtils.isEmpty;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,13 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author venky
@@ -67,16 +57,6 @@ public abstract class MeVenkWebAppUtil {
 			"Utility class");
 
 	private static final Random RANDOM = new Random();
-
-	/**
-	 *
-	 */
-	private static SimpleDateFormat simpleDateFormatCorrelationId;
-
-	/**
-	 *
-	 */
-	private static int correlationIdDateFormatPatternLength;
 
 	/**
 	 *
@@ -294,144 +274,6 @@ public abstract class MeVenkWebAppUtil {
 		StringWriter stringWriter = new StringWriter();
 		exception.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
-	}
-
-	/**
-	 *
-	 * @param string
-	 * @return
-	 */
-	private static boolean isStringEmptyOrNull(String string) {
-		return isEmpty(string) || !hasLength(string.trim());
-	}
-
-	/**
-	 *
-	 * @param strings
-	 * @return
-	 */
-	public static boolean isAnyStringEmptyOrNull(String... strings) {
-		for (String string : strings) {
-			if (isStringEmptyOrNull(string)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 *
-	 * @param correlationIdPrefix
-	 */
-	public static String resetCorrelationIdThreadContext(String correlationIdPrefix) {
-		ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID,
-				correlationIdPrefix + UNDERSCORE + simpleDateFormatCorrelationId.format(new Date()));
-		return ThreadContext.get(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
-	}
-
-	/**
-	 *
-	 * @param key
-	 * @return
-	 */
-	public static String retreiveThreadContextValue(String key) {
-		return ThreadContext.get(key);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static String retreiveThreadContextValueSessionId() {
-		return retreiveThreadContextValue(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID);
-	}
-
-	/**
-	 *
-	 * @param session
-	 */
-	public static void populateThreadContextRequiredSessionAttributes(HttpSession session) {
-		ThreadContext.put(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID, session.getId());
-	}
-
-	/**
-	 *
-	 * @param parameters
-	 */
-	public static void addParametersToCorrelationId(Object... parameters) {
-		String correlationIdExisting = ThreadContext.get(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
-		int lengthDateWithUnderScore = correlationIdDateFormatPatternLength + 1;
-		int lengthExistingCorrelationId = correlationIdExisting.length();
-		String unserscoreAndDate = correlationIdExisting
-				.substring(lengthExistingCorrelationId - lengthDateWithUnderScore);
-		String correlationIdWithoutUnserscoreAndDate = correlationIdExisting.substring(0,
-				lengthExistingCorrelationId - unserscoreAndDate.length());
-		StringBuilder stringBuilderCorrelationIdModified = new StringBuilder();
-		stringBuilderCorrelationIdModified.append(correlationIdWithoutUnserscoreAndDate);
-		stringBuilderCorrelationIdModified.append(HYPHEN + argumentsAsAppendableString(true, parameters) + HYPHEN);
-		stringBuilderCorrelationIdModified.append(unserscoreAndDate);
-		ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, stringBuilderCorrelationIdModified.toString());
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static HttpServletRequest getHTTPRequest() {
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static HttpSession getHTTPSession(HttpServletRequest httpServletRequest) {
-		return httpServletRequest.getSession(false);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static HttpSession getHTTPSession() {
-		return getHTTPSession(getHTTPRequest());
-	}
-
-	/**
-	 *
-	 * @param httpSession
-	 * @return
-	 */
-	public static String getHTTPSessionId(HttpSession httpSession) {
-		if (httpSession == null) {
-			return null;
-		}
-		return httpSession.getId();
-	}
-
-	/**
-	 *
-	 * @param httpServletRequest
-	 * @return
-	 */
-	public static String getHTTPSessionId(HttpServletRequest httpServletRequest) {
-		HttpSession httpSession = getHTTPSession(httpServletRequest);
-		if (httpSession == null) {
-			return null;
-		}
-		return getHTTPSessionId(httpSession);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static String getHTTPSessionId() {
-		HttpSession httpSession = getHTTPSession();
-		if (httpSession == null) {
-			return null;
-		}
-		return getHTTPSessionId(httpSession);
 	}
 
 }

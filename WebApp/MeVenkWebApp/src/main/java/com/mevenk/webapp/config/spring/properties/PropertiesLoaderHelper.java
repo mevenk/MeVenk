@@ -3,8 +3,8 @@
  */
 package com.mevenk.webapp.config.spring.properties;
 
+import static com.mevenk.webapp.util.MeVenkWebAppStringUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.loadPropertiesDependantStaticUtilData;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;

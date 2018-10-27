@@ -3,7 +3,7 @@
  */
 package com.mevenk.webapp.config.servlet.listener;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.populateThreadContextRequiredSessionAttributes;
+import static com.mevenk.webapp.util.ThreadContextUtil.populateThreadContextRequiredSessionAttributes;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
 import static org.apache.logging.log4j.LogManager.getLogger;
 

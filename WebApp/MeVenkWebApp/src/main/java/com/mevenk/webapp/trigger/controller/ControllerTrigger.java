@@ -4,7 +4,7 @@
 package com.mevenk.webapp.trigger.controller;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.TRIGGER;
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.getHTTPSessionId;
+import static com.mevenk.webapp.util.HTTPUtil.getHTTPSessionId;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
 import static org.apache.logging.log4j.LogManager.getLogger;
 

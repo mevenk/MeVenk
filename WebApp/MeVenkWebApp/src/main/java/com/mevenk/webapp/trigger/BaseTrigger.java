@@ -1,8 +1,8 @@
 package com.mevenk.webapp.trigger;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.isAnyStringEmptyOrNull;
+import static com.mevenk.webapp.util.MeVenkWebAppStringUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.methodArgumentsAsString;
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.resetCorrelationIdThreadContext;
+import static com.mevenk.webapp.util.ThreadContextUtil.resetCorrelationIdThreadContextWithCurrentDate;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.UNDERSCORE;
 
@@ -35,7 +35,7 @@ public abstract class BaseTrigger {
 			}
 			stringBuilderCorreltionIdPrefix.append(UNDERSCORE + parameter);
 		}
-		return resetCorrelationIdThreadContext(stringBuilderCorreltionIdPrefix.toString());
+		return resetCorrelationIdThreadContextWithCurrentDate(stringBuilderCorreltionIdPrefix.toString());
 	}
 
 	/**
