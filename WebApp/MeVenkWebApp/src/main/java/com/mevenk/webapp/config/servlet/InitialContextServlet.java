@@ -37,6 +37,7 @@ public class InitialContextServlet extends HttpServlet {
 		try {
 			ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, "INITIAL_ACTIVITIES");
 			runInitialActivities(servletConfig);
+			ThreadContext.put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, null);
 		} catch (Exception exception) {
 			LOG.error("ERROR Loading Master Data!!!!", exception);
 		}
