@@ -36,20 +36,24 @@ public class MeVenkWebAppApplicationLaunchServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 		super.init(servletConfig);
-		LOG.log(CONFIG, "Initializing Servlet[" + this + "]");
+		LOG.log(CONFIG, "Initializing Application launch Servlet[" + this + "]");
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 		LOG.info("Application launched @ " + new Date());
-		logClientDetails(req);
-		resp.sendRedirect("welcome.mevenk");
+		logClientDetails(httpServletRequest);
+		try {
+			httpServletResponse.sendRedirect("welcome.mevenk");
+		} catch (IOException ioException) {
+			LOG.error(ioException);
+		}
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
-		LOG.log(CONFIG, "Initial Servlet[" + this + "]destroyed!!");
+		LOG.log(CONFIG, "Application launch Servlet[" + this + "] destroyed!!");
 	}
 
 	@Override
