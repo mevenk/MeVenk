@@ -348,6 +348,14 @@ public abstract class MeVenkWebAppUtil {
 
 	/**
 	 *
+	 * @param session
+	 */
+	public static void populateThreadContextRequiredSessionAttributes(HttpSession session) {
+		ThreadContext.put(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID, session.getId());
+	}
+
+	/**
+	 *
 	 * @param parameters
 	 */
 	public static void addParametersToCorrelationId(Object... parameters) {
