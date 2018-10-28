@@ -17,4 +17,6 @@ public final class MeVenkWebAppExpressions {
 
 	public static final String DATE_POLLING_CRON_EXPRESSION = "${datePollingCronExpression}";
 
+	public static final String CRON_EXPRESSION_DATABASE_STATISTICS_LOGGING_POLLING = "${database.statistics.logging.polling.cronExpression}";
+
 }
