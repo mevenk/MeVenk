@@ -4,8 +4,7 @@
 package com.mevenk.webapp.polling;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.POLLING;
-import static com.mevenk.webapp.util.ThreadContextUtil.setCorrelationIdThreadContext;
-import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.VERTICAL_BAR;
+import static com.mevenk.webapp.util.ThreadContextUtil.resetCorrelationIdThreadContextWithCurrentDate;
 import static com.mevenk.webapp.util.expressions.MeVenkWebAppExpressions.DATE_POLLING_CRON_EXPRESSION;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -31,9 +30,7 @@ public class TimelyDatePolling {
 
 	@Scheduled(cron = DATE_POLLING_CRON_EXPRESSION)
 	public void timelyDatePollingFromCron() {
-		String formattedDate = new SimpleDateFormat(timelyLoggerDateFormatPattern).format(new Date());
-		setCorrelationIdThreadContext("com.mevenk.webapp.polling.TimelyDatePolling.timelyDatePollingFromCron()"
-				+ VERTICAL_BAR + formattedDate);
-		LOG.log(POLLING, "Polling..... | {}", formattedDate);
+		resetCorrelationIdThreadContextWithCurrentDate("timelyDatePollingFromCron");
+		LOG.log(POLLING, "Polling..... | {}", new SimpleDateFormat(timelyLoggerDateFormatPattern).format(new Date()));
 	}
 }
