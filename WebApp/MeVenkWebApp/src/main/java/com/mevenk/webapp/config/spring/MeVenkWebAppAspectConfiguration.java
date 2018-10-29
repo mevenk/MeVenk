@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Import;
 import com.mevenk.webapp.trigger.MethodLoggingTrigger;
 import com.mevenk.webapp.trigger.controller.ControllerTrigger;
 import com.mevenk.webapp.trigger.controller.impl.ControllerRequestTrigger;
+import com.mevenk.webapp.trigger.polling.PollingTrigger;
 
 /**
  * @author venky
@@ -29,6 +30,11 @@ public class MeVenkWebAppAspectConfiguration {
 	@Bean(name = "controllerRequestTrigger")
 	public ControllerTrigger controllerRequestTrigger() {
 		return new ControllerRequestTrigger();
+	}
+
+	@Bean(name = "pollingTrigger")
+	public PollingTrigger pollingTrigger() {
+		return new PollingTrigger();
 	}
 
 }
