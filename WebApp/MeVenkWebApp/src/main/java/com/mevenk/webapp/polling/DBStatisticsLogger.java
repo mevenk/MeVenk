@@ -5,7 +5,6 @@ package com.mevenk.webapp.polling;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.POLLING;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.exceptionStactTraceAsString;
-import static com.mevenk.webapp.util.ThreadContextUtil.resetCorrelationIdThreadContextWithCurrentDate;
 import static com.mevenk.webapp.util.expressions.MeVenkWebAppExpressions.CRON_EXPRESSION_DATABASE_STATISTICS_LOGGING_POLLING;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -34,7 +33,7 @@ public class DBStatisticsLogger {
 
 	@Scheduled(cron = CRON_EXPRESSION_DATABASE_STATISTICS_LOGGING_POLLING)
 	public void logDatabaseStatistics() {
-		resetCorrelationIdThreadContextWithCurrentDate("logDatabaseStatistics");
+
 		try {
 			ComboPooledDataSource comboPooledDataSource = (ComboPooledDataSource) dataSource;
 
