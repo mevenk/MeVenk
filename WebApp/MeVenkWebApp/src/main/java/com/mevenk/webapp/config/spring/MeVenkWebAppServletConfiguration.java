@@ -6,12 +6,13 @@ package com.mevenk.webapp.config.spring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.context.request.WebRequestInterceptor;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -25,19 +26,22 @@ import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppWebRequestInterce
 @Configuration
 @EnableWebMvc
 @Import(MeVenkWebAppRootConfiguration.class)
-public class MeVenkWebAppServletConfiguration extends WebMvcConfigurationSupport {
+public class MeVenkWebAppServletConfiguration implements WebMvcConfigurer {
 
-	@Override
-	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new MeVenkWebAppInterceptor());
-		registry.addWebRequestInterceptor(new MeVenkWebAppWebRequestInterceptor());
-		super.addInterceptors(registry);
+	@Bean(name = "meVenkWebAppWebRequestInterceptor")
+	public WebRequestInterceptor meVenkWebAppWebRequestInterceptor() {
+		return new MeVenkWebAppWebRequestInterceptor();
+	}
+
+	@Bean(name = "meVenkWebAppInterceptor")
+	public HandlerInterceptor meVenkWebAppInterceptor() {
+		return new MeVenkWebAppInterceptor();
 	}
 
 	@Override
-	protected void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("forward:/welcome.mevenk");
-		super.addViewControllers(registry);
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addWebRequestInterceptor(meVenkWebAppWebRequestInterceptor());
+		registry.addInterceptor(meVenkWebAppInterceptor());
 	}
 
 	@Bean(name = "multipartResolver")
