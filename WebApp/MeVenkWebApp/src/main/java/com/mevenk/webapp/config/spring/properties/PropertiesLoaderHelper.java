@@ -6,6 +6,7 @@ package com.mevenk.webapp.config.spring.properties;
 import static com.mevenk.webapp.util.MeVenkWebAppStringUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.loadPropertiesDependantStaticUtilData;
+import static java.lang.Boolean.parseBoolean;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -21,6 +22,8 @@ public abstract class PropertiesLoaderHelper {
 
 	private static final Logger LOG = getLogger(PropertiesLoaderHelper.class);
 
+	protected static final String SET_FOR_PROPERTY = "] set for property [";
+
 	private PropertiesLoaderHelper() throws IllegalAccessException {
 		throw ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 	}
@@ -33,6 +36,20 @@ public abstract class PropertiesLoaderHelper {
 	 */
 	protected static void logPropertyDetail(Class<?> classPropertiesLoader, String propertyName, Object propertyValue) {
 		LOG.debug(classPropertiesLoader + "|Property '" + propertyName + "' loaded with value:" + propertyValue);
+	}
+
+	/**
+	 *
+	 * @param propertyName
+	 * @param propertyValue
+	 * @return
+	 */
+	public static boolean validateBooleanProperty(String propertyName, String propertyValue) {
+		propertyValue = propertyValue.trim().toLowerCase();
+		if (propertyValue.equals("true") || propertyValue.equals("false")) {
+			return parseBoolean(propertyValue);
+		}
+		throw new InvalidBooleanValueException(propertyName, propertyValue);
 	}
 
 	/**
@@ -142,7 +159,30 @@ public abstract class PropertiesLoaderHelper {
 		 * @param propertyValue
 		 */
 		protected InvalidNumberException(String propertyName, String propertyValue) {
-			super("Invalid number[" + propertyValue + "] set for property [" + propertyName + "]");
+			super("Invalid number[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
+		}
+
+	}
+
+	/**
+	 *
+	 * @author venky
+	 *
+	 */
+	private static final class InvalidBooleanValueException extends IllegalArgumentException {
+
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = -2475405576307157083L;
+
+		/**
+		 *
+		 * @param propertyName
+		 * @param propertyValue
+		 */
+		protected InvalidBooleanValueException(String propertyName, String propertyValue) {
+			super("Invalid boolean[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
 		}
 
 	}
@@ -177,7 +217,8 @@ final class InvalidPropertyValueException extends IllegalArgumentException {
 	 * @param errorMessage
 	 */
 	protected InvalidPropertyValueException(String propertyName, String propertyValue, String errorMessage) {
-		super("Invalid number[" + propertyValue + "] set for property [" + propertyName + "] - " + errorMessage);
+		super("Invalid number[" + propertyValue + PropertiesLoaderHelper.SET_FOR_PROPERTY + propertyName + "] - "
+				+ errorMessage);
 	}
 
 }
