@@ -1,52 +1,143 @@
 package com.mevenk.webapp.config.spring.database;
 
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.getCacheRegionFactoryClass;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.getDialect;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.getHbm2ddlAuto;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isFormatSQL;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isGenerateStatistics;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isNonContextualCreation;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isShowSQL;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isUseQueryCache;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isUseSQLComments;
+import static com.mevenk.webapp.config.spring.properties.HibernateProperties.isUseSecondLevelCache;
+
 import java.util.Properties;
+
+import com.mevenk.webapp.config.spring.properties.DataSourceProperties;
 
 public abstract class AbstractDatabaseConfigurationBase {
 
-	protected static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
-	protected static final String URL = "jdbc:postgresql://VENKATESH-NUC:5432/mevenk?application_name=webapp";
-	protected static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
+	protected AbstractDatabaseConfigurationBase() {
 
-	protected static final String USERNAME = "mevenk_webapp_application";
-	protected static final String PASSWORD = "mevenk_webapp_application";
+	}
 
-	protected static final String SHOWSQL = "true";
-	protected static final int CONNECTION_TIMEOUT = 1000;
-	protected static final int CONNECTION_TEST = 1000;
-	protected static final int ACQUIRE_RETRY_ATTEMPTS = 5;
-	protected static final int ACQUIRE_RETRY_DELAY = 1000;
-	protected static final int UNRETURNED_CONNECTION_TIMEOUT = 1000;
-	protected static final int CHECKOUT_TIMEOUT = 1000;
-	protected static final int MAX_IDLE_TIME = 2000;
+	/**
+	 *
+	 * @return
+	 */
+	protected static String getDriverClassName() {
+		return DataSourceProperties.getDriverClassName();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static String getJdbcUrl() {
+		return DataSourceProperties.getJdbcUrl();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static String getUsername() {
+		return DataSourceProperties.getUsername();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static String getPassword() {
+		return DataSourceProperties.getPassword();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getMinPoolSize() {
+		return DataSourceProperties.getMinPoolSize();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getMaxPoolSize() {
+		return DataSourceProperties.getMaxPoolSize();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getIdleConnectionTestPeriod() {
+		return DataSourceProperties.getIdleConnectionTestPeriod();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getMaxIdleTime() {
+		return DataSourceProperties.getMaxIdleTime();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getAcquireRetryDelay() {
+		return DataSourceProperties.getAcquireRetryDelay();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getAcquireRetryAttempts() {
+		return DataSourceProperties.getAcquireRetryAttempts();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getTimeoutConnectionUnReturned() {
+		return DataSourceProperties.getTimeoutConnectionUnReturned();
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	protected static int getTimeoutCheckout() {
+		return DataSourceProperties.getTimeoutCheckout();
+	}
 
 	/*
 	 * Loading hibernate properties to enable caching
 	 */
-	protected static final String GENERATE_STATICS = "true";
 
-	protected static final String HIBERNATE_DIALECT = "hibernate.dialect";
-	protected static final String SHOW_SQL = "hibernate.show_sql";
-	protected static final String HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
 	protected static final String MIN_CNCTN_SIZE = "hibernate.c3p0.min_size";
 	protected static final String MAX_CNCTN_SIZE = "hibernate.c3p0.max_size";
 	protected static final String CNCTN_TIMEOUT = "hibernate.c3p0.timeout";
 	protected static final String CNCTN_TEST = "hibernate.c3p0.idle_test_period";
-	protected static final String HIBERNATE_GENERATE_STATICS = "hibernate.generate_statistics";
 
 	protected static Properties getHibernateProperties() {
 		Properties properties = new Properties();
-		properties.setProperty(HIBERNATE_DIALECT, DIALECT);
-		properties.setProperty("hibernate.jdbc.lob.non_contextual_creation", "true");
-		properties.setProperty(SHOW_SQL, SHOWSQL);
-		properties.setProperty("hibernate.format_sql", "true");
-		properties.setProperty("hibernate.use_sql_comments", "true");
-		properties.setProperty(HBM2DDL_AUTO, "validate");
-		properties.setProperty(HIBERNATE_GENERATE_STATICS, GENERATE_STATICS);
-		properties.setProperty("hibernate.cache.use_second_level_cache", "true");
-		properties.setProperty("hibernate.cache.use_query_cache", "true");
-		properties.setProperty("hibernate.cache.region.factory_class",
-				"org.hibernate.cache.ehcache.EhCacheRegionFactory");
+		properties.setProperty("hibernate.dialect", getDialect());
+		properties.setProperty("hibernate.jdbc.lob.non_contextual_creation", String.valueOf(isNonContextualCreation()));
+		properties.setProperty("hibernate.show_sql", String.valueOf(isShowSQL()));
+		properties.setProperty("hibernate.format_sql", String.valueOf(isFormatSQL()));
+		properties.setProperty("hibernate.use_sql_comments", String.valueOf(isUseSQLComments()));
+		properties.setProperty("hibernate.hbm2ddl.auto", getHbm2ddlAuto());
+		properties.setProperty("hibernate.generate_statistics", String.valueOf(isGenerateStatistics()));
+		properties.setProperty("hibernate.cache.use_second_level_cache", String.valueOf(isUseSecondLevelCache()));
+		properties.setProperty("hibernate.cache.use_query_cache", String.valueOf(isUseQueryCache()));
+		properties.setProperty("hibernate.cache.region.factory_class", getCacheRegionFactoryClass());
 		return properties;
 	}
 }

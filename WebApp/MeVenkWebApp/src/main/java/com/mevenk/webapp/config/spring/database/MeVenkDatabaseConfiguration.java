@@ -5,8 +5,6 @@ package com.mevenk.webapp.config.spring.database;
 
 import static com.mevenk.webapp.config.spring.database.MeVenkWebAppEntities.ENTITIES_HIBERNATE;
 import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.BEAN_DATABASE_PROPERTIES;
-import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.maxPoolSize;
-import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.minPoolSize;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.BASE_PACKAGE;
 
 import java.beans.PropertyVetoException;
@@ -58,18 +56,18 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 	public DataSource dataSource() {
 		ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 		try {
-			comboPooledDataSource.setDriverClass(DRIVER_CLASS_NAME);
-			comboPooledDataSource.setJdbcUrl(URL);
-			comboPooledDataSource.setUser(USERNAME);
-			comboPooledDataSource.setPassword(PASSWORD);
-			comboPooledDataSource.setMinPoolSize(minPoolSize);
-			comboPooledDataSource.setMaxPoolSize(maxPoolSize);
-			comboPooledDataSource.setIdleConnectionTestPeriod(CONNECTION_TEST);
-			comboPooledDataSource.setMaxIdleTime(MAX_IDLE_TIME);
-			comboPooledDataSource.setAcquireRetryDelay(ACQUIRE_RETRY_DELAY);
-			comboPooledDataSource.setAcquireRetryAttempts(ACQUIRE_RETRY_ATTEMPTS);
-			comboPooledDataSource.setUnreturnedConnectionTimeout(UNRETURNED_CONNECTION_TIMEOUT);
-			comboPooledDataSource.setCheckoutTimeout(CHECKOUT_TIMEOUT);
+			comboPooledDataSource.setDriverClass(getDriverClassName());
+			comboPooledDataSource.setJdbcUrl(getJdbcUrl());
+			comboPooledDataSource.setUser(getUsername());
+			comboPooledDataSource.setPassword(getPassword());
+			comboPooledDataSource.setMinPoolSize(getMinPoolSize());
+			comboPooledDataSource.setMaxPoolSize(getMaxPoolSize());
+			comboPooledDataSource.setIdleConnectionTestPeriod(getIdleConnectionTestPeriod());
+			comboPooledDataSource.setMaxIdleTime(getMaxIdleTime());
+			comboPooledDataSource.setAcquireRetryDelay(getAcquireRetryDelay());
+			comboPooledDataSource.setAcquireRetryAttempts(getAcquireRetryAttempts());
+			comboPooledDataSource.setUnreturnedConnectionTimeout(getTimeoutConnectionUnReturned());
+			comboPooledDataSource.setCheckoutTimeout(getTimeoutCheckout());
 
 		} catch (PropertyVetoException exception) {
 			throw new IllegalStateException(
