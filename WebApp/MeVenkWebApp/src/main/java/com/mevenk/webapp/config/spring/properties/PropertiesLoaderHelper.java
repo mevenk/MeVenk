@@ -5,7 +5,6 @@ package com.mevenk.webapp.config.spring.properties;
 
 import static com.mevenk.webapp.util.MeVenkWebAppStringUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.loadPropertiesDependantStaticUtilData;
 import static java.lang.Boolean.parseBoolean;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
@@ -184,15 +183,6 @@ public abstract class PropertiesLoaderHelper {
 		protected InvalidBooleanValueException(String propertyName, String propertyValue) {
 			super("Invalid boolean[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
 		}
-
-	}
-
-	/**
-	 *
-	 */
-	public static void loadPropertiesDependantStaticData() {
-
-		loadPropertiesDependantStaticUtilData();
 
 	}
 

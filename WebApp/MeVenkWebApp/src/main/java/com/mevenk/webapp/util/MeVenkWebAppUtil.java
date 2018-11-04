@@ -3,10 +3,6 @@
  */
 package com.mevenk.webapp.util;
 
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
-import static com.mevenk.webapp.config.spring.properties.BaseProperties.correlationIdDateFormatPattern;
-import static com.mevenk.webapp.util.StaticData.correlationIdDateFormatPatternLength;
-import static com.mevenk.webapp.util.StaticData.simpleDateFormatCorrelationId;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACKET_CLOSE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.ANGLE_BRACKET_OPEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.COMMA_AND_SPACE;
@@ -25,24 +21,18 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.SECOND;
 import static java.util.Calendar.YEAR;
 import static java.util.UUID.randomUUID;
-import static org.apache.logging.log4j.LogManager.getLogger;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-
-import org.apache.logging.log4j.Logger;
 
 /**
  * @author venky
  *
  */
 public abstract class MeVenkWebAppUtil {
-
-	private static final Logger LOG = getLogger(MeVenkWebAppUtil.class);
 
 	public static final String LINE_SEPARATOR = lineSeparator();
 
@@ -64,20 +54,6 @@ public abstract class MeVenkWebAppUtil {
 	 */
 	private MeVenkWebAppUtil() throws IllegalAccessException {
 		throw ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
-	}
-
-	/**
-	 *
-	 */
-	public static void loadPropertiesDependantStaticUtilData() {
-
-		simpleDateFormatCorrelationId = new SimpleDateFormat(correlationIdDateFormatPattern);
-		LOG.log(CONFIG, "com.mevenk.webapp.util.MeVenkWebAppUtil.simpleDateFormatCorrelationId|"
-				+ simpleDateFormatCorrelationId);
-
-		correlationIdDateFormatPatternLength = correlationIdDateFormatPattern.length();
-		LOG.log(CONFIG, "com.mevenk.webapp.util.MeVenkWebAppUtil.correlationIdDateFormatPatternLength|"
-				+ correlationIdDateFormatPatternLength);
 	}
 
 	/**

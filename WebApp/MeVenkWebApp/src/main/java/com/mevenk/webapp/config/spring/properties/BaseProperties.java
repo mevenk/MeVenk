@@ -23,60 +23,131 @@ public class BaseProperties {
 	private static final String PROPERTY_NAME_CORRELATION_ID_DATE_FORMAT_PATTERN = "correlationIdDateFormatPattern";
 	@Value("${" + PROPERTY_NAME_CORRELATION_ID_DATE_FORMAT_PATTERN + "}")
 	private String propertyValueCorrelationIdDateFormatPattern;
-	public static String correlationIdDateFormatPattern;
+	private static String correlationIdDateFormatPattern;
+	private static int correlationIdDateFormatPatternLength;
 
 	private static final String PROPERTY_NAME_TIMELY_LOGGER_DATE_FORMAT_PATTERN = "timelyLoggerDateFormatPattern";
 	@Value("${" + PROPERTY_NAME_TIMELY_LOGGER_DATE_FORMAT_PATTERN + "}")
 	private String propertyValueTimelyLoggerDateFormatPattern;
-	public static String timelyLoggerDateFormatPattern;
+	private static String timelyLoggerDateFormatPattern;
 
 	private static final String PROPERTY_NAME_SOURCE_BEAN_DATE_FORMAT_PATTERN = "sourceBeanDateFormatPattern";
 	@Value("${" + PROPERTY_NAME_SOURCE_BEAN_DATE_FORMAT_PATTERN + "}")
 	private String propertyValueSourceBeanDateFormatPattern;
-	public static String sourceBeanDateFormatPattern;
+	private static String sourceBeanDateFormatPattern;
 
 	private static final String PROPERTY_NAME_MISC_DATE_FORMAT_PATTERN = "miscDateFormatPattern";
 	@Value("${" + PROPERTY_NAME_MISC_DATE_FORMAT_PATTERN + "}")
 	private String propertyValueMiscDateFormatPattern;
-	public static String miscDateFormatPattern;
+	private static String miscDateFormatPattern;
 
 	private static final String PROPERTY_NAME_DATE_POLLING_CRON_EXPRESSION = "datePollingCronExpression";
 	@Value("${" + PROPERTY_NAME_DATE_POLLING_CRON_EXPRESSION + "}")
 	private String propertyValueDatePollingCronExpression;
-	public static String datePollingCronExpression;
+	private static String datePollingCronExpression;
 
 	@PostConstruct
 	private void loadBaseProperties() {
 
-		loadBasicProperties();
+		loadDateFormatPatterns(propertyValueCorrelationIdDateFormatPattern, propertyValueTimelyLoggerDateFormatPattern,
+				propertyValueSourceBeanDateFormatPattern, propertyValueMiscDateFormatPattern);
+
+		loadCronExpressions(propertyValueDatePollingCronExpression);
 
 	}
 
-	private void loadBasicProperties() {
+	/**
+	 *
+	 * @param propertyValueCorrelationIdDateFormatPattern
+	 * @param propertyValueTimelyLoggerDateFormatPattern
+	 * @param propertyValueSourceBeanDateFormatPattern
+	 * @param propertyValueMiscDateFormatPattern
+	 */
+	private static void loadDateFormatPatterns(String propertyValueCorrelationIdDateFormatPattern,
+			String propertyValueTimelyLoggerDateFormatPattern, String propertyValueSourceBeanDateFormatPattern,
+			String propertyValueMiscDateFormatPattern) {
 
 		correlationIdDateFormatPattern = validateStringProperty(PROPERTY_NAME_CORRELATION_ID_DATE_FORMAT_PATTERN,
 				propertyValueCorrelationIdDateFormatPattern);
-		logPropertyDetail(CLASS_BASE_PROPERTIES, PROPERTY_NAME_CORRELATION_ID_DATE_FORMAT_PATTERN,
-				correlationIdDateFormatPattern);
+		logBaseProperty(PROPERTY_NAME_CORRELATION_ID_DATE_FORMAT_PATTERN, correlationIdDateFormatPattern);
+		correlationIdDateFormatPatternLength = correlationIdDateFormatPattern.length();
 
 		timelyLoggerDateFormatPattern = validateStringProperty(PROPERTY_NAME_TIMELY_LOGGER_DATE_FORMAT_PATTERN,
 				propertyValueTimelyLoggerDateFormatPattern);
-		logPropertyDetail(CLASS_BASE_PROPERTIES, PROPERTY_NAME_TIMELY_LOGGER_DATE_FORMAT_PATTERN,
-				timelyLoggerDateFormatPattern);
+		logBaseProperty(PROPERTY_NAME_TIMELY_LOGGER_DATE_FORMAT_PATTERN, timelyLoggerDateFormatPattern);
 
 		sourceBeanDateFormatPattern = validateStringProperty(PROPERTY_NAME_SOURCE_BEAN_DATE_FORMAT_PATTERN,
 				propertyValueSourceBeanDateFormatPattern);
-		logPropertyDetail(CLASS_BASE_PROPERTIES, PROPERTY_NAME_SOURCE_BEAN_DATE_FORMAT_PATTERN,
-				sourceBeanDateFormatPattern);
+		logBaseProperty(PROPERTY_NAME_SOURCE_BEAN_DATE_FORMAT_PATTERN, sourceBeanDateFormatPattern);
 
 		miscDateFormatPattern = validateStringProperty(PROPERTY_NAME_MISC_DATE_FORMAT_PATTERN,
 				propertyValueMiscDateFormatPattern);
-		logPropertyDetail(CLASS_BASE_PROPERTIES, PROPERTY_NAME_MISC_DATE_FORMAT_PATTERN, miscDateFormatPattern);
+		logBaseProperty(PROPERTY_NAME_MISC_DATE_FORMAT_PATTERN, miscDateFormatPattern);
+
+	}
+
+	/**
+	 *
+	 * @param propertyValueDatePollingCronExpression
+	 */
+	private static void loadCronExpressions(String propertyValueDatePollingCronExpression) {
 
 		datePollingCronExpression = validateStringProperty(PROPERTY_NAME_DATE_POLLING_CRON_EXPRESSION,
 				propertyValueDatePollingCronExpression);
-		logPropertyDetail(CLASS_BASE_PROPERTIES, PROPERTY_NAME_DATE_POLLING_CRON_EXPRESSION, datePollingCronExpression);
+		logBaseProperty(PROPERTY_NAME_DATE_POLLING_CRON_EXPRESSION, datePollingCronExpression);
 
+	}
+
+	/**
+	 * @return the correlationIdDateFormatPattern
+	 */
+	public static final String getCorrelationIdDateFormatPattern() {
+		return correlationIdDateFormatPattern;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static final int getCorrelationIdDateFormatPatternLength() {
+		return correlationIdDateFormatPatternLength;
+	}
+
+	/**
+	 * @return the timelyLoggerDateFormatPattern
+	 */
+	public static final String getTimelyLoggerDateFormatPattern() {
+		return timelyLoggerDateFormatPattern;
+	}
+
+	/**
+	 * @return the sourceBeanDateFormatPattern
+	 */
+	public static final String getSourceBeanDateFormatPattern() {
+		return sourceBeanDateFormatPattern;
+	}
+
+	/**
+	 * @return the miscDateFormatPattern
+	 */
+	public static final String getMiscDateFormatPattern() {
+		return miscDateFormatPattern;
+	}
+
+	/**
+	 * @return the datePollingCronExpression
+	 */
+	public static final String getDatePollingCronExpression() {
+		return datePollingCronExpression;
+	}
+
+	/**
+	 *
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	private static void logBaseProperty(String propertyName, String propertyValue) {
+		logPropertyDetail(CLASS_BASE_PROPERTIES, propertyName, propertyValue);
 	}
 
 }

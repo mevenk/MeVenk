@@ -3,16 +3,17 @@
  */
 package com.mevenk.webapp.util;
 
+import static com.mevenk.webapp.config.spring.properties.BaseProperties.getCorrelationIdDateFormatPattern;
+import static com.mevenk.webapp.config.spring.properties.BaseProperties.getCorrelationIdDateFormatPatternLength;
 import static com.mevenk.webapp.util.MeVenkWebAppStringUtil.isAnyStringEmptyOrNull;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.argumentsAsAppendableString;
-import static com.mevenk.webapp.util.StaticData.correlationIdDateFormatPatternLength;
-import static com.mevenk.webapp.util.StaticData.simpleDateFormatCorrelationId;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.HYPHEN;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.UNDERSCORE;
 import static org.apache.logging.log4j.ThreadContext.get;
 import static org.apache.logging.log4j.ThreadContext.put;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -67,8 +68,8 @@ public final class ThreadContextUtil {
 	 * @param correlationIdPrefix
 	 */
 	public static String resetCorrelationIdThreadContextWithCurrentDate(String correlationIdPrefix) {
-		put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID,
-				correlationIdPrefix + UNDERSCORE + simpleDateFormatCorrelationId.format(new Date()));
+		put(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID, correlationIdPrefix + UNDERSCORE
+				+ new SimpleDateFormat(getCorrelationIdDateFormatPattern()).format(new Date()));
 		return get(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
 	}
 
@@ -103,7 +104,7 @@ public final class ThreadContextUtil {
 	 */
 	public static void addParametersToCorrelationId(Object... parameters) {
 		String correlationIdExisting = get(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
-		int lengthDateWithUnderScore = correlationIdDateFormatPatternLength + 1;
+		int lengthDateWithUnderScore = getCorrelationIdDateFormatPatternLength() + 1;
 		int lengthExistingCorrelationId = correlationIdExisting.length();
 		String unserscoreAndDate = correlationIdExisting
 				.substring(lengthExistingCorrelationId - lengthDateWithUnderScore);
