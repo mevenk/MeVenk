@@ -3,14 +3,15 @@
  */
 package com.mevenk.webapp.validator;
 
-import static org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils.qualifiedBeanOfType;
-import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.BeanFactoryAnnotationUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.mevenk.webapp.util.HTTPUtil;
 
 /**
  * @author venky
@@ -30,14 +31,18 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	 */
 	public MeVenkWebAppValidator(Errors errors, Object form, HttpServletRequest request) {
 
+		this.form = form;
 		this.errors = errors;
 
 		if (hasErrors()) {
 			return;
 		}
 
+		if(request == null) {
+			request = HTTPUtil.getHTTPRequest();
+		}
 		this.request = request;
-		applicationContext = getRequiredWebApplicationContext(request.getServletContext());
+		applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
 		validate(form, errors);
 
 	}
@@ -56,7 +61,7 @@ public abstract class MeVenkWebAppValidator implements Validator {
 		if (qualifier == null) {
 			return applicationContext.getBean(requiredType);
 		} else {
-			return qualifiedBeanOfType(applicationContext, requiredType, qualifier);
+			return BeanFactoryAnnotationUtils.qualifiedBeanOfType(applicationContext, requiredType, qualifier);
 		}
 	}
 
