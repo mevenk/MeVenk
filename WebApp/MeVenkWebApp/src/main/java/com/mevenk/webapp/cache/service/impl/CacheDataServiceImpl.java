@@ -96,11 +96,16 @@ public class CacheDataServiceImpl implements CacheDataService {
 
 	private void loadMessageSourceData() throws IllegalAccessException {
 		Map<Integer, String> messages = new HashMap<>();
-		messages.put(0, "Hello");
-		messages.put(1, "Hola");
+		messages.put(0, "NULL Not Allowed");
+		messages.put(1, "NULL No permitido");
 
 		Map<Integer, Map<Integer, String>> masterData = new HashMap<>();
 		masterData.put(1001, messages);
+
+		messages = new HashMap<>();
+		messages.put(0, "Hidden - NULL Not Allowed");
+		messages.put(1, "oculto - NULL No permitido");
+
 		masterData.put(1002, messages);
 
 		MessageSourceStaticData.setMessagesMasterData(masterData);

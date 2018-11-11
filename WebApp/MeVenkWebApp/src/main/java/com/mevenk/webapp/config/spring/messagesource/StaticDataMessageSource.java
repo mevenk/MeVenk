@@ -31,7 +31,7 @@ public class StaticDataMessageSource extends AbstractMessageSource {
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		String message = MessageSourceStaticData.getMessage(messageId, 1);
+		String message = MessageSourceStaticData.getMessage(messageId, 0);
 		return createMessageFormat(message, locale);
 	}
 }

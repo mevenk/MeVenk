@@ -43,9 +43,9 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 
 		SampleForm sampleForm = (SampleForm) form;
 
-		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_STRING, 1001);
-		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_NUMBER, 1001);
-		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_BOOLEAN, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_STRING, 1002);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_NUMBER, 1002);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_BOOLEAN, 1002);
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_CHECK_BOX_BOOLEAN, 1001);
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_RADIO_BUTTON, 1001);
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NAME, 1001);
