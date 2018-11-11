@@ -17,6 +17,14 @@ import com.mevenk.webapp.validator.MeVenkWebAppValidator;
  */
 public class SampleFormValidator extends MeVenkWebAppValidator {
 
+	private static final String FIELD_NUMBER = "number";
+	private static final String FIELD_NAME = "name";
+	private static final String FIELD_RADIO_BUTTON = "radioButton";
+	private static final String FIELD_CHECK_BOX_BOOLEAN = "checkBoxBoolean";
+	private static final String FIELD_HIDDEN_BOOLEAN = "hiddenBoolean";
+	private static final String FIELD_HIDDEN_NUMBER = "hiddenNumber";
+	private static final String FIELD_HIDDEN_STRING = "hiddenString";
+
 	public SampleFormValidator(Errors errors, Object form, HttpServletRequest request) {
 		super(errors, form, request);
 	}
@@ -35,36 +43,45 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 
 		SampleForm sampleForm = (SampleForm) form;
 
-		if (sampleForm.getHiddenString() == null) {
-			rejectFormFieldValue("hiddenString", "Hidden String - NULL Not Allowed " + databaseTimeFormatted);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_STRING, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_NUMBER, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_HIDDEN_BOOLEAN, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_CHECK_BOX_BOOLEAN, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_RADIO_BUTTON, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NAME, 1001);
+		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NUMBER, 1001);
+
+		if (!hasFormFieldErrors(FIELD_HIDDEN_STRING) && isEmptyOrNull(sampleForm.getHiddenString())) {
+			rejectFormFieldValue(FIELD_HIDDEN_STRING, "Hidden String - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getHiddenNumber() == null) {
-			rejectFormFieldValue("hiddenNumber", "Hidden Number - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_HIDDEN_NUMBER) && isEmptyOrNull(sampleForm.getHiddenNumber())) {
+			rejectFormFieldValue(FIELD_HIDDEN_NUMBER, "Hidden Number - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getHiddenBoolean() == null) {
-			rejectFormFieldValue("hiddenBoolean", "Hidden Boolean - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_HIDDEN_BOOLEAN) && isEmptyOrNull(sampleForm.getHiddenBoolean())) {
+			rejectFormFieldValue(FIELD_HIDDEN_BOOLEAN, "Hidden Boolean - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getCheckBoxBoolean() == null) {
-			rejectFormFieldValue("checkBoxBoolean", "Checkbox Boolean - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_CHECK_BOX_BOOLEAN) && isEmptyOrNull(sampleForm.getCheckBoxBoolean())) {
+			rejectFormFieldValue(FIELD_CHECK_BOX_BOOLEAN,
+					"Checkbox Boolean - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getRadioButton() == null) {
-			rejectFormFieldValue("radioButton", "Radio Number - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_RADIO_BUTTON) && isEmptyOrNull(sampleForm.getRadioButton())) {
+			rejectFormFieldValue(FIELD_RADIO_BUTTON, "Radio Number - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (!hasFormFieldErrors("radioButton") && sampleForm.getRadioButton() == 10) {
-			rejectFormFieldValue("radioButton", "Radio Number - 10 Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_RADIO_BUTTON) && sampleForm.getRadioButton() == 10) {
+			rejectFormFieldValue(FIELD_RADIO_BUTTON, "Radio Number - 10 Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getName() == null) {
-			rejectFormFieldValue("name", "Name - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_NAME) && isEmptyOrNull(sampleForm.getName())) {
+			rejectFormFieldValue(FIELD_NAME, "Name - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
-		if (sampleForm.getNumber() == null) {
-			rejectFormFieldValue("number", "Number - NULL Not Allowed " + databaseTimeFormatted);
+		if (!hasFormFieldErrors(FIELD_NUMBER) && isEmptyOrNull(sampleForm.getNumber())) {
+			rejectFormFieldValue(FIELD_NUMBER, "Number - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
 	}

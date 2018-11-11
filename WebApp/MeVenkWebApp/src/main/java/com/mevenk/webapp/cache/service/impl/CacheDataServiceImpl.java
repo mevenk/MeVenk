@@ -9,6 +9,7 @@ import static com.mevenk.webapp.cache.application.ApplicationCache.setUrisApplic
 import static com.mevenk.webapp.config.spring.SpringConfiguration.loadSpringConfiguration;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.mevenk.webapp.cache.service.CacheDataService;
 import com.mevenk.webapp.config.spring.SpringConfiguration;
+import com.mevenk.webapp.config.spring.messagesource.MessageSourceStaticData;
 
 /**
  * @author venky
@@ -68,6 +70,7 @@ public class CacheDataServiceImpl implements CacheDataService {
 		LOG.log(CONFIG, "Spring Configuration:" + springConfiguration);
 
 		loadHandlerMethodsCacheData();
+		loadMessageSourceData();
 
 	}
 
@@ -89,6 +92,19 @@ public class CacheDataServiceImpl implements CacheDataService {
 		setUrisApplication(patterns);
 
 		LOG.log(CONFIG, "Request Mappings:" + patterns);
+	}
+
+	private void loadMessageSourceData() throws IllegalAccessException {
+		Map<Integer, String> messages = new HashMap<>();
+		messages.put(0, "Hello");
+		messages.put(1, "Hola");
+
+		Map<Integer, Map<Integer, String>> masterData = new HashMap<>();
+		masterData.put(1001, messages);
+		masterData.put(1002, messages);
+
+		MessageSourceStaticData.setMessagesMasterData(masterData);
+
 	}
 
 }
