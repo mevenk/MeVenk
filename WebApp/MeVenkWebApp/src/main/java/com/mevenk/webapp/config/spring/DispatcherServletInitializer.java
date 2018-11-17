@@ -7,6 +7,7 @@ import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
 import static com.mevenk.webapp.util.ThreadContextUtil.setCorrelationIdThreadContext;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -43,6 +45,10 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationDispatcherContext);
 		dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
+		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true);
+		FilterRegistration.Dynamic dynamicFilterRegistration = servletContext.addFilter("characterEncodingFilter", characterEncodingFilter);
+		dynamicFilterRegistration.addMappingForUrlPatterns(null, true, URL_MAPPING_DISPATCHER_SERVLET_MEVENK);
 
 		ServletRegistration.Dynamic dispatcherDynamicServlet = servletContext.addServlet("mevenk", dispatcherServlet);
 		dispatcherDynamicServlet.setInitParameter("throwExceptionIfNoHandlerFound", "true");
