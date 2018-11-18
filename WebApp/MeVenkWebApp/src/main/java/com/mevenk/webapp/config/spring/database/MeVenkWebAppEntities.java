@@ -8,6 +8,7 @@ import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_U
 import java.util.HashSet;
 import java.util.Set;
 
+import com.mevenk.webapp.entity.audit.ApplicationException;
 import com.mevenk.webapp.entity.cache.MessageSource;
 
 /**
@@ -27,6 +28,7 @@ public final class MeVenkWebAppEntities {
 	protected static Class<?>[] getAnnotatedClassesEntitiesHibernate() {
 		Set<Class<?>> annotatedClassesEntitiesHibernate = new HashSet<>();
 		annotatedClassesEntitiesHibernate.addAll(populateEntitiesCache());
+		annotatedClassesEntitiesHibernate.addAll(populateEntitiesAudit());
 		return annotatedClassesEntitiesHibernate.toArray(new Class<?>[annotatedClassesEntitiesHibernate.size()]);
 	}
 
@@ -38,6 +40,16 @@ public final class MeVenkWebAppEntities {
 		Set<Class<?>> entitiesCache = new HashSet<>();
 		entitiesCache.add(MessageSource.class);
 		return entitiesCache;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	private static Set<Class<?>> populateEntitiesAudit() {
+		Set<Class<?>> entitiesAudit = new HashSet<>();
+		entitiesAudit.add(ApplicationException.class);
+		return entitiesAudit;
 	}
 
 }

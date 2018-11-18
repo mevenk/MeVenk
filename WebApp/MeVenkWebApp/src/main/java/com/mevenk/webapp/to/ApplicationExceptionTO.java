@@ -12,14 +12,14 @@ public class ApplicationExceptionTO {
 	public static final String APPLICATION_ERROR_IDENTIFIER = "applicationErrorIdentifier";
 	public static final String APPLICATION_ERROR_MESSAGE = "applicationErrorMessage";
 
-	private String applicationErrorIdentifier;
+	private int applicationErrorIdentifier;
 	private String applicationErrorMessage;
 
 	/**
 	 * @param applicationErrorIdentifier
 	 * @param applicationErrorMessage
 	 */
-	public ApplicationExceptionTO(String applicationErrorIdentifier, String applicationErrorMessage) {
+	public ApplicationExceptionTO(int applicationErrorIdentifier, String applicationErrorMessage) {
 		super();
 		this.applicationErrorIdentifier = applicationErrorIdentifier;
 		this.applicationErrorMessage = applicationErrorMessage;
@@ -28,7 +28,7 @@ public class ApplicationExceptionTO {
 	/**
 	 * @return the applicationErrorIdentifier
 	 */
-	public String getApplicationErrorIdentifier() {
+	public int getApplicationErrorIdentifier() {
 		return applicationErrorIdentifier;
 	}
 

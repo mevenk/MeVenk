@@ -3,6 +3,7 @@
  */
 package com.mevenk.webapp.dao.impl;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mevenk.webapp.dao.BaseDao;
+import com.mevenk.webapp.entity.audit.ApplicationException;
 
 /**
  * @author venky
@@ -38,6 +40,14 @@ public class BaseDaoImpl implements BaseDao {
 		queryGetFormattedDate.setParameter("dateFormat", dateFormat);
 		return (String) queryGetFormattedDate.uniqueResult();
 
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public Serializable saveApplicationException(ApplicationException applicationException) {
+		return sessionFactory.getCurrentSession().save(applicationException);
 	}
 
 }

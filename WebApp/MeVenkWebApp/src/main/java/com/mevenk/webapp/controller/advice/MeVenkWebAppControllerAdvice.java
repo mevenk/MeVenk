@@ -7,11 +7,17 @@ import static com.mevenk.webapp.to.ApplicationExceptionTO.APPLICATION_ERROR_IDEN
 import static com.mevenk.webapp.to.ApplicationExceptionTO.APPLICATION_ERROR_MESSAGE;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mevenk.webapp.service.BaseService;
 import com.mevenk.webapp.to.ApplicationExceptionTO;
 
 /**
@@ -23,12 +29,17 @@ public class MeVenkWebAppControllerAdvice {
 
 	private static final Logger LOG = getLogger(MeVenkWebAppControllerAdvice.class);
 
+	@Autowired
+	private BaseService baseService;
+
 	@ExceptionHandler(value = Throwable.class)
-	public ModelAndView mevenkWebAppExceptionHandler(Throwable throwable) {
-		LOG.error("Error!!", throwable);
+	public ModelAndView mevenkWebAppExceptionHandler(Throwable throwable, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		LOG.error("Error!!-{}", throwable.getClass());
 		ModelAndView modelAndViewApplicationException = new ModelAndView("applicationException");
-		ApplicationExceptionTO applicationExceptionTO = new ApplicationExceptionTO(
-				String.valueOf(System.currentTimeMillis()), throwable.getMessage());
+		ApplicationExceptionTO applicationExceptionTO = baseService.saveApplicationException(throwable, request,
+				session);
+		LOG.info("Exception saved @ {}", applicationExceptionTO);
 		modelAndViewApplicationException.addObject("applicationExceptionPageTitle",
 				"ERROR - " + applicationExceptionTO.getApplicationErrorIdentifier());
 		modelAndViewApplicationException.addObject(APPLICATION_ERROR_IDENTIFIER,
