@@ -1,7 +1,6 @@
 package com.mevenk.webapp.config.spring.database.cache;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
-import static net.sf.ehcache.CacheManager.getInstance;
 import static net.sf.ehcache.store.MemoryStoreEvictionPolicy.LFU;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -17,57 +16,125 @@ public class CacheManagerConfig {
 
 	private static final Logger LOG = getLogger(CacheManagerConfig.class);
 
-	public static final String CACHE_HIBERNATE = "CACHE_HIBERNATE";
-	public static final String CACHE_MEVENK_WEBAPP = "CACHE_MEVENK_WEBAPP";
+	private static final String CACHE_HIBERNATE = "CACHE_HIBERNATE";
+	private static final String CACHE_STATIC_DATA = "CACHE_STATIC_DATA";
 
 	private static final int MAX_ELEMENTS_IN_MEMORY = 1000;
 	private static final int DISK_POOL_BUFFER_SIZE_IN_MB = 5;
 
+	/**
+	 *
+	 */
 	public CacheManagerConfig() {
+
 		LOG.log(CONFIG, "Creating Custom Caches");
 		// Create a singleton CacheManager using defaults
-		CacheManager manager = getInstance();
-
-		Cache cacheHibernate = createCache(CACHE_HIBERNATE);
-		Cache cacheMeVenkWebApp = createCache(CACHE_MEVENK_WEBAPP);
 
 		LOG.log(CONFIG, "Adding Caches");
-		manager.removeCache(CACHE_HIBERNATE);
-		manager.removeCache(CACHE_MEVENK_WEBAPP);
-		manager.addCache(cacheHibernate);
-		manager.addCache(cacheMeVenkWebApp);
+		addCacheHibernate();
+		addCacheStaticData();
 
-		String[] strCacheNames = manager.getCacheNames();
+		CacheManager cacheManager = getCacheManagerInstance();
+
+		String[] strCacheNames = cacheManager.getCacheNames();
 		for (String cache : strCacheNames) {
 			LOG.log(CONFIG, "Caches Present : {} " + cache);
 		}
 
 	}
 
-	private Cache createCache(String cacheName) {
-		Cache cache = new Cache(new CacheConfiguration(cacheName, MAX_ELEMENTS_IN_MEMORY).memoryStoreEvictionPolicy(LFU)
+	/**
+	 *
+	 * @return
+	 */
+	private static CacheManager getCacheManagerInstance() {
+		return CacheManager.getInstance();
+	}
+
+	/**
+	 *
+	 * @param cacheName
+	 * @return
+	 */
+	private static Cache createCache(String cacheName) {
+
+		return new Cache(new CacheConfiguration(cacheName, MAX_ELEMENTS_IN_MEMORY).memoryStoreEvictionPolicy(LFU)
 				.eternal(true).maxElementsInMemory(MAX_ELEMENTS_IN_MEMORY).timeToIdleSeconds(0).timeToLiveSeconds(0)
-				.diskSpoolBufferSizeMB(DISK_POOL_BUFFER_SIZE_IN_MB).overflowToDisk(false)
-
-		);
-
-		return cache;
+				.diskSpoolBufferSizeMB(DISK_POOL_BUFFER_SIZE_IN_MB).overflowToDisk(false));
 
 	}
 
-	@PreDestroy
-	public static void cleanUp() {
-		getInstance().shutdown();
+	/**
+	 *
+	 * @param cache
+	 */
+	private static void addCache(Cache cache) {
+
+		CacheManager cacheManager = getCacheManagerInstance();
+		cacheManager.removeCache(cache.getName());
+		cacheManager.addCache(cache);
 	}
 
+	/**
+	 *
+	 */
+	private static void addCacheHibernate() {
+		addCache(createCache(CACHE_HIBERNATE));
+	}
+
+	/**
+	 *
+	 */
+	private static void addCacheStaticData() {
+		addCache(createCache(CACHE_STATIC_DATA));
+	}
+
+	/**
+	 *
+	 * @param cacheName
+	 * @return
+	 */
+	private static Cache getCache(String cacheName) {
+		return getCacheManagerInstance().getCache(cacheName);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static Cache getCacheHibernate() {
+		return getCache(CACHE_HIBERNATE);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static Cache getCacheStaticData() {
+		return getCache(CACHE_STATIC_DATA);
+	}
+
+	/**
+	 *
+	 */
 	public void clearCache() {
 
-		CacheManager manager = getInstance();
-		manager.getCache(CACHE_HIBERNATE).removeAll();
-		manager.getCache(CACHE_MEVENK_WEBAPP).removeAll();
+		CacheManager cacheManager = getCacheManagerInstance();
+		String[] strCacheNames = cacheManager.getCacheNames();
+		for (String cacheName : strCacheNames) {
+			getCache(cacheName).removeAll();
+		}
 
 		LOG.info("Second level cache cleared");
 
+	}
+
+	/**
+	 *
+	 */
+	@PreDestroy
+	public static void cleanUp() {
+		getCacheManagerInstance().shutdown();
 	}
 
 }
