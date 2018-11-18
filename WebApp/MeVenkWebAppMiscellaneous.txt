@@ -3,3 +3,21 @@
 -DmevenkWebAppLogsDirectoryLoaction="C:\Users\venky\RABOTA\workspaces\MeVenk\WebApp\Logs" -DmevenkWebAppLog4jSocketHost="VENKATESH-LENOVO" -DmevenkWebAppLog4jSocketPort="9898" -DmevenkWebappBasePropertiesFileSource="file:///C:\Users\venky\RABOTA\workspaces\MeVenk\WebApp\sources\properties\mevenkwebapp.properties" -DmevenkWebappDatabasePropertiesFileSource="file:///C:\Users\venky\RABOTA\workspaces\MeVenk\WebApp\sources\properties\mevenkwebappDatabase.properties"
 
 
+
+
+char[] messageOriginal = messageSource.getMessage().toCharArray();
+StringBuilder stringBuilderMessage = new StringBuilder();
+for (char charCurrent : messageOriginal) {
+	stringBuilderMessage.append("\\u" + Integer.toHexString(charCurrent | 0x10000).substring(1));
+}
+messages.put(messageSource.getLocaleId(), stringBuilderMessage.toString());
+
+
+import org.apache.commons.lang.StringEscapeUtils;
+
+com.mevenk.webapp.cache.service.impl.CacheDataServiceImpl.loadMessageSourceData()
+messages.put(messageSource.getLocaleId(), StringEscapeUtils.escapeJava(messageSource.getMessage()));
+
+com.mevenk.webapp.config.spring.messagesource.MessageSourceStaticData.getMessage(int, int)
+return StringEscapeUtils.unescapeJava(messagesMasterData.get(messageCategoryId).get(localeId));
+
