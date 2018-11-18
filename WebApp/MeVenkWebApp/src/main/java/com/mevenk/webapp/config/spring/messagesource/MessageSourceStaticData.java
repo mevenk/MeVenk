@@ -15,9 +15,6 @@ import com.mevenk.webapp.util.MeVenkWebAppUtil;
  */
 public final class MessageSourceStaticData {
 
-	public static final int LOCALE_ID_ENGLISH = 0;
-	public static final int LOCALE_ID_HINDI = 1;
-
 	private static Map<Integer, Map<Integer, String>> messagesMasterData = new HashMap<>();
 
 	/**
@@ -29,6 +26,7 @@ public final class MessageSourceStaticData {
 	}
 
 	/**
+	 *
 	 * @param messagesMasterData the messagesMasterData to set
 	 * @throws IllegalAccessException
 	 */
@@ -64,38 +62,23 @@ public final class MessageSourceStaticData {
 
 	/**
 	 *
+	 * @param messageCategoryId
 	 * @param localeId
-	 * @param messages
-	 * @throws IllegalAccessException
+	 * @return
 	 */
-	public static final void setMessages(Integer messageId, Map<Integer, String> messages)
-			throws IllegalAccessException {
+	public static String getMessage(int messageCategoryId, int localeId) {
 
-		if (messagesMasterData.keySet().contains(messageId)) {
-			throw new IllegalAccessException("Messages already added for " + messageId);
-		}
-
-		messagesMasterData.put(messageId, messages);
+		return messagesMasterData.get(messageCategoryId).get(localeId);
 
 	}
 
 	/**
 	 *
-	 * @param localeId
-	 * @param messageId
+	 * @param messageCategoryId
 	 * @return
 	 */
-	public static String getMessage(int messageId, int localeId) {
-		return messagesMasterData.get(messageId).get(localeId);
-	}
-
-	/**
-	 *
-	 * @param errorCode
-	 * @return
-	 */
-	public static String getMessage(int messageId) {
-		return getMessage(messageId, 0);
+	public static String getMessage(int messageCategoryId) {
+		return getMessage(messageCategoryId, 0);
 	}
 
 }

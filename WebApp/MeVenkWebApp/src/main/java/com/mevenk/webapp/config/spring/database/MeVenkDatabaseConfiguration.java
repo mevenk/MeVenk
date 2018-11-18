@@ -37,6 +37,8 @@ import com.mevenk.webapp.config.spring.database.cache.CacheManagerConfig;
 @EnableTransactionManagement
 public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBase {
 
+	public static final String BEAN_NAME_TRANSACTION_MANAGER = "transactionManager";
+
 	@Bean
 	public CacheManagerConfig cacheManagerConfig() {
 		return new CacheManagerConfig();
@@ -86,7 +88,7 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 		return new TransactionTemplate(transactionManager());
 	}
 
-	@Bean
+	@Bean(name = BEAN_NAME_TRANSACTION_MANAGER)
 	@DependsOn("sessionFactory")
 	public PlatformTransactionManager transactionManager() {
 

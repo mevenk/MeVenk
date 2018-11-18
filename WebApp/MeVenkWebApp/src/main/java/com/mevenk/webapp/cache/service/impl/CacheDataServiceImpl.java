@@ -3,14 +3,16 @@
  */
 package com.mevenk.webapp.cache.service.impl;
 
-import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
 import static com.mevenk.webapp.cache.application.ApplicationCache.setSpringConfiguration;
 import static com.mevenk.webapp.cache.application.ApplicationCache.setUrisApplication;
+import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
 import static com.mevenk.webapp.config.spring.SpringConfiguration.loadSpringConfiguration;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,9 +24,11 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.mevenk.webapp.cache.dao.CacheDataDao;
 import com.mevenk.webapp.cache.service.CacheDataService;
 import com.mevenk.webapp.config.spring.SpringConfiguration;
 import com.mevenk.webapp.config.spring.messagesource.MessageSourceStaticData;
+import com.mevenk.webapp.entity.cache.MessageSource;
 
 /**
  * @author venky
@@ -40,6 +44,9 @@ public class CacheDataServiceImpl implements CacheDataService {
 
 	@Autowired
 	private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+	@Autowired
+	private CacheDataDao cacheDataDao;
 
 	/*
 	 * (non-Javadoc)
@@ -94,21 +101,37 @@ public class CacheDataServiceImpl implements CacheDataService {
 		LOG.log(CONFIG, "Request Mappings:" + patterns);
 	}
 
+	/**
+	 *
+	 * @throws IllegalAccessException
+	 */
 	private void loadMessageSourceData() throws IllegalAccessException {
-		Map<Integer, String> messages = new HashMap<>();
-		messages.put(0, "NULL Not Allowed");
-		messages.put(1, "NULL No permitido");
 
-		Map<Integer, Map<Integer, String>> masterData = new HashMap<>();
-		masterData.put(1001, messages);
+		List<Integer> messageCategoryIds = cacheDataDao.getMessageCategoryIds();
 
-		messages = new HashMap<>();
-		messages.put(0, "Hidden - NULL Not Allowed");
-		messages.put(1, "oculto - NULL No permitido");
+		Map<Integer, Map<Integer, String>> messageSourceMasterData = new HashMap<>();
 
-		masterData.put(1002, messages);
+		Map<Integer, String> messages = null;
+		List<MessageSource> messageSources = null;
 
-		MessageSourceStaticData.setMessagesMasterData(masterData);
+		for (Iterator<Integer> iteratorMessageCategoryIds = messageCategoryIds.iterator(); iteratorMessageCategoryIds
+				.hasNext();) {
+
+			Integer messageCategoryId = iteratorMessageCategoryIds.next();
+			messageSources = cacheDataDao.getMessageSource(messageCategoryId);
+			messages = new HashMap<>();
+
+			for (Iterator<MessageSource> iteratorMessageSources = messageSources.iterator(); iteratorMessageSources
+					.hasNext();) {
+				MessageSource messageSource = iteratorMessageSources.next();
+				messages.put(messageSource.getLocaleId(), messageSource.getMessage());
+			}
+
+			messageSourceMasterData.put(messageCategoryId, messages);
+
+		}
+
+		MessageSourceStaticData.setMessagesMasterData(messageSourceMasterData);
 
 	}
 

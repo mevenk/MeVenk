@@ -15,8 +15,13 @@ import javax.servlet.ServletConfig;
 
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.mevenk.webapp.cache.service.CacheDataService;
+import com.mevenk.webapp.config.spring.database.MeVenkDatabaseConfiguration;
 
 /**
  * @author venky
@@ -48,7 +53,37 @@ public final class WebApplicationInitializer {
 		Date dateCacheLoadStart = new Date();
 		LOG.log(CONFIG, "Starting Cache Load@{}", dateCacheLoadStart);
 
-		applicationContext.getBean(CacheDataService.class).loadCacheMasterData();
+		PlatformTransactionManager platformTransactionManagerCacheLoad = null;
+		TransactionStatus transactionStatusCacheLoad = null;
+
+		try {
+			platformTransactionManagerCacheLoad = (PlatformTransactionManager) applicationContext
+					.getBean(MeVenkDatabaseConfiguration.BEAN_NAME_TRANSACTION_MANAGER);
+			DefaultTransactionDefinition defaultTransactionDefinitionCacheDataLoad = new DefaultTransactionDefinition();
+			defaultTransactionDefinitionCacheDataLoad.setName("CACHE_LOAD");
+			defaultTransactionDefinitionCacheDataLoad
+					.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED);
+			defaultTransactionDefinitionCacheDataLoad.setReadOnly(true);
+
+			transactionStatusCacheLoad = platformTransactionManagerCacheLoad
+					.getTransaction(defaultTransactionDefinitionCacheDataLoad);
+
+			LOG.log(CONFIG, "Transaction created for Cache load:{}", transactionStatusCacheLoad);
+			LOG.log(CONFIG, "Is new Transaction for Cache load?", transactionStatusCacheLoad.isNewTransaction());
+
+			applicationContext.getBean(CacheDataService.class).loadCacheMasterData();
+
+			platformTransactionManagerCacheLoad.commit(transactionStatusCacheLoad);
+			LOG.log(CONFIG, "Is Transaction completed?{}", transactionStatusCacheLoad.isCompleted());
+
+		} catch (Exception exception) {
+			LOG.error("Error loading Cache from DB {}", exception);
+			if (platformTransactionManagerCacheLoad != null) {
+				platformTransactionManagerCacheLoad.rollback(transactionStatusCacheLoad);
+			}
+
+			throw exception;
+		}
 
 		Date dateCacheLoadComplete = new Date();
 		LOG.log(CONFIG, "Cache Load Complete@{}", dateCacheLoadComplete);
