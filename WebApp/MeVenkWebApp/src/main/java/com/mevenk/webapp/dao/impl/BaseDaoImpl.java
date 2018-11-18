@@ -26,16 +26,15 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public Date databaseTime() {
 		Session currentSession = sessionFactory.getCurrentSession();
-		Date dateDatabase = (Date) currentSession.createNativeQuery("SELECT NOW()").uniqueResult();
-		return dateDatabase;
+		return (Date) currentSession.createNativeQuery("SELECT SYSDATE()").uniqueResult();
 	}
 
 	@Override
 	public String databaseTimeFormatted() {
 
-		String dateFormat = "Dy, dd MON yyyy  HH24:MI:SS.MS";
+		String dateFormat = "%d %m %Y  %H:%i:%s";
 		NativeQuery<?> queryGetFormattedDate = sessionFactory.getCurrentSession()
-				.createNativeQuery("SELECT TO_CHAR(NOW(), :dateFormat)");
+				.createNativeQuery("SELECT DATE_FORMAT(SYSDATE(), :dateFormat)");
 		queryGetFormattedDate.setParameter("dateFormat", dateFormat);
 		return (String) queryGetFormattedDate.uniqueResult();
 
