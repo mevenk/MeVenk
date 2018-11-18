@@ -246,9 +246,9 @@ public abstract class MeVenkWebAppUtil {
 	 * @param exception
 	 * @return
 	 */
-	public static String exceptionStactTraceAsString(Exception exception) {
+	public static String exceptionStactTraceAsString(Throwable throwable) {
 		StringWriter stringWriter = new StringWriter();
-		exception.printStackTrace(new PrintWriter(stringWriter));
+		throwable.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
 	}
 
