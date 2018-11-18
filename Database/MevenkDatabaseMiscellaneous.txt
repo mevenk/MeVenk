@@ -25,3 +25,51 @@ ROLES
 -----
 mevenk_webapp
 
+
+MYSQL
+-----
+
+mevenk_webapp_application
+Nov@2018
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
+
+mysql -u root
+
+Nov@2018
+
+
+CREATE USER 'venkatesh'@'localhost' IDENTIFIED BY 'Nov@2018';
+GRANT ALL PRIVILEGES ON *.* TO 'venkatesh'@'localhost' WITH GRANT OPTION;
+
+
+CREATE USER 'venkatesh'@'%' IDENTIFIED BY 'Nov@2018';
+GRANT ALL PRIVILEGES ON *.* TO 'venkatesh'@'%' WITH GRANT OPTION;
+
+--------------------------------------------------------------------------------
+
+
+CREATE USER 'mevenk_webapp_application'@'%' IDENTIFIED BY 'Nov@2018';
+GRANT ALL PRIVILEGES ON *.* TO 'mevenk_webapp_application'@'%' WITH GRANT OPTION;
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+"0"	"ENGLISH"
+"1"	"HINDI"
+"2"	"SPANISH"
+
+
+
+"10001"	"0"	"NULL not allowed"	"1001"
+"10002"	"1"	"शून्य की अनुमति नहीं है"	"1001"
+"10003"	"2"	"nulo no permitido"	"1001"
+"10004"	"0"	"hidden NULL not allowed"	"1002"
+"10005"	"1"	"छुपा नल की अनुमति नहीं है"	"1002"
+"10006"	"2"	"oculta nula no permitida"	"1002"
+
+
