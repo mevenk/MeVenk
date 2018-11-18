@@ -20,20 +20,24 @@ public final class MeVenkWebAppEntities {
 		throw ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 	}
 
-	protected static final Set<Class<?>> ENTITIES_HIBERNATE = new HashSet<>();
+	/**
+	 *
+	 * @return
+	 */
+	protected static Class<?>[] getAnnotatedClassesEntitiesHibernate() {
+		Set<Class<?>> annotatedClassesEntitiesHibernate = new HashSet<>();
+		annotatedClassesEntitiesHibernate.addAll(populateEntitiesCache());
+		return annotatedClassesEntitiesHibernate.toArray(new Class<?>[annotatedClassesEntitiesHibernate.size()]);
+	}
 
-	private static final Set<Class<?>> ENTITIES_CACHE = new HashSet<>();
-
-	static {
-
-		/* CACHE */
-
-		ENTITIES_CACHE.add(MessageSource.class);
-
-		ENTITIES_HIBERNATE.addAll(ENTITIES_CACHE);
-
-		/* CACHE - END */
-
+	/**
+	 *
+	 * @return
+	 */
+	private static Set<Class<?>> populateEntitiesCache() {
+		Set<Class<?>> entitiesCache = new HashSet<>();
+		entitiesCache.add(MessageSource.class);
+		return entitiesCache;
 	}
 
 }

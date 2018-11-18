@@ -3,7 +3,6 @@
  */
 package com.mevenk.webapp.config.spring.database;
 
-import static com.mevenk.webapp.config.spring.database.MeVenkWebAppEntities.ENTITIES_HIBERNATE;
 import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.BEAN_DATABASE_PROPERTIES;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.BASE_PACKAGE;
 
@@ -49,7 +48,7 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 	public SessionFactory sessionFactory() {
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource());
 		sessionBuilder.addProperties(getHibernateProperties());
-		sessionBuilder.addAnnotatedClasses(ENTITIES_HIBERNATE.toArray(new Class<?>[ENTITIES_HIBERNATE.size()]));
+		sessionBuilder.addAnnotatedClasses(MeVenkWebAppEntities.getAnnotatedClassesEntitiesHibernate());
 		return sessionBuilder.buildSessionFactory();
 	}
 
