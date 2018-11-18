@@ -69,7 +69,7 @@ public final class WebApplicationInitializer {
 					.getTransaction(defaultTransactionDefinitionCacheDataLoad);
 
 			LOG.log(CONFIG, "Transaction created for Cache load:{}", transactionStatusCacheLoad);
-			LOG.log(CONFIG, "Is new Transaction for Cache load?", transactionStatusCacheLoad.isNewTransaction());
+			LOG.log(CONFIG, "Is new Transaction for Cache load?{}", transactionStatusCacheLoad.isNewTransaction());
 
 			applicationContext.getBean(CacheDataService.class).loadCacheMasterData();
 
