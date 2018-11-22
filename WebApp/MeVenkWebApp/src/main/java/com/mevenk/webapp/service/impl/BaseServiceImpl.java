@@ -4,8 +4,6 @@
 package com.mevenk.webapp.service.impl;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static org.springframework.transaction.annotation.Propagation.REQUIRED;
-import static org.springframework.transaction.annotation.Propagation.SUPPORTS;
 
 import java.util.Date;
 
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.mevenk.webapp.dao.BaseDao;
 import com.mevenk.webapp.entity.audit.ApplicationException;
@@ -41,7 +38,6 @@ public class BaseServiceImpl implements BaseService {
 	 * @see com.mevenk.webapp.service.BaseService#databaseTime()
 	 */
 	@Override
-	@Transactional(readOnly = true, propagation = SUPPORTS)
 	public Date databaseTime() {
 		return baseDao.databaseTime();
 	}
@@ -50,13 +46,11 @@ public class BaseServiceImpl implements BaseService {
 	 *
 	 */
 	@Override
-	@Transactional(readOnly = true, propagation = SUPPORTS)
 	public String databaseTimeFormatted() {
 		return baseDao.databaseTimeFormatted();
 	}
 
 	@Override
-	@Transactional(propagation = REQUIRED)
 	public ApplicationExceptionTO saveApplicationException(Throwable throwable, HttpServletRequest request,
 			HttpSession session) {
 
