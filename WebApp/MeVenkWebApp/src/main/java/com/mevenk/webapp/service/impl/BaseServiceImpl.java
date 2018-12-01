@@ -19,6 +19,7 @@ import com.mevenk.webapp.entity.audit.ApplicationException;
 import com.mevenk.webapp.service.BaseService;
 import com.mevenk.webapp.to.ApplicationExceptionTO;
 import com.mevenk.webapp.util.MeVenkWebAppUtil;
+import com.mevenk.webapp.util.ThreadContextUtil;
 
 /**
  * @author venky
@@ -59,6 +60,7 @@ public class BaseServiceImpl implements BaseService {
 		applicationException.setExceptionClass(throwable.getClass());
 		applicationException.setStackTrace(MeVenkWebAppUtil.exceptionStactTraceAsString(throwable));
 		applicationException.setHttpSessionId(session.getId());
+		applicationException.setApplicationCorrelationId(ThreadContextUtil.retreiveThreadContextValueCorrelationId());
 		applicationException.setUid("UID");
 		int exceptionId = (int) baseDao.saveApplicationException(applicationException);
 		LOG.info("Exception Id generated:{}", exceptionId);

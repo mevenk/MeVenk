@@ -45,6 +45,8 @@ public class ApplicationException implements Serializable {
 	private Date createdDate;
 	@Column(name = "UID")
 	private String uid;
+	@Column(name = "APPLICATION_CORRELAION_ID")
+	private String applicationCorrelationId;
 	@Column(name = "HTTP_SESSION_ID")
 	private String httpSessionId;
 
@@ -119,6 +121,20 @@ public class ApplicationException implements Serializable {
 	}
 
 	/**
+	 * @return the applicationCorrelationId
+	 */
+	public final String getApplicationCorrelationId() {
+		return applicationCorrelationId;
+	}
+
+	/**
+	 * @param applicationCorrelationId the applicationCorrelationId to set
+	 */
+	public final void setApplicationCorrelationId(String applicationCorrelationId) {
+		this.applicationCorrelationId = applicationCorrelationId;
+	}
+
+	/**
 	 * @return the httpSessionId
 	 */
 	public final String getHttpSessionId() {
@@ -132,13 +148,6 @@ public class ApplicationException implements Serializable {
 		this.httpSessionId = httpSessionId;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static final long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -147,8 +156,8 @@ public class ApplicationException implements Serializable {
 	@Override
 	public String toString() {
 		return "ApplicationException [exceptionId=" + exceptionId + ", exceptionClass=" + exceptionClass
-				+ ", stackTrace=" + stackTrace + ", createdDate=" + createdDate + ", uid=" + uid + ", httpSessionId="
-				+ httpSessionId + "]";
+				+ ", stackTrace=" + stackTrace + ", createdDate=" + createdDate + ", uid=" + uid
+				+ ", applicationCorrelationId=" + applicationCorrelationId + ", httpSessionId=" + httpSessionId + "]";
 	}
 
 }
