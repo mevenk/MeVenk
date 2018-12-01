@@ -86,6 +86,14 @@ public final class ThreadContextUtil {
 	 *
 	 * @return
 	 */
+	public static final String retreiveThreadContextValueCorrelationId() {
+		return retreiveThreadContextValue(THREAD_CONTEXT_KEY_WEB_APP_CORRELATION_ID);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
 	public static String retreiveThreadContextValueSessionId() {
 		return retreiveThreadContextValue(THREAD_CONTEXT_KEY_ATTRIBUTE_SESSION_ATTRIBUTE_NAME_SESSION_ID);
 	}
