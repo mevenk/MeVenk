@@ -4,7 +4,6 @@
 package com.mevenk.webapp.controller.advice;
 
 import static com.mevenk.webapp.to.ApplicationExceptionTO.APPLICATION_ERROR_IDENTIFIER;
-import static com.mevenk.webapp.to.ApplicationExceptionTO.APPLICATION_ERROR_MESSAGE;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.EXCEPTION_OCCURED_ATTRIBUTE_NAME;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -24,6 +23,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.mevenk.webapp.service.BaseService;
 import com.mevenk.webapp.to.ApplicationExceptionTO;
+import com.mevenk.webapp.util.MeVenkWebAppUtil;
 
 /**
  * @author venky
@@ -73,7 +73,8 @@ public class MeVenkWebAppControllerAdvice {
 			saveExceptionDetail(throwable, request, session, modelAndViewApplicationException);
 		}
 
-		modelAndViewApplicationException.addObject(EXCEPTION_OCCURED_ATTRIBUTE_NAME, throwable);
+		modelAndViewApplicationException.addObject(EXCEPTION_OCCURED_ATTRIBUTE_NAME,
+				MeVenkWebAppUtil.exceptionStactTraceAsString(throwable));
 		return modelAndViewApplicationException;
 
 	}
@@ -93,8 +94,6 @@ public class MeVenkWebAppControllerAdvice {
 				"ERROR - " + applicationExceptionTO.getApplicationErrorIdentifier());
 		modelAndViewApplicationException.addObject(APPLICATION_ERROR_IDENTIFIER,
 				applicationExceptionTO.getApplicationErrorIdentifier());
-		modelAndViewApplicationException.addObject(APPLICATION_ERROR_MESSAGE,
-				applicationExceptionTO.getApplicationErrorMessage());
 	}
 
 }
