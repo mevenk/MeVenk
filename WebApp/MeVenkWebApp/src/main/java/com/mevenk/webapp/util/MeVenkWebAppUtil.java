@@ -24,9 +24,12 @@ import static java.util.UUID.randomUUID;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
+import com.mevenk.webapp.config.spring.properties.BaseProperties;
 
 /**
  * @author venky
@@ -106,6 +109,23 @@ public abstract class MeVenkWebAppUtil {
 		calendar.set(SECOND, currentYear + RANDOM.nextInt(59));
 		calendar.set(MILLISECOND, currentYear + RANDOM.nextInt(998));
 		return calendar.getTime();
+	}
+
+	/**
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static final String getDateFormatted(Date date) {
+		return new SimpleDateFormat(BaseProperties.getMiscDateFormatPattern()).format(date);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static final String getDateFormattedCurrentDate() {
+		return getDateFormatted(new Date());
 	}
 
 	/**
