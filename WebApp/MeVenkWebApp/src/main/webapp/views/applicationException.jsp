@@ -8,7 +8,9 @@
 <body>
 	<h1>System encountered unexpected Error:
 		${applicationErrorIdentifier }</h1>
-	<br /> ${applicationErrorMessage }
+	<br />
+
+	<div id="exceptionOccured" style="display: none;">${exceptionOccured }</div>
 
 </body>
 </html>

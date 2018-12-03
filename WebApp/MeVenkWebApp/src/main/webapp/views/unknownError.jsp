@@ -9,5 +9,7 @@
 
 	<h1>System encountered Error</h1>
 
+	<div id="exceptionOccured" style="display: none;">${exceptionOccured }</div>
+
 </body>
 </html>
