@@ -62,4 +62,6 @@ public final class MeVenkWebAppConstants {
 
 	public static final String EXT_JSON = ".json";
 
+	public static final String EXCEPTION_OCCURED_ATTRIBUTE_NAME = "exceptionOccured";
+
 }
