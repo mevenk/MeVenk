@@ -6,7 +6,6 @@ package com.mevenk.webapp.entity.audit;
 import static com.mevenk.webapp.entity.audit.ApplicationException.GENERATOR_APPLICATION_EXCEPTION_ID;
 import static javax.persistence.GenerationType.TABLE;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import com.mevenk.webapp.entity.BaseEntity;
 import com.mevenk.webapp.entity.EntitiesMetadata;
 
 /**
@@ -25,7 +25,7 @@ import com.mevenk.webapp.entity.EntitiesMetadata;
 @Entity
 @Table(name = "APPLICATION_EXCEPTION")
 @TableGenerator(name = GENERATOR_APPLICATION_EXCEPTION_ID, allocationSize = 1, table = EntitiesMetadata.TABLE_NAME_SEQUENCE, pkColumnName = EntitiesMetadata.COLUMN_NAME_SEQUENCE_NAME, pkColumnValue = EntitiesMetadata.SEQUENCE_NAME_APPLICATION_EXCEPTION_ID, valueColumnName = EntitiesMetadata.COLUMN_NAME_SEQUENCE_VALUE)
-public class ApplicationException implements Serializable {
+public class ApplicationException extends BaseEntity {
 
 	protected static final String GENERATOR_APPLICATION_EXCEPTION_ID = "GENERATOR_APPLICATION_EXCEPTION_ID";
 	/**
@@ -146,18 +146,6 @@ public class ApplicationException implements Serializable {
 	 */
 	public final void setHttpSessionId(String httpSessionId) {
 		this.httpSessionId = httpSessionId;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "ApplicationException [exceptionId=" + exceptionId + ", exceptionClass=" + exceptionClass
-				+ ", stackTrace=" + stackTrace + ", createdDate=" + createdDate + ", uid=" + uid
-				+ ", applicationCorrelationId=" + applicationCorrelationId + ", httpSessionId=" + httpSessionId + "]";
 	}
 
 }
