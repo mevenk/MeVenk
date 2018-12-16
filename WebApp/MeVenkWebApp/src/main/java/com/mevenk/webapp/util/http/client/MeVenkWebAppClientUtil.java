@@ -9,7 +9,9 @@ import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.SPACE_AROUN
 import static eu.bitwalker.useragentutils.UserAgent.parseUserAgentString;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +26,9 @@ import eu.bitwalker.useragentutils.UserAgent;
 public final class MeVenkWebAppClientUtil {
 
 	private static final Logger LOG = getLogger(MeVenkWebAppClientUtil.class);
+
+	public static final List<String> RESOURCE_TYPE_CLIENT_RESOURCE = Arrays.asList("css", "js", "ico", "img", "png",
+			"jpg", "jpeg", "gif", "woff", "woff2", "ttf");
 
 	/**
 	 * @throws IllegalAccessException

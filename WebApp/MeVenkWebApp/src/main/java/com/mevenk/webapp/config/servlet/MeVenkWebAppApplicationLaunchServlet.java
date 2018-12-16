@@ -4,6 +4,7 @@
 package com.mevenk.webapp.config.servlet;
 
 import static com.mevenk.webapp.config.logger.MeVenkWebAppLogger.CONFIG;
+import static com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil.RESOURCE_TYPE_CLIENT_RESOURCE;
 import static com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil.logClientDetails;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -41,6 +42,11 @@ public class MeVenkWebAppApplicationLaunchServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+		String requestURI = httpServletRequest.getRequestURI();
+		String requestURIResourceType = requestURI.substring(requestURI.lastIndexOf('.') + 1);
+		if (RESOURCE_TYPE_CLIENT_RESOURCE.contains(requestURIResourceType)) {
+			return;
+		}
 		LOG.info("Application launched @ " + new Date());
 		logClientDetails(httpServletRequest);
 		try {
