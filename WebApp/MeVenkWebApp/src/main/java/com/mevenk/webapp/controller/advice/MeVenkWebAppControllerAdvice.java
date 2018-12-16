@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +40,7 @@ public class MeVenkWebAppControllerAdvice {
 	static {
 
 		EXCEPTIONS_SKIP_SAVE_DETAIL.add(NoHandlerFoundException.class);
+		EXCEPTIONS_SKIP_SAVE_DETAIL.add(HttpRequestMethodNotSupportedException.class);
 
 	}
 
