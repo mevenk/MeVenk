@@ -15,8 +15,8 @@ public interface CacheDataDao {
 
 	public List<MessageSource> getMessageSource();
 
-	public List<MessageSource> getMessageSource(int messageCategoryId);
+	public List<MessageSource> getMessageSource(int messageId);
 
-	public List<Integer> getMessageCategoryIds();
+	public List<Integer> getMessageIds();
 
 }

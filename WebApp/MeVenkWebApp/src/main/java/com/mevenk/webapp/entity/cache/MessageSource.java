@@ -3,12 +3,12 @@
  */
 package com.mevenk.webapp.entity.cache;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.mevenk.webapp.entity.BaseEntity;
 
 /**
  * @author venky
@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "MESSAGE_SOURCE")
-public class MessageSource implements Serializable {
+public class MessageSource extends BaseEntity {
 
 	/**
 	 *
@@ -24,17 +24,31 @@ public class MessageSource implements Serializable {
 	private static final long serialVersionUID = 3879695996103414447L;
 
 	@Id
+	@Column(name = "MESSAGE_KEY", insertable = false)
+	private Integer messageKey;
+
 	@Column(name = "MESSAGE_ID", insertable = false)
 	private Integer messageId;
-
-	@Column(name = "MESSAGE_CATEGORY_ID", insertable = false)
-	private Integer messageCategoryId;
 
 	@Column(name = "LOCALE_ID", insertable = false)
 	private Integer localeId;
 
 	@Column(name = "MESSAGE", insertable = false)
 	private String message;
+
+	/**
+	 * @return the messageKey
+	 */
+	public final Integer getMessageKey() {
+		return messageKey;
+	}
+
+	/**
+	 * @param messageKey the messageKey to set
+	 */
+	public final void setMessageKey(Integer messageKey) {
+		this.messageKey = messageKey;
+	}
 
 	/**
 	 * @return the messageId
@@ -44,10 +58,10 @@ public class MessageSource implements Serializable {
 	}
 
 	/**
-	 * @return the messageCategoryId
+	 * @param messageId the messageId to set
 	 */
-	public final Integer getMessageCategoryId() {
-		return messageCategoryId;
+	public final void setMessageId(Integer messageId) {
+		this.messageId = messageId;
 	}
 
 	/**
@@ -58,21 +72,24 @@ public class MessageSource implements Serializable {
 	}
 
 	/**
+	 * @param localeId the localeId to set
+	 */
+	public final void setLocaleId(Integer localeId) {
+		this.localeId = localeId;
+	}
+
+	/**
 	 * @return the message
 	 */
 	public final String getMessage() {
 		return message;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * @param message the message to set
 	 */
-	@Override
-	public String toString() {
-		return "MessageSource [messageId=" + messageId + ", messageCategoryId=" + messageCategoryId + ", localeId="
-				+ localeId + ", message=" + message + "]";
+	public final void setMessage(String message) {
+		this.message = message;
 	}
 
 }

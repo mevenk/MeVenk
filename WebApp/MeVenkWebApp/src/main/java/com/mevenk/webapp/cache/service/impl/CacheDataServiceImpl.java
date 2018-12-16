@@ -107,18 +107,18 @@ public class CacheDataServiceImpl implements CacheDataService {
 	 */
 	private void loadMessageSourceData() throws IllegalAccessException {
 
-		List<Integer> messageCategoryIds = cacheDataDao.getMessageCategoryIds();
+		List<Integer> messageIds = cacheDataDao.getMessageIds();
 
 		Map<Integer, Map<Integer, String>> messageSourceMasterData = new HashMap<>();
 
 		Map<Integer, String> messages = null;
 		List<MessageSource> messageSources = null;
 
-		for (Iterator<Integer> iteratorMessageCategoryIds = messageCategoryIds.iterator(); iteratorMessageCategoryIds
+		for (Iterator<Integer> iteratorMessageIds = messageIds.iterator(); iteratorMessageIds
 				.hasNext();) {
 
-			Integer messageCategoryId = iteratorMessageCategoryIds.next();
-			messageSources = cacheDataDao.getMessageSource(messageCategoryId);
+			Integer messageId = iteratorMessageIds.next();
+			messageSources = cacheDataDao.getMessageSource(messageId);
 			messages = new HashMap<>();
 
 			for (Iterator<MessageSource> iteratorMessageSources = messageSources.iterator(); iteratorMessageSources
@@ -127,7 +127,7 @@ public class CacheDataServiceImpl implements CacheDataService {
 				messages.put(messageSource.getLocaleId(), messageSource.getMessage());
 			}
 
-			messageSourceMasterData.put(messageCategoryId, messages);
+			messageSourceMasterData.put(messageId, messages);
 
 		}
 

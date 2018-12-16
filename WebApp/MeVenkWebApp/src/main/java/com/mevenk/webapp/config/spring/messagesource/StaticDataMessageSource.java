@@ -25,13 +25,13 @@ public class StaticDataMessageSource extends AbstractMessageSource {
 	 */
 	@Override
 	protected MessageFormat resolveCode(String errorCode, Locale locale) {
-		int messageCategoryId;
+		int messageId;
 		try {
-			messageCategoryId = parseInt(errorCode);
+			messageId = parseInt(errorCode);
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		String message = MessageSourceStaticData.getMessage(messageCategoryId, 1);
+		String message = MessageSourceStaticData.getMessage(messageId, 1);
 		return createMessageFormat(message, locale);
 	}
 }

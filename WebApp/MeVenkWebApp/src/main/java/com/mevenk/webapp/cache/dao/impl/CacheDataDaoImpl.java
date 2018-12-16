@@ -38,20 +38,20 @@ public class CacheDataDaoImpl implements CacheDataDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MessageSource> getMessageSource(int messageCategoryId) {
+	public List<MessageSource> getMessageSource(int messageId) {
 
 		@SuppressWarnings("rawtypes")
 		Query queryGetMessageSource = sessionFactory.getCurrentSession()
-				.createQuery("FROM MessageSource ms WHERE ms.messageCategoryId = :messageCategoryId");
-		return queryGetMessageSource.setParameter("messageCategoryId", messageCategoryId).getResultList();
+				.createQuery("FROM MessageSource ms WHERE ms.messageId = :messageId");
+		return queryGetMessageSource.setParameter("messageId", messageId).getResultList();
 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Integer> getMessageCategoryIds() {
+	public List<Integer> getMessageIds() {
 
-		return sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT(messageCategoryId) FROM MessageSource")
+		return sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT(messageId) FROM MessageSource")
 				.getResultList();
 	}
 

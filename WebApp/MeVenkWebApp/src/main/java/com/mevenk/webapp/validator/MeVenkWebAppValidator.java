@@ -99,36 +99,36 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	/**
 	 *
 	 * @param field
-	 * @param messageCategoryId
+	 * @param messageId
 	 */
-	protected final void rejectFormFieldValue(String field, int messageCategoryId) {
-		errors.rejectValue(field, getMessageCategoryIdAsString(messageCategoryId));
+	protected final void rejectFormFieldValue(String field, int messageId) {
+		errors.rejectValue(field, getMessageIdAsString(messageId));
 	}
 
 	/**
 	 *
 	 * @param field
-	 * @param messageCategoryId
+	 * @param messageId
 	 */
-	protected final void rejectFormFieldValueIfEmpty(String field, int messageCategoryId) {
-		ValidationUtils.rejectIfEmpty(errors, field, getMessageCategoryIdAsString(messageCategoryId));
+	protected final void rejectFormFieldValueIfEmpty(String field, int messageId) {
+		ValidationUtils.rejectIfEmpty(errors, field, getMessageIdAsString(messageId));
 	}
 
 	/**
 	 *
 	 * @param field
-	 * @param messageCategoryId
+	 * @param messageId
 	 */
-	protected final void rejectFormFieldValueIfEmptyOrWhitespace(String field, int messageCategoryId) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, getMessageCategoryIdAsString(messageCategoryId));
+	protected final void rejectFormFieldValueIfEmptyOrWhitespace(String field, int messageId) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, getMessageIdAsString(messageId));
 	}
 
 	/**
-	 * @param messageCategoryId
+	 * @param messageId
 	 * @return
 	 */
-	private String getMessageCategoryIdAsString(int messageCategoryId) {
-		return String.valueOf(messageCategoryId);
+	private String getMessageIdAsString(int messageId) {
+		return String.valueOf(messageId);
 	}
 
 	/**

@@ -62,23 +62,23 @@ public final class MessageSourceStaticData {
 
 	/**
 	 *
-	 * @param messageCategoryId
+	 * @param messageId
 	 * @param localeId
 	 * @return
 	 */
-	public static String getMessage(int messageCategoryId, int localeId) {
+	public static String getMessage(int messageId, int localeId) {
 
-		return messagesMasterData.get(messageCategoryId).get(localeId);
+		return messagesMasterData.get(messageId).get(localeId);
 
 	}
 
 	/**
 	 *
-	 * @param messageCategoryId
+	 * @param messageId
 	 * @return
 	 */
-	public static String getMessage(int messageCategoryId) {
-		return getMessage(messageCategoryId, 0);
+	public static String getMessage(int messageId) {
+		return getMessage(messageId, 0);
 	}
 
 }
