@@ -83,7 +83,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 		dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
 
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true);
-		FilterRegistration.Dynamic dynamicFilterRegistration = servletContext.addFilter("characterEncodingFilter", characterEncodingFilter);
+		FilterRegistration.Dynamic dynamicFilterRegistration = servletContext.addFilter("characterEncodingFilter",
+				characterEncodingFilter);
 		dynamicFilterRegistration.addMappingForUrlPatterns(null, true, URL_MAPPING_DISPATCHER_SERVLET_MEVENK);
 
 		ServletRegistration.Dynamic dispatcherDynamicServlet = servletContext.addServlet("mevenk", dispatcherServlet);
