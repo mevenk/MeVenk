@@ -88,6 +88,8 @@
 			<Filters>
 				<ThresholdFilter level="FATAL" onMatch="DENY"
 					onMismatch="NEUTRAL" />
+				<ThresholdFilter level="ERROR" onMatch="DENY"
+				onMismatch="NEUTRAL" />
 			</Filters>
 
 			<Policies>
@@ -302,6 +304,7 @@
 		<Logger name="com.mevenk.webapp.cache" level="TRACE"
 			additivity="false">
 			<AppenderRef ref="configLogRollingFile" level="TRACE" />
+			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="Socket" />
 		</Logger>
@@ -311,6 +314,7 @@
 			name="com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil"
 			level="TRACE" additivity="false">
 			<AppenderRef ref="utilLogRollingFile" level="TRACE" />
+			<AppenderRef ref="errorLogRollingFile" level="ERROR" />
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="Socket" />
 		</Logger>

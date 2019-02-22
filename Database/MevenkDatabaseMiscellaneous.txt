@@ -7,6 +7,7 @@ URL = "jdbc:postgresql://VENKATESH-NUC:5432/mevenk?application_name=webapp";
 DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
 
 
+POSTGRESQL
 
 -----
 USERS
@@ -15,10 +16,8 @@ USERS
 venkatesh
 venkatesh
 
-
 mevenk_webapp_application
 mevenk_webapp_application
-
 
 -----
 ROLES
@@ -33,11 +32,48 @@ mevenk_webapp_application
 Nov@2018
 
 
+---------------------------------------------------------------------------------------------------------------------------------
 
+30 JAN 2019
+
+
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7
+
+# yum install mysql-server
+# systemctl start mysqld
+# systemctl status mysqld
+
+# grep 'temporary password' /var/log/mysqld.log
+2019-01-30T17:59:48.616191Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: D6kk5_l0vvvd
+
+# mysql_secure_installation
+Feb@2019
+
+mysqladmin -u root -p version
+
+
+mysql -u root -p
+
+
+CREATE USER 'venkatesh'@'localhost' IDENTIFIED BY 'Feb@2019';
+GRANT ALL PRIVILEGES ON *.* TO 'venkatesh'@'localhost' WITH GRANT OPTION;
+
+
+CREATE USER 'venkatesh'@'%' IDENTIFIED BY 'Feb@2019';
+GRANT ALL PRIVILEGES ON *.* TO 'venkatesh'@'%' WITH GRANT OPTION;
+
+CREATE USER 'mevenk_webapp_application'@'%' IDENTIFIED BY 'Feb@2019';
+GRANT ALL PRIVILEGES ON *.* TO 'mevenk_webapp_application'@'%' WITH GRANT OPTION;
+
+-----
+https://www.youtube.com/watch?v=xgGgt7YJYKo
 ----------------------------------------------------------------------------------------------------------------------------------
 https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
 
+
 mysql -u root
+
+:_HmgSrta0C:
 
 Nov@2018
 
@@ -58,6 +94,86 @@ GRANT ALL PRIVILEGES ON *.* TO 'mevenk_webapp_application'@'%' WITH GRANT OPTION
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
+-- SEQUENCE: webapp."MESSAGE_SOURCE_MESSAGE_ID"
+
+-- DROP SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID";
+
+CREATE SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID";
+
+ALTER SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID"
+    OWNER TO postgres;
+
+GRANT ALL ON SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID" TO mevenk_webapp_application WITH GRANT OPTION;
+
+GRANT ALL ON SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID" TO postgres;
+
+GRANT ALL ON SEQUENCE webapp."MESSAGE_SOURCE_MESSAGE_ID" TO mevenk_webapp WITH GRANT OPTION;
+
+
+
+-- Table: webapp."MESSAGE_SOURCE"
+
+-- DROP TABLE webapp."MESSAGE_SOURCE";
+
+CREATE TABLE webapp."MESSAGE_SOURCE"
+(
+    "MESSAGE_ID" numeric NOT NULL,
+    "LOCALE_ID" numeric NOT NULL,
+    "MESSAGE" character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    "MESSAGE_CATEGORY_ID" numeric NOT NULL,
+    CONSTRAINT "MESSAGE_SOURCE_pkey" PRIMARY KEY ("MESSAGE_ID"),
+    CONSTRAINT "LOCALE_ID_FK" FOREIGN KEY ("LOCALE_ID")
+        REFERENCES webapp."USER_LOCALE" ("LOCALE_ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE webapp."MESSAGE_SOURCE"
+    OWNER to mevenk_webapp_application;
+
+GRANT ALL ON TABLE webapp."MESSAGE_SOURCE" TO mevenk_webapp WITH GRANT OPTION;
+
+GRANT ALL ON TABLE webapp."MESSAGE_SOURCE" TO mevenk_webapp_application WITH GRANT OPTION;
+
+
+
+
+
+
+
+-- Table: webapp."USER_LOCALE"
+
+-- DROP TABLE webapp."USER_LOCALE";
+
+CREATE TABLE webapp."USER_LOCALE"
+(
+    "LOCALE_ID" numeric NOT NULL,
+    "LOCALE_NAME" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "USER_LOCALE_pkey" PRIMARY KEY ("LOCALE_ID")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE webapp."USER_LOCALE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE webapp."USER_LOCALE" TO mevenk_webapp WITH GRANT OPTION;
+
+GRANT ALL ON TABLE webapp."USER_LOCALE" TO mevenk_webapp_application WITH GRANT OPTION;
+
+GRANT ALL ON TABLE webapp."USER_LOCALE" TO postgres;
+
+COMMENT ON COLUMN webapp."USER_LOCALE"."LOCALE_ID"
+    IS 'Locale Id and details';
+
+
+
 
 "0"	"ENGLISH"
 "1"	"HINDI"
@@ -71,5 +187,6 @@ GRANT ALL PRIVILEGES ON *.* TO 'mevenk_webapp_application'@'%' WITH GRANT OPTION
 "10004"	"0"	"hidden NULL not allowed"	"1002"
 "10005"	"1"	"छुपा नल की अनुमति नहीं है"	"1002"
 "10006"	"2"	"oculta nula no permitida"	"1002"
+
 
 

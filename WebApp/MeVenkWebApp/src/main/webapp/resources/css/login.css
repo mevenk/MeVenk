@@ -1,0 +1,13 @@
+#tableLoginUserForm {
+	background-color: #C0C0C0;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px
+}
+
+.loginErrorMessage {
+	background: yellow;
+	color: red;
+	white-space: normal;
+}

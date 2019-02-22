@@ -13,11 +13,15 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.mevenk.webapp.config.spring.bind.GlobalBindingInitializer;
 import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppInterceptor;
 import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppWebRequestInterceptor;
+import com.mevenk.webapp.config.spring.interceptor.login.LoginInterceptor;
+import com.mevenk.webapp.config.spring.servlet.session.MeVenkWebAppSessionAttributeStore;
 
 /**
  * @author venky
@@ -38,10 +42,24 @@ public class MeVenkWebAppServletConfiguration implements WebMvcConfigurer {
 		return new MeVenkWebAppInterceptor();
 	}
 
+	@Bean(name = "loginInterceptor")
+	public HandlerInterceptor loginInterceptor() {
+		return new LoginInterceptor();
+	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addWebRequestInterceptor(meVenkWebAppWebRequestInterceptor());
 		registry.addInterceptor(meVenkWebAppInterceptor());
+		registry.addInterceptor(loginInterceptor());
+	}
+
+	@Bean(name = "requestMappingHandlerAdapter")
+	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
+		RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
+		requestMappingHandlerAdapter.setWebBindingInitializer(new GlobalBindingInitializer());
+		requestMappingHandlerAdapter.setSessionAttributeStore(new MeVenkWebAppSessionAttributeStore());
+		return requestMappingHandlerAdapter;
 	}
 
 	@Bean(name = "multipartResolver")

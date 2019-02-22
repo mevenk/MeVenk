@@ -51,7 +51,7 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NAME, 101);
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NUMBER, 101);
 
-		if (!hasFormFieldErrors(FIELD_HIDDEN_STRING) && isEmptyOrNull(sampleForm.getHiddenString())) {
+		/*if (!hasFormFieldErrors(FIELD_HIDDEN_STRING) && isEmptyOrNull(sampleForm.getHiddenString())) {
 			rejectFormFieldValue(FIELD_HIDDEN_STRING, "Hidden String - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
@@ -82,7 +82,7 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 
 		if (!hasFormFieldErrors(FIELD_NUMBER) && isEmptyOrNull(sampleForm.getNumber())) {
 			rejectFormFieldValue(FIELD_NUMBER, "Number - NULL Not Allowed " + databaseTimeFormatted);
-		}
+		}*/
 
 	}
 

@@ -18,12 +18,6 @@ table tr td {
 	border: 1px solid black;
 	width: 250px;
 }
-
-.errorMessage {
-	background: yellow;
-	color: red;
-	white-space: normal;
-}
 </style>
 </head>
 <body>

@@ -5,9 +5,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 </head>
 <body>
-	<h5>Footer: ${mevenk:printDate() }</h5>
+
+
+	<div id="footerLeftSection">
+
+		<div id="footerDateDisplay">
+			<h5>Footer: ${mevenk:printDate() }</h5>
+		</div>
+
+	</div>
+
+	<div id="footerRightSection">
+
+		<div id="userInformationDisplayFooter">
+
+			<span>${user.uid }</span>
+
+		</div>
+	</div>
+
+
 </body>
 </html>

@@ -92,9 +92,9 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	 * @param field
 	 * @param message
 	 */
-	protected final void rejectFormFieldValue(String field, String message) {
+	/*protected final void rejectFormFieldValue(String field, String message) {
 		errors.rejectValue(field, null, message);
-	}
+	}*/
 
 	/**
 	 *

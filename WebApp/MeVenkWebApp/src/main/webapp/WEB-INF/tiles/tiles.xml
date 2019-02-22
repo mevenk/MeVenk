@@ -12,10 +12,13 @@
 		<put-attribute name="footer" value="/views/footer.jsp" />
 	</definition>
 
+	<definition name="login" template="/views/login.jsp">
+		<put-attribute name="title" value="Login" />
+	</definition>
+
 	<definition id="UNKNOWN_ERROR_PAGE" name="unknownError"
 		extends="base.definition">
-		<put-attribute name="title"
-			expression="Error!!" />
+		<put-attribute name="title" expression="Error!!" />
 		<put-attribute id="BODY_UNKNOWN_ERROR_PAGE" name="body"
 			value="/views/unknownError.jsp" />
 	</definition>

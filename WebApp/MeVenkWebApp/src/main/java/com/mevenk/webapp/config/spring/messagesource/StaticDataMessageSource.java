@@ -10,6 +10,8 @@ import java.util.Locale;
 
 import org.springframework.context.support.AbstractMessageSource;
 
+import com.mevenk.webapp.util.HTTPUtil;
+
 /**
  * @author venky
  *
@@ -31,7 +33,7 @@ public class StaticDataMessageSource extends AbstractMessageSource {
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		String message = MessageSourceStaticData.getMessage(messageId, 1);
+		String message = MessageSourceStaticData.getMessage(messageId, HTTPUtil.getUserFromSession().getLocale());
 		return createMessageFormat(message, locale);
 	}
 }

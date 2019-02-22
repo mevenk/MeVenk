@@ -5,11 +5,14 @@ package com.mevenk.webapp.config.spring.database;
 
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import com.mevenk.webapp.entity.audit.ApplicationException;
 import com.mevenk.webapp.entity.cache.MessageSource;
+import com.mevenk.webapp.entity.user.UserPasswordVW;
+import com.mevenk.webapp.entity.user.UserVW;
 
 /**
  * @author venky
@@ -27,9 +30,21 @@ public final class MeVenkWebAppEntities {
 	 */
 	protected static Class<?>[] getAnnotatedClassesEntitiesHibernate() {
 		Set<Class<?>> annotatedClassesEntitiesHibernate = new HashSet<>();
+		annotatedClassesEntitiesHibernate.addAll(populateEntitiesAuth());
 		annotatedClassesEntitiesHibernate.addAll(populateEntitiesCache());
 		annotatedClassesEntitiesHibernate.addAll(populateEntitiesAudit());
 		return annotatedClassesEntitiesHibernate.toArray(new Class<?>[annotatedClassesEntitiesHibernate.size()]);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	private static Collection<? extends Class<?>> populateEntitiesAuth() {
+		Set<Class<?>> entitiesAuth = new HashSet<>();
+		entitiesAuth.add(UserVW.class);
+		entitiesAuth.add(UserPasswordVW.class);
+		return entitiesAuth;
 	}
 
 	/**
