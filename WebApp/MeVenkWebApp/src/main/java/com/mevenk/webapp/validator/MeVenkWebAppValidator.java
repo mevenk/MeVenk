@@ -29,13 +29,6 @@ public abstract class MeVenkWebAppValidator implements Validator {
 	}
 
 	/**
-	 * @param request the request to set
-	 */
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	/**
 	 * 
 	 * @param errors
 	 * @param form
