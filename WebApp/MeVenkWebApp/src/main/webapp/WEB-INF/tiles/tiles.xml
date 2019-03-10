@@ -12,7 +12,7 @@
 		<put-attribute name="footer" value="/views/footer.jsp" />
 	</definition>
 
-	<definition name="login" template="/views/login.jsp">
+	<definition name="login" template="/views/login/login.jsp">
 		<put-attribute name="title" value="Login" />
 	</definition>
 
