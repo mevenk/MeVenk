@@ -27,6 +27,9 @@ public class StaticDataMessageSource extends AbstractMessageSource {
 	 */
 	@Override
 	protected MessageFormat resolveCode(String errorCode, Locale locale) {
+		if(errorCode.equals("typeMismatch")) {
+			return createMessageFormat("Not an expected type", locale);
+		}
 		int messageId;
 		try {
 			messageId = parseInt(errorCode);
