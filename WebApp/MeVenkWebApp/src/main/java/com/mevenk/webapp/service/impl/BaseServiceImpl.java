@@ -59,7 +59,9 @@ public class BaseServiceImpl implements BaseService {
 		applicationException.setCreatedDate(new Date());
 		applicationException.setExceptionClass(throwable.getClass());
 		applicationException.setStackTrace(MeVenkWebAppUtil.exceptionStactTraceAsString(throwable));
-		applicationException.setHttpSessionId(session.getId());
+		if (session != null) {
+			applicationException.setHttpSessionId(session.getId());
+		}
 		applicationException.setApplicationCorrelationId(ThreadContextUtil.retreiveThreadContextValueCorrelationId());
 		applicationException.setUid("UID");
 		int exceptionId = (int) baseDao.saveApplicationException(applicationException);
