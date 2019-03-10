@@ -20,9 +20,9 @@ import com.mevenk.webapp.to.user.UserTO;
  *
  */
 @Component
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class RequestInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger LOG = getLogger(LoginInterceptor.class);
+	private static final Logger LOG = getLogger(RequestInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

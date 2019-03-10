@@ -20,7 +20,7 @@ import org.springframework.web.servlet.view.JstlView;
 import com.mevenk.webapp.config.spring.bind.GlobalBindingInitializer;
 import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppInterceptor;
 import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppWebRequestInterceptor;
-import com.mevenk.webapp.config.spring.interceptor.login.LoginInterceptor;
+import com.mevenk.webapp.config.spring.interceptor.login.RequestInterceptor;
 import com.mevenk.webapp.config.spring.servlet.session.MeVenkWebAppSessionAttributeStore;
 
 /**
@@ -44,7 +44,7 @@ public class MeVenkWebAppServletConfiguration implements WebMvcConfigurer {
 
 	@Bean(name = "loginInterceptor")
 	public HandlerInterceptor loginInterceptor() {
-		return new LoginInterceptor();
+		return new RequestInterceptor();
 	}
 
 	@Override
