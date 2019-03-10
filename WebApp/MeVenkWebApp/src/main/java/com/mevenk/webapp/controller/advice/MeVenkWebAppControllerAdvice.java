@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import com.mevenk.webapp.exception.login.LoginUserException;
 import com.mevenk.webapp.service.BaseService;
 import com.mevenk.webapp.to.ApplicationExceptionTO;
 import com.mevenk.webapp.util.MeVenkWebAppUtil;
@@ -51,7 +52,23 @@ public class MeVenkWebAppControllerAdvice {
 	public ModelAndView mevenkWebAppExceptionHandler(Throwable throwable, HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		LOG.error("Error!!-{}", throwable.getClass());
-		return generateModelAndView(throwable, request, session);
+		return generateModelAndViewException(throwable, request, session);
+
+	}
+
+	/**
+	 * 
+	 * @param loginUserException
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@ExceptionHandler(value = LoginUserException.class)
+	public ModelAndView mevenkWebAppLoginUserExceptionHandler(LoginUserException loginUserException, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		
+		return generateModelAndViewLoginUserException(loginUserException, request);
 
 	}
 
@@ -63,7 +80,7 @@ public class MeVenkWebAppControllerAdvice {
 	 * @param session
 	 * @return
 	 */
-	private final ModelAndView generateModelAndView(Throwable throwable, HttpServletRequest request,
+	private final ModelAndView generateModelAndViewException(Throwable throwable, HttpServletRequest request,
 			HttpSession session) {
 
 		boolean isSkipException = EXCEPTIONS_SKIP_SAVE_DETAIL.contains(throwable.getClass());
@@ -80,7 +97,22 @@ public class MeVenkWebAppControllerAdvice {
 		return modelAndViewApplicationException;
 
 	}
-
+	
+	/**
+	 * 
+	 * @param loginUserException
+	 * @param request
+	 * @return
+	 */
+	private ModelAndView generateModelAndViewLoginUserException(LoginUserException loginUserException,
+			HttpServletRequest request) {
+		ModelAndView modelAndViewLoginUserException = new ModelAndView("loginUserException");
+		saveExceptionDetail(loginUserException, request, null, modelAndViewLoginUserException);
+		modelAndViewLoginUserException.addObject(EXCEPTION_OCCURED_ATTRIBUTE_NAME,
+				MeVenkWebAppUtil.exceptionStactTraceAsString(loginUserException));
+		return modelAndViewLoginUserException;
+	}
+	
 	/**
 	 * @param throwable
 	 * @param request

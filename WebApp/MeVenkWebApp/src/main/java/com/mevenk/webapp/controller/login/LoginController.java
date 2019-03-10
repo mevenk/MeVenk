@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mevenk.webapp.exception.login.LoginUserException;
 import com.mevenk.webapp.service.login.LoginService;
 import com.mevenk.webapp.to.user.UserLoginTO;
 import com.mevenk.webapp.to.user.UserTO;
@@ -35,7 +36,10 @@ public class LoginController {
 	private static final Logger LOG = getLogger(LoginController.class);
 
 	private static final String VIEW_NAME_LOGIN = "login";
-
+	
+	@Autowired
+	private LoginUserValidator loginUserValidator;
+	
 	@Autowired
 	private LoginService loginService;
 
@@ -61,23 +65,27 @@ public class LoginController {
 	@PostMapping(value = "/loginUser")
 	public ModelAndView loginUser(@ModelAttribute("userLogin") UserLoginTO userLoginTO, BindingResult bindingResult,
 			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTO, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws LoginUserException {
 
-		ModelAndView modelAndViewLoginUser = new ModelAndView();
+		try {
+			if (loginUserValidator.hasErrors(bindingResult, userLoginTO, request)) {
+				ModelAndView modelAndViewLoginUserValidatorError = new ModelAndView();
+				modelAndViewLoginUserValidatorError.addObject("userLogin", userLoginTO);
+				modelAndViewLoginUserValidatorError.addObject("loginStatus", "Login Fail!!");
+				modelAndViewLoginUserValidatorError.setViewName(VIEW_NAME_LOGIN);
+				return modelAndViewLoginUserValidatorError;
+			}
 
-		if (new LoginUserValidator(bindingResult, userLoginTO, request).hasErrors()) {
-			modelAndViewLoginUser.addObject("userLogin", userLoginTO);
-			modelAndViewLoginUser.addObject("loginStatus", "Login Fail!!");
-			modelAndViewLoginUser.setViewName(VIEW_NAME_LOGIN);
-			return modelAndViewLoginUser;
+			userTO = loginService.loginUser(userLoginTO);
+			userTO = HTTPUtil.addUserToSession(userTO, request);
+
+			return new ModelAndView("redirect:./welcome.mevenk");
+		} catch (Exception exception) {
+			LOG.warn("Login User Error", exception);
+			userLoginTO.setPassword("PASSWORD_RESET");
+			LOG.info("Password has been RESET");
+			throw new LoginUserException(exception, userLoginTO, bindingResult);
 		}
-
-		userTO = loginService.loginUser(userLoginTO);
-		userTO = HTTPUtil.addUserToSession(userTO, request);
-
-		modelAndViewLoginUser.setViewName("redirect:./welcome.mevenk");
-
-		return modelAndViewLoginUser;
 	}
 
 	@GetMapping(value = "/logoutUser")

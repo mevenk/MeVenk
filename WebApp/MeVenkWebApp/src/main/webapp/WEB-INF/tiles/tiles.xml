@@ -15,7 +15,11 @@
 	<definition name="login" template="/views/login/login.jsp">
 		<put-attribute name="title" value="Login" />
 	</definition>
-
+	
+	<definition id="LOGIN_ERROR_PAGE" name="loginUserException" template="/views/login/loginUserException.jsp">
+		<put-attribute name="title" value="Login" />
+	</definition>
+	
 	<definition id="UNKNOWN_ERROR_PAGE" name="unknownError"
 		extends="base.definition">
 		<put-attribute name="title" expression="Error!!" />
