@@ -35,7 +35,10 @@ import com.mevenk.webapp.validator.sampleform.SampleFormValidator;
 public class BaseController {
 
 	private static final String WELCOME = "welcome";
-
+	
+	@Autowired
+	private SampleFormValidator sampleFormValidator;
+	
 	@Autowired
 	private BaseBDO baseBDO;
 
@@ -72,7 +75,7 @@ public class BaseController {
 
 		updateModelAndViewForViewParameters(modelAndViewSampleFormSubmit);
 
-		if (new SampleFormValidator(bindingResult, sampleForm, httpServletRequest).hasErrors()) {
+		if (sampleFormValidator.hasErrors(bindingResult, sampleForm)) {
 			System.out.println("Validator ERRORS!!!");
 		}
 

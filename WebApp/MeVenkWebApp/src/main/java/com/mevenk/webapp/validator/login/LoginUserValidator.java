@@ -3,8 +3,10 @@
  */
 package com.mevenk.webapp.validator.login;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.mevenk.webapp.service.login.LoginService;
@@ -16,17 +18,19 @@ import com.mevenk.webapp.validator.MeVenkWebAppValidator;
  * @author venky
  *
  */
+@Component
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class LoginUserValidator extends MeVenkWebAppValidator {
 
+	@Autowired
 	private LoginService loginService;
 
 	/**
-	 * @param errors
-	 * @param form
-	 * @param request
+	 * 
 	 */
-	public LoginUserValidator(Errors errors, Object form, HttpServletRequest request) {
-		super(errors, form, request);
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return UserLoginTO.class.isAssignableFrom(clazz);
 	}
 
 	/*
@@ -37,15 +41,17 @@ public class LoginUserValidator extends MeVenkWebAppValidator {
 	 */
 	@Override
 	public void validate(Object target, Errors errors) {
-
+		
+		executePreValidationActivities(errors);
+		
 		UserLoginTO userLoginTO = (UserLoginTO) target;
 
 		if (MeVenkWebAppStringUtil.isAnyStringEmptyOrNull(userLoginTO.getUid())) {
-			errors.rejectValue("uid", null, "UID Required");
+			rejectFormFieldValue("uid", "UID Required");
 		}
 
 		if (MeVenkWebAppStringUtil.isAnyStringEmptyOrNull(userLoginTO.getPassword())) {
-			errors.rejectValue("password", null, "Password Required");
+			rejectFormFieldValue("password", "Password Required");
 		}
 
 		if (hasErrors()) {
@@ -53,16 +59,13 @@ public class LoginUserValidator extends MeVenkWebAppValidator {
 			return;
 		}
 
-		loginService = (LoginService) getBean(LoginService.class, null);
-
 		String uid = userLoginTO.getUid();
 		if (!loginService.isValidUId(uid)) {
-			errors.rejectValue("uid", null, "UID Invalid");
+			rejectFormFieldValue("uid", "UID Invalid");
 		}
 
 		if (!hasErrors() && !loginService.isValidPassword(uid, userLoginTO.getPassword())) {
-
-			errors.rejectValue("password", null, "Invalid Password");
+			rejectFormFieldValue("password", "Invalid Password");
 
 		}
 

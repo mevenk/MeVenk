@@ -68,7 +68,7 @@ public class LoginController {
 			HttpServletResponse response) throws LoginUserException {
 
 		try {
-			if (loginUserValidator.hasErrors(bindingResult, userLoginTO, request)) {
+			if (loginUserValidator.hasErrors(bindingResult, userLoginTO)) {
 				ModelAndView modelAndViewLoginUserValidatorError = new ModelAndView();
 				modelAndViewLoginUserValidatorError.addObject("userLogin", userLoginTO);
 				modelAndViewLoginUserValidatorError.addObject("loginStatus", "Login Fail!!");

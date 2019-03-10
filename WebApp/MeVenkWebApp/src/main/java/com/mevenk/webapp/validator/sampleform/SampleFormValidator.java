@@ -3,8 +3,11 @@
  */
 package com.mevenk.webapp.validator.sampleform;
 
-import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.mevenk.webapp.modelattribute.SampleForm;
@@ -15,8 +18,13 @@ import com.mevenk.webapp.validator.MeVenkWebAppValidator;
  * @author venky
  *
  */
-public class SampleFormValidator extends MeVenkWebAppValidator {
-
+@Component
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class SampleFormValidator extends MeVenkWebAppValidator{
+	
+	@Autowired
+	private BaseService baseService;
+	
 	private static final String FIELD_NUMBER = "number";
 	private static final String FIELD_NAME = "name";
 	private static final String FIELD_RADIO_BUTTON = "radioButton";
@@ -24,9 +32,10 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 	private static final String FIELD_HIDDEN_BOOLEAN = "hiddenBoolean";
 	private static final String FIELD_HIDDEN_NUMBER = "hiddenNumber";
 	private static final String FIELD_HIDDEN_STRING = "hiddenString";
-
-	public SampleFormValidator(Errors errors, Object form, HttpServletRequest request) {
-		super(errors, form, request);
+	
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return SampleForm.class.isAssignableFrom(clazz);
 	}
 
 	/*
@@ -37,8 +46,9 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 	 */
 	@Override
 	public void validate(Object form, Errors errors) {
-
-		BaseService baseService = (BaseService) getBean(BaseService.class, null);
+		
+		executePreValidationActivities(errors);
+		
 		String databaseTimeFormatted = baseService.databaseTimeFormatted();
 
 		SampleForm sampleForm = (SampleForm) form;
@@ -51,7 +61,7 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NAME, 101);
 		rejectFormFieldValueIfEmptyOrWhitespace(FIELD_NUMBER, 101);
 
-		/*if (!hasFormFieldErrors(FIELD_HIDDEN_STRING) && isEmptyOrNull(sampleForm.getHiddenString())) {
+		if (!hasFormFieldErrors(FIELD_HIDDEN_STRING) && isEmptyOrNull(sampleForm.getHiddenString())) {
 			rejectFormFieldValue(FIELD_HIDDEN_STRING, "Hidden String - NULL Not Allowed " + databaseTimeFormatted);
 		}
 
@@ -82,8 +92,10 @@ public class SampleFormValidator extends MeVenkWebAppValidator {
 
 		if (!hasFormFieldErrors(FIELD_NUMBER) && isEmptyOrNull(sampleForm.getNumber())) {
 			rejectFormFieldValue(FIELD_NUMBER, "Number - NULL Not Allowed " + databaseTimeFormatted);
-		}*/
+		}
 
 	}
+
+	
 
 }
