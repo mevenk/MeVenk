@@ -187,6 +187,10 @@ public abstract class MeVenkWebAppUtil {
 		StringBuilder stringBuilderObjects = new StringBuilder();
 		stringBuilderObjects.append(PARENTHESES_OPEN);
 		for (Object object : objects) {
+			if(object == null) {
+				stringBuilderObjects.append("null" + COMMA_AND_SPACE);
+				continue;
+			}
 			stringBuilderObjects.append(object.toString() + COMMA_AND_SPACE);
 
 		}
