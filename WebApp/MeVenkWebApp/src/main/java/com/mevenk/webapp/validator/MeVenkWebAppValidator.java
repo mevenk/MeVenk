@@ -42,9 +42,6 @@ public abstract class MeVenkWebAppValidator implements Validator {
 
 		validate(form, errors);
 		
-		this.errors = null;
-		this.request = null;
-		
 		return hasErrors(errors);
 
 	}
