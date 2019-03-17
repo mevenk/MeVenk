@@ -11,8 +11,14 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -24,6 +30,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelDocumentBuilder {
 
 	public static final String EXCEL_FILE_NAME_SUFFIX = ".xslx";
+
+	private static final short BLACK = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
+	private static final short WHITE = HSSFColor.HSSFColorPredefined.WHITE.getIndex();
+	private static final short LIGHT_ORANGE = HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex();
 
 	private XSSFWorkbook workbook;
 
@@ -47,6 +57,9 @@ public class ExcelDocumentBuilder {
 
 		XSSFSheet currentSheet = null;
 		LinkedHashMap<ExcelCell, LinkedList<ExcelCell>> sheetData = null;
+
+		XSSFCellStyle headerStyle = createHeaderStyle(workbook);
+		XSSFCellStyle dataStyle = createDataStyle(workbook);
 
 		for (ExcelSheet sheet : sheets) {
 
@@ -72,6 +85,7 @@ public class ExcelDocumentBuilder {
 
 				XSSFCell cellHeader = rowColumnHeader.createCell(columnIndex);
 				setCellValue(cellHeader, excelCellColumnHeader);
+				cellHeader.setCellStyle(headerStyle);
 
 				currentSheet.autoSizeColumn(columnIndex);
 
@@ -87,6 +101,7 @@ public class ExcelDocumentBuilder {
 
 					cellData = rowData.createCell(columnIndex);
 					setCellValue(cellData, excelCellData);
+					cellData.setCellStyle(dataStyle);
 
 					if (columnsAutoSize.contains(cellHeader.getStringCellValue())) {
 						currentSheet.autoSizeColumn(columnIndex);
@@ -142,6 +157,73 @@ public class ExcelDocumentBuilder {
 			return;
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param workbook
+	 * @return
+	 */
+	private static final XSSFCellStyle createHeaderStyle(XSSFWorkbook workbook) {
+
+		XSSFFont headerFont = workbook.createFont();
+		headerFont.setBold(true);
+		headerFont.setFontHeight(13);
+		headerFont.setFontName("Calibri");
+
+		XSSFCellStyle headerStyle = workbook.createCellStyle();
+
+		headerStyle.setFont(headerFont);
+		headerStyle.setAlignment(HorizontalAlignment.CENTER);
+
+		headerStyle.setFillForegroundColor(LIGHT_ORANGE);
+		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		headerStyle.setBorderLeft(BorderStyle.THICK);
+		headerStyle.setBorderRight(BorderStyle.THICK);
+		headerStyle.setBorderTop(BorderStyle.THICK);
+		headerStyle.setBorderBottom(BorderStyle.THICK);
+
+		headerStyle.setLeftBorderColor(BLACK);
+		headerStyle.setRightBorderColor(BLACK);
+		headerStyle.setTopBorderColor(BLACK);
+		headerStyle.setBottomBorderColor(BLACK);
+
+		return headerStyle;
+	}
+
+	/**
+	 * 
+	 * @param workbook
+	 * @return
+	 */
+	private static final XSSFCellStyle createDataStyle(XSSFWorkbook workbook) {
+
+		XSSFFont dataFont = workbook.createFont();
+		dataFont.setBold(false);
+		dataFont.setFontHeight(11);
+		dataFont.setFontName("Calibri");
+
+		XSSFCellStyle dataStyle = workbook.createCellStyle();
+
+		dataStyle.setFont(dataFont);
+		dataStyle.setAlignment(HorizontalAlignment.LEFT);
+		dataStyle.setWrapText(true);
+
+		dataStyle.setFillForegroundColor(WHITE);
+		dataStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		dataStyle.setBorderLeft(BorderStyle.THIN);
+		dataStyle.setBorderRight(BorderStyle.THIN);
+		dataStyle.setBorderTop(BorderStyle.THIN);
+		dataStyle.setBorderBottom(BorderStyle.THIN);
+
+		dataStyle.setLeftBorderColor(BLACK);
+		dataStyle.setRightBorderColor(BLACK);
+		dataStyle.setTopBorderColor(BLACK);
+		dataStyle.setBottomBorderColor(BLACK);
+
+		return dataStyle;
 	}
 
 	/**
