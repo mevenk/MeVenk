@@ -17,8 +17,11 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFComment;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -204,6 +207,30 @@ public class ExcelDocumentBuilder {
 		} else if ((richTextStringValue = excelCell.getRichTextStringValue()) != null) {
 			cell.setCellValue(richTextStringValue);
 		}
+
+		ExcelComment excelComment = excelCell.getExcelComment();
+		if (excelComment == null) {
+			return;
+		}
+
+		XSSFSheet sheet = cell.getSheet();
+		XSSFClientAnchor clientAnchor = sheet.getWorkbook().getCreationHelper().createClientAnchor();
+
+		CellAddress cellAddress = cell.getAddress();
+		int columnIndex = cellAddress.getColumn();
+		int rowIndex = cellAddress.getRow();
+		clientAnchor.setCol1(columnIndex + 1);
+		clientAnchor.setCol2(columnIndex + 3);
+		clientAnchor.setRow1(rowIndex + 1);
+		clientAnchor.setRow2(rowIndex + 5);
+
+		XSSFComment cellComment = sheet.createDrawingPatriarch().createCellComment(clientAnchor);
+
+		cellComment.setString(excelComment.getComment());
+		cellComment.setAuthor(excelComment.getAuthor());
+		cellComment.setVisible(excelComment.isVisible());
+
+		cell.setCellComment(cellComment);
 
 	}
 

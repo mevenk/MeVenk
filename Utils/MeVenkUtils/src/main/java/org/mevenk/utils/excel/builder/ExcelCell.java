@@ -21,6 +21,8 @@ public class ExcelCell {
 	private Date dateValue;
 	private RichTextString richTextStringValue;
 
+	private ExcelComment excelComment;
+
 	/**
 	 * 
 	 */
@@ -111,6 +113,30 @@ public class ExcelCell {
 		return richTextStringValue;
 	}
 
+	/**
+	 * @return the excelComment
+	 */
+	public final ExcelComment getExcelComment() {
+		return excelComment;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public final boolean isValueNull() {
+		return stringValue == null && doubleValue == null && booleanValue == null && calendarValue == null
+				&& dateValue == null && richTextStringValue == null;
+	}
+	
+	/**
+	 * @param excelComment the excelComment to set
+	 */
+	public final ExcelCell addExcelComment(ExcelComment excelComment) {
+		this.excelComment = excelComment;
+		return this;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -120,7 +146,7 @@ public class ExcelCell {
 	public String toString() {
 		return "ExcelCell [stringValue=" + stringValue + ", doubleValue=" + doubleValue + ", booleanValue="
 				+ booleanValue + ", calendarValue=" + calendarValue + ", dateValue=" + dateValue
-				+ ", richTextStringValue=" + richTextStringValue + "]";
+				+ ", richTextStringValue=" + richTextStringValue + ", excelComment=" + excelComment + "]";
 	}
 
 }
