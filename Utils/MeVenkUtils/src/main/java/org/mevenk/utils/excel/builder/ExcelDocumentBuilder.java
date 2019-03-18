@@ -179,44 +179,30 @@ public class ExcelDocumentBuilder {
 	 * @param excelCell
 	 */
 	private static final void setCellValue(XSSFCell cell, ExcelCell excelCell) {
-		
-		if(excelCell == null) {
+
+		if (excelCell == null) {
 			return;
 		}
-		
-		String stringValue = excelCell.getStringValue();
-		if (stringValue != null) {
+
+		String stringValue = null;
+		Double doubleValue = null;
+		Boolean booleanValue = null;
+		Calendar calendarValue = null;
+		Date dateValue = null;
+		RichTextString richTextStringValue = null;
+
+		if ((stringValue = excelCell.getStringValue()) != null) {
 			cell.setCellValue(stringValue);
-			return;
-		}
-		Double doubleValue = excelCell.getDoubleValue();
-		if (doubleValue != null) {
+		} else if ((doubleValue = excelCell.getDoubleValue()) != null) {
 			cell.setCellValue(doubleValue);
-			return;
-		}
-
-		Boolean booleanValue = excelCell.getBooleanValue();
-		if (booleanValue != null) {
+		} else if ((booleanValue = excelCell.getBooleanValue()) != null) {
 			cell.setCellValue(booleanValue);
-			return;
-		}
-
-		Calendar calendarValue = excelCell.getCalendarValue();
-		if (calendarValue != null) {
+		} else if ((calendarValue = excelCell.getCalendarValue()) != null) {
 			cell.setCellValue(calendarValue);
-			return;
-		}
-
-		Date dateValue = excelCell.getDateValue();
-		if (dateValue != null) {
+		} else if ((dateValue = excelCell.getDateValue()) != null) {
 			cell.setCellValue(dateValue);
-			return;
-		}
-
-		RichTextString richTextStringValue = excelCell.getRichTextStringValue();
-		if (richTextStringValue != null) {
+		} else if ((richTextStringValue = excelCell.getRichTextStringValue()) != null) {
 			cell.setCellValue(richTextStringValue);
-			return;
 		}
 
 	}
