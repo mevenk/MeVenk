@@ -32,7 +32,7 @@ public class ExcelDocumentBuilder {
 	public static final String EXCEL_FILE_NAME_SUFFIX = ".xslx";
 
 	private static final short BLACK = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
-	private static final short WHITE = HSSFColor.HSSFColorPredefined.WHITE.getIndex();
+	private static final short PALE_BLUE = HSSFColor.HSSFColorPredefined.PALE_BLUE.getIndex();
 	private static final short LIGHT_ORANGE = HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex();
 
 	private XSSFWorkbook workbook;
@@ -210,7 +210,7 @@ public class ExcelDocumentBuilder {
 		dataStyle.setAlignment(HorizontalAlignment.LEFT);
 		dataStyle.setWrapText(true);
 
-		dataStyle.setFillForegroundColor(WHITE);
+		dataStyle.setFillForegroundColor(PALE_BLUE);
 		dataStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
 		dataStyle.setBorderLeft(BorderStyle.THIN);
