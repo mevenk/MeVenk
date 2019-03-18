@@ -5,6 +5,7 @@ package org.mevenk.utils.excel.builder;
 
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -32,7 +33,7 @@ public class ExcelDocumentBuilder {
 	public static final String EXCEL_FILE_NAME_SUFFIX = ".xslx";
 
 	private static final short BLACK = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
-	private static final short PALE_BLUE = HSSFColor.HSSFColorPredefined.PALE_BLUE.getIndex();
+	private static final short LIGHT_BLUE = HSSFColor.HSSFColorPredefined.PALE_BLUE.getIndex();
 	private static final short LIGHT_ORANGE = HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex();
 
 	private XSSFWorkbook workbook;
@@ -68,7 +69,10 @@ public class ExcelDocumentBuilder {
 			sheetData = sheet.getData();
 
 			XSSFRow rowColumnHeader = null;
-
+			
+			int rowVlauesSizeMax = rowVlauesSizeMax(sheetData.values());
+			int columnIndexMax = sheetData.size() - 1;
+			
 			int columnIndex = -1;
 			for (Map.Entry<ExcelCell, LinkedList<ExcelCell>> entry : sheetData.entrySet()) {
 
@@ -91,8 +95,20 @@ public class ExcelDocumentBuilder {
 
 				XSSFRow rowData = null;
 				LinkedList<ExcelCell> columnValues = entry.getValue();
+				int columnRowValuesIndexMax = columnValues.size() - 1;
 				XSSFCell cellData = null;
-				for (ExcelCell excelCellData : columnValues) {
+				ExcelCell excelCellData = null;
+				
+				XSSFCellStyle dataStyleTemp = null;
+				
+				int rowIndexValuesMax = rowVlauesSizeMax - 1;
+				
+				for (int rowIndexValues = 0; rowIndexValues < rowVlauesSizeMax; rowIndexValues++) {
+
+					excelCellData = null;
+					if (rowIndexValues <= columnRowValuesIndexMax) {
+						excelCellData = columnValues.get(rowIndexValues);
+					}
 
 					rowData = currentSheet.getRow(++rowIndex);
 					if (rowData == null) {
@@ -102,6 +118,33 @@ public class ExcelDocumentBuilder {
 					cellData = rowData.createCell(columnIndex);
 					setCellValue(cellData, excelCellData);
 					cellData.setCellStyle(dataStyle);
+
+					if (columnIndex == 0) {
+						dataStyleTemp = workbook.createCellStyle();
+						dataStyleTemp.cloneStyleFrom(dataStyle);
+						dataStyleTemp.setBorderLeft(BorderStyle.THICK);
+						cellData.setCellStyle(dataStyleTemp);
+					}
+
+					if (columnIndex == columnIndexMax) {
+						dataStyleTemp = workbook.createCellStyle();
+						dataStyleTemp.cloneStyleFrom(dataStyle);
+						dataStyleTemp.setBorderRight(BorderStyle.THICK);
+						cellData.setCellStyle(dataStyleTemp);
+					}
+
+					if (rowIndexValues == rowIndexValuesMax) {
+						dataStyleTemp = workbook.createCellStyle();
+						dataStyleTemp.cloneStyleFrom(dataStyle);
+						dataStyleTemp.setBorderBottom(BorderStyle.THICK);
+						if (columnIndex == 0) {
+							dataStyleTemp.setBorderLeft(BorderStyle.THICK);
+						}
+						if (columnIndex == columnIndexMax) {
+							dataStyleTemp.setBorderRight(BorderStyle.THICK);
+						}
+						cellData.setCellStyle(dataStyleTemp);
+					}
 
 					if (columnsAutoSize.contains(cellHeader.getStringCellValue())) {
 						currentSheet.autoSizeColumn(columnIndex);
@@ -114,6 +157,21 @@ public class ExcelDocumentBuilder {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param values
+	 * @return
+	 */
+	private static final int rowVlauesSizeMax(Collection<LinkedList<ExcelCell>> values) {
+		int rowVlauesSizeMax = -1;
+		for (LinkedList<ExcelCell> value : values) {
+			if (rowVlauesSizeMax < value.size()) {
+				rowVlauesSizeMax = value.size();
+			}
+		}
+		return rowVlauesSizeMax;
+	}
 
 	/**
 	 * 
@@ -121,7 +179,11 @@ public class ExcelDocumentBuilder {
 	 * @param excelCell
 	 */
 	private static final void setCellValue(XSSFCell cell, ExcelCell excelCell) {
-
+		
+		if(excelCell == null) {
+			return;
+		}
+		
 		String stringValue = excelCell.getStringValue();
 		if (stringValue != null) {
 			cell.setCellValue(stringValue);
@@ -210,7 +272,7 @@ public class ExcelDocumentBuilder {
 		dataStyle.setAlignment(HorizontalAlignment.LEFT);
 		dataStyle.setWrapText(true);
 
-		dataStyle.setFillForegroundColor(PALE_BLUE);
+		dataStyle.setFillForegroundColor(LIGHT_BLUE);
 		dataStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
 		dataStyle.setBorderLeft(BorderStyle.THIN);
