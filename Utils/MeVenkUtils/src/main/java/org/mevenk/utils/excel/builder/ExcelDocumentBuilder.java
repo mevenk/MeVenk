@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFComment;
+import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -34,7 +35,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelDocumentBuilder {
 
 	public static final String EXCEL_FILE_NAME_SUFFIX = ".xslx";
-
+	
+	private static final String DATE_FORMAT_DATE = "DD/MM/YY HH:MM";
+	private static final String DATE_FORMAT_CALENDAR = "DD/MM/YY";
+	
 	private static final short BLACK = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
 	private static final short LIGHT_BLUE = HSSFColor.HSSFColorPredefined.PALE_BLUE.getIndex();
 	private static final short LIGHT_ORANGE = HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex();
@@ -186,14 +190,20 @@ public class ExcelDocumentBuilder {
 		if (excelCell == null) {
 			return;
 		}
-
+		
+		XSSFSheet sheet = cell.getSheet();
+		XSSFWorkbook workbookFromCell = sheet.getWorkbook();
+		XSSFCreationHelper creationHelper = workbookFromCell.getCreationHelper();
+		
 		String stringValue = null;
 		Double doubleValue = null;
 		Boolean booleanValue = null;
 		Calendar calendarValue = null;
 		Date dateValue = null;
 		RichTextString richTextStringValue = null;
-
+		
+		XSSFCellStyle dataStyleTemp = null;
+		
 		if ((stringValue = excelCell.getStringValue()) != null) {
 			cell.setCellValue(stringValue);
 		} else if ((doubleValue = excelCell.getDoubleValue()) != null) {
@@ -201,8 +211,16 @@ public class ExcelDocumentBuilder {
 		} else if ((booleanValue = excelCell.getBooleanValue()) != null) {
 			cell.setCellValue(booleanValue);
 		} else if ((calendarValue = excelCell.getCalendarValue()) != null) {
+			dataStyleTemp = workbookFromCell.createCellStyle();
+			dataStyleTemp.cloneStyleFrom(cell.getCellStyle());
+			dataStyleTemp.setDataFormat(creationHelper.createDataFormat().getFormat(DATE_FORMAT_CALENDAR));
+			cell.setCellStyle(dataStyleTemp);
 			cell.setCellValue(calendarValue);
 		} else if ((dateValue = excelCell.getDateValue()) != null) {
+			dataStyleTemp = workbookFromCell.createCellStyle();
+			dataStyleTemp.cloneStyleFrom(cell.getCellStyle());
+			dataStyleTemp.setDataFormat(creationHelper.createDataFormat().getFormat(DATE_FORMAT_DATE));
+			cell.setCellStyle(dataStyleTemp);
 			cell.setCellValue(dateValue);
 		} else if ((richTextStringValue = excelCell.getRichTextStringValue()) != null) {
 			cell.setCellValue(richTextStringValue);
@@ -212,9 +230,8 @@ public class ExcelDocumentBuilder {
 		if (excelComment == null) {
 			return;
 		}
-
-		XSSFSheet sheet = cell.getSheet();
-		XSSFClientAnchor clientAnchor = sheet.getWorkbook().getCreationHelper().createClientAnchor();
+		
+		XSSFClientAnchor clientAnchor = creationHelper.createClientAnchor();
 
 		CellAddress cellAddress = cell.getAddress();
 		int columnIndex = cellAddress.getColumn();
