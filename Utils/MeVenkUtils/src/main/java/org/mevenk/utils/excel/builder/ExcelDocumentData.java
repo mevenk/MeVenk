@@ -17,19 +17,26 @@ public class ExcelDocumentData {
 
 	private String fileName;
 
+	private ExcelProperties excelProperties;
+
 	/**
+	 * 
+	 * @param author
 	 * @param sheets
 	 */
-	public ExcelDocumentData(LinkedList<ExcelSheet> sheets) {
+	public ExcelDocumentData(String author, LinkedList<ExcelSheet> sheets) {
+		this.excelProperties = new ExcelProperties(author);
 		this.sheets = sheets;
 	}
 
 	/**
+	 * 
+	 * @param author
 	 * @param sheets
 	 * @param columnsAutoSize
 	 */
-	public ExcelDocumentData(LinkedList<ExcelSheet> sheets, LinkedHashSet<String> columnsAutoSize) {
-		this(sheets);
+	public ExcelDocumentData(String author, LinkedList<ExcelSheet> sheets, LinkedHashSet<String> columnsAutoSize) {
+		this(author, sheets);
 		this.columnsAutoSize.addAll(columnsAutoSize);
 	}
 
@@ -61,6 +68,13 @@ public class ExcelDocumentData {
 		this.fileName = fileName;
 	}
 
+	/**
+	 * @return the excelProperties
+	 */
+	public final ExcelProperties getExcelProperties() {
+		return excelProperties;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,7 +82,8 @@ public class ExcelDocumentData {
 	 */
 	@Override
 	public String toString() {
-		return "ExcelDocumentData [sheets=" + sheets + ", columnsAutoSize=" + columnsAutoSize + "]";
+		return "ExcelDocumentData [sheets=" + sheets + ", columnsAutoSize=" + columnsAutoSize + ", fileName=" + fileName
+				+ ", excelProperties=" + excelProperties + "]";
 	}
 
 }

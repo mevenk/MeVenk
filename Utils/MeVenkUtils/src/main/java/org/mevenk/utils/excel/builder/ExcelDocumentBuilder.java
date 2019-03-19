@@ -11,8 +11,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ooxml.POIXMLProperties;
+import org.apache.poi.ooxml.POIXMLProperties.CoreProperties;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -35,10 +38,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelDocumentBuilder {
 
 	public static final String EXCEL_FILE_NAME_SUFFIX = ".xslx";
-	
+
 	private static final String DATE_FORMAT_DATE = "DD/MM/YY HH:MM";
 	private static final String DATE_FORMAT_CALENDAR = "DD/MM/YY";
-	
+
 	private static final short BLACK = HSSFColor.HSSFColorPredefined.BLACK.getIndex();
 	private static final short LIGHT_BLUE = HSSFColor.HSSFColorPredefined.PALE_BLUE.getIndex();
 	private static final short LIGHT_ORANGE = HSSFColor.HSSFColorPredefined.LIGHT_ORANGE.getIndex();
@@ -58,6 +61,8 @@ public class ExcelDocumentBuilder {
 		this.columnsAutoSize = excelDocumentData.getColumnsAutoSize();
 
 		this.workbook = new XSSFWorkbook();
+
+		setProperties(workbook, excelDocumentData.getExcelProperties());
 		build();
 	}
 
@@ -76,10 +81,10 @@ public class ExcelDocumentBuilder {
 			sheetData = sheet.getData();
 
 			XSSFRow rowColumnHeader = null;
-			
+
 			int rowVlauesSizeMax = rowVlauesSizeMax(sheetData.values());
 			int columnIndexMax = sheetData.size() - 1;
-			
+
 			int columnIndex = -1;
 			for (Map.Entry<ExcelColumn, LinkedList<ExcelCell>> entry : sheetData.entrySet()) {
 
@@ -96,10 +101,10 @@ public class ExcelDocumentBuilder {
 
 				XSSFCell cellHeader = rowColumnHeader.createCell(columnIndex);
 				setCellValue(cellHeader, excelCellColumnHeader);
-				
+
 				boolean leftBorderRequired = excelCellColumnHeader.isLeftBorderRequired();
 				boolean rightBorderRequired = excelCellColumnHeader.isRightBorderRequired();
-				
+
 				setCellStyle(headerStyle, cellHeader, leftBorderRequired, rightBorderRequired);
 
 				currentSheet.autoSizeColumn(columnIndex);
@@ -109,11 +114,11 @@ public class ExcelDocumentBuilder {
 				int columnRowValuesIndexMax = columnValues.size() - 1;
 				XSSFCell cellData = null;
 				ExcelCell excelCellData = null;
-				
+
 				XSSFCellStyle dataStyleTemp = null;
-				
+
 				int rowIndexValuesMax = rowVlauesSizeMax - 1;
-				
+
 				for (int rowIndexValues = 0; rowIndexValues < rowVlauesSizeMax; rowIndexValues++) {
 
 					excelCellData = null;
@@ -156,9 +161,9 @@ public class ExcelDocumentBuilder {
 						}
 						cellData.setCellStyle(dataStyleTemp);
 					}
-					
+
 					setCellStyle(cellData.getCellStyle(), cellData, leftBorderRequired, rightBorderRequired);
-					
+
 					if (columnsAutoSize.contains(cellHeader.getStringCellValue())) {
 						currentSheet.autoSizeColumn(columnIndex);
 					}
@@ -166,12 +171,12 @@ public class ExcelDocumentBuilder {
 				}
 
 			}
-			
+
 			int[] freezePoint = sheet.getFreezePoint();
 			if (freezePoint != null) {
 				currentSheet.createFreezePane(freezePoint[0], freezePoint[1], freezePoint[2], freezePoint[3]);
 			}
-			
+
 		}
 
 	}
@@ -206,7 +211,7 @@ public class ExcelDocumentBuilder {
 		cell.setCellStyle(headerStyleTemp);
 
 	}
-	
+
 	/**
 	 * 
 	 * @param values
@@ -224,6 +229,23 @@ public class ExcelDocumentBuilder {
 
 	/**
 	 * 
+	 * @param workbookSetProperties
+	 * @param excelProperties
+	 */
+	private static final void setProperties(XSSFWorkbook workbookSetProperties, ExcelProperties excelProperties) {
+		POIXMLProperties poiXmlProperties = workbookSetProperties.getProperties();
+		CoreProperties coreProperties = poiXmlProperties.getCoreProperties();
+
+		coreProperties.setCreated(Optional.of(new Date()));
+		coreProperties.setCreator(excelProperties.getAuthor());
+		if (excelProperties.getTitle() != null) {
+			coreProperties.setTitle(excelProperties.getTitle());
+		}
+
+	}
+
+	/**
+	 * 
 	 * @param cell
 	 * @param excelCell
 	 */
@@ -232,20 +254,20 @@ public class ExcelDocumentBuilder {
 		if (excelCell == null) {
 			return;
 		}
-		
+
 		XSSFSheet sheet = cell.getSheet();
 		XSSFWorkbook workbookFromCell = sheet.getWorkbook();
 		XSSFCreationHelper creationHelper = workbookFromCell.getCreationHelper();
-		
+
 		String stringValue = null;
 		Double doubleValue = null;
 		Boolean booleanValue = null;
 		Calendar calendarValue = null;
 		Date dateValue = null;
 		RichTextString richTextStringValue = null;
-		
+
 		XSSFCellStyle dataStyleTemp = null;
-		
+
 		if ((stringValue = excelCell.getStringValue()) != null) {
 			cell.setCellValue(stringValue);
 		} else if ((doubleValue = excelCell.getDoubleValue()) != null) {
@@ -272,7 +294,7 @@ public class ExcelDocumentBuilder {
 		if (excelComment == null) {
 			return;
 		}
-		
+
 		XSSFClientAnchor clientAnchor = creationHelper.createClientAnchor();
 
 		CellAddress cellAddress = cell.getAddress();
