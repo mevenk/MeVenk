@@ -3,6 +3,7 @@
  */
 package org.mevenk.utils.excel.builder;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -14,6 +15,7 @@ public class ExcelSheet {
 
 	private String name;
 	private LinkedHashMap<ExcelColumn, LinkedList<ExcelCell>> data;
+	private int[] freezePoint;
 
 	/**
 	 * @param name
@@ -38,6 +40,36 @@ public class ExcelSheet {
 		return data;
 	}
 
+	/**
+	 * @return the freezePoint
+	 */
+	public final int[] getFreezePoint() {
+		return freezePoint;
+	}
+
+	/**
+	 * 
+	 * @param colSplit
+	 * @param rowSplit
+	 * @return
+	 */
+	public ExcelSheet freezePane(int colSplit, int rowSplit) {
+		return freezePane(colSplit, rowSplit, colSplit, rowSplit);
+	}
+
+	/**
+	 * 
+	 * @param colSplit
+	 * @param rowSplit
+	 * @param leftmostColumn
+	 * @param topRow
+	 * @return
+	 */
+	public ExcelSheet freezePane(int colSplit, int rowSplit, int leftmostColumn, int topRow) {
+		freezePoint = new int[] { colSplit, rowSplit, leftmostColumn, topRow };
+		return this;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -45,7 +77,7 @@ public class ExcelSheet {
 	 */
 	@Override
 	public String toString() {
-		return "ExcelSheet [name=" + name + ", data=" + data + "]";
+		return "ExcelSheet [name=" + name + ", data=" + data + ", freezePoint=" + Arrays.toString(freezePoint) + "]";
 	}
 
 }

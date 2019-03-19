@@ -166,7 +166,12 @@ public class ExcelDocumentBuilder {
 				}
 
 			}
-
+			
+			int[] freezePoint = sheet.getFreezePoint();
+			if (freezePoint != null) {
+				currentSheet.createFreezePane(freezePoint[0], freezePoint[1], freezePoint[2], freezePoint[3]);
+			}
+			
 		}
 
 	}
