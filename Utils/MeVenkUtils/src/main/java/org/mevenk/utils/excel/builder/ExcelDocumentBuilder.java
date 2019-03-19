@@ -64,7 +64,7 @@ public class ExcelDocumentBuilder {
 	private final void build() throws Exception {
 
 		XSSFSheet currentSheet = null;
-		LinkedHashMap<ExcelCell, LinkedList<ExcelCell>> sheetData = null;
+		LinkedHashMap<ExcelColumn, LinkedList<ExcelCell>> sheetData = null;
 
 		XSSFCellStyle headerStyle = createHeaderStyle(workbook);
 		XSSFCellStyle dataStyle = createDataStyle(workbook);
@@ -81,7 +81,7 @@ public class ExcelDocumentBuilder {
 			int columnIndexMax = sheetData.size() - 1;
 			
 			int columnIndex = -1;
-			for (Map.Entry<ExcelCell, LinkedList<ExcelCell>> entry : sheetData.entrySet()) {
+			for (Map.Entry<ExcelColumn, LinkedList<ExcelCell>> entry : sheetData.entrySet()) {
 
 				columnIndex++;
 
@@ -92,11 +92,15 @@ public class ExcelDocumentBuilder {
 					rowColumnHeader = currentSheet.createRow(rowIndex);
 				}
 
-				ExcelCell excelCellColumnHeader = entry.getKey();
+				ExcelColumn excelCellColumnHeader = entry.getKey();
 
 				XSSFCell cellHeader = rowColumnHeader.createCell(columnIndex);
 				setCellValue(cellHeader, excelCellColumnHeader);
-				cellHeader.setCellStyle(headerStyle);
+				
+				boolean leftBorderRequired = excelCellColumnHeader.isLeftBorderRequired();
+				boolean rightBorderRequired = excelCellColumnHeader.isRightBorderRequired();
+				
+				setCellStyle(headerStyle, cellHeader, leftBorderRequired, rightBorderRequired);
 
 				currentSheet.autoSizeColumn(columnIndex);
 
@@ -152,7 +156,9 @@ public class ExcelDocumentBuilder {
 						}
 						cellData.setCellStyle(dataStyleTemp);
 					}
-
+					
+					setCellStyle(cellData.getCellStyle(), cellData, leftBorderRequired, rightBorderRequired);
+					
 					if (columnsAutoSize.contains(cellHeader.getStringCellValue())) {
 						currentSheet.autoSizeColumn(columnIndex);
 					}
@@ -162,6 +168,37 @@ public class ExcelDocumentBuilder {
 			}
 
 		}
+
+	}
+
+	/**
+	 * 
+	 * @param cellStyleDefault
+	 * @param cell
+	 * @param leftBorderRequired
+	 * @param rightBorderRequired
+	 */
+	private void setCellStyle(XSSFCellStyle cellStyleDefault, XSSFCell cell, boolean leftBorderRequired,
+			boolean rightBorderRequired) {
+
+		if (!leftBorderRequired && !rightBorderRequired) {
+			cell.setCellStyle(cellStyleDefault);
+			return;
+		}
+
+		XSSFCellStyle headerStyleTemp;
+		headerStyleTemp = workbook.createCellStyle();
+		headerStyleTemp.cloneStyleFrom(cellStyleDefault);
+
+		if (leftBorderRequired) {
+			headerStyleTemp.setBorderLeft(BorderStyle.THICK);
+		}
+
+		if (rightBorderRequired) {
+			headerStyleTemp.setBorderRight(BorderStyle.THICK);
+		}
+
+		cell.setCellStyle(headerStyleTemp);
 
 	}
 	

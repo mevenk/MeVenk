@@ -13,13 +13,13 @@ import java.util.LinkedList;
 public class ExcelSheet {
 
 	private String name;
-	private LinkedHashMap<ExcelCell, LinkedList<ExcelCell>> data;
+	private LinkedHashMap<ExcelColumn, LinkedList<ExcelCell>> data;
 
 	/**
 	 * @param name
 	 * @param data
 	 */
-	public ExcelSheet(String name, LinkedHashMap<ExcelCell, LinkedList<ExcelCell>> data) {
+	public ExcelSheet(String name, LinkedHashMap<ExcelColumn, LinkedList<ExcelCell>> data) {
 		this.name = name.trim();
 		this.data = data;
 	}
@@ -34,7 +34,7 @@ public class ExcelSheet {
 	/**
 	 * @return the data
 	 */
-	public final LinkedHashMap<ExcelCell, LinkedList<ExcelCell>> getData() {
+	public final LinkedHashMap<ExcelColumn, LinkedList<ExcelCell>> getData() {
 		return data;
 	}
 
