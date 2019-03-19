@@ -220,9 +220,9 @@ public class ExcelDocumentBuilder {
 		int columnIndex = cellAddress.getColumn();
 		int rowIndex = cellAddress.getRow();
 		clientAnchor.setCol1(columnIndex + 1);
-		clientAnchor.setCol2(columnIndex + 3);
+		clientAnchor.setCol2(columnIndex + 4);
 		clientAnchor.setRow1(rowIndex + 1);
-		clientAnchor.setRow2(rowIndex + 5);
+		clientAnchor.setRow2(rowIndex + 3);
 
 		XSSFComment cellComment = sheet.createDrawingPatriarch().createCellComment(clientAnchor);
 
