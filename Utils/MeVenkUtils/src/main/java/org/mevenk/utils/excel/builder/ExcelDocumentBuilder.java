@@ -11,11 +11,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.ooxml.POIXMLProperties.CoreProperties;
+import org.apache.poi.ooxml.POIXMLProperties.CustomProperties;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -30,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.mevenk.utils.excel.builder.ExcelProperties.CustomPropertyValue;
 
 /**
  * @author venky
@@ -236,10 +237,31 @@ public class ExcelDocumentBuilder {
 		POIXMLProperties poiXmlProperties = workbookSetProperties.getProperties();
 		CoreProperties coreProperties = poiXmlProperties.getCoreProperties();
 
-		coreProperties.setCreated(Optional.of(new Date()));
 		coreProperties.setCreator(excelProperties.getAuthor());
 		if (excelProperties.getTitle() != null) {
 			coreProperties.setTitle(excelProperties.getTitle());
+		}
+
+		Map<String, CustomPropertyValue> customPropertiesFromExcelProperties = excelProperties.getCustomProperties();
+		if (!customPropertiesFromExcelProperties.isEmpty()) {
+			CustomProperties customProperties = poiXmlProperties.getCustomProperties();
+
+			String key;
+			Object value;
+			for (Map.Entry<String, CustomPropertyValue> property : customPropertiesFromExcelProperties.entrySet()) {
+				key = property.getKey();
+				value = property.getValue().getValue();
+				if (value instanceof String) {
+					customProperties.addProperty(key, (String) value);
+				} else if (value instanceof Double) {
+					customProperties.addProperty(key, (double) value);
+				} else if (value instanceof Integer) {
+					customProperties.addProperty(key, (int) value);
+				} else if (value instanceof Boolean) {
+					customProperties.addProperty(key, (boolean) value);
+				}
+			}
+
 		}
 
 	}
