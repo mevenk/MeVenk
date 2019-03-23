@@ -3,7 +3,6 @@
  */
 package org.mevenk.utils.excel.builder;
 
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 /**
@@ -13,11 +12,8 @@ import java.util.LinkedList;
 public class ExcelDocumentData {
 
 	private LinkedList<ExcelSheet> sheets;
-	private LinkedHashSet<String> columnsAutoSize = new LinkedHashSet<String>();
-
-	private String fileName;
-
 	private ExcelProperties excelProperties;
+	private String fileName;
 
 	/**
 	 * 
@@ -30,17 +26,6 @@ public class ExcelDocumentData {
 	}
 
 	/**
-	 * 
-	 * @param author
-	 * @param sheets
-	 * @param columnsAutoSize
-	 */
-	public ExcelDocumentData(String author, LinkedList<ExcelSheet> sheets, LinkedHashSet<String> columnsAutoSize) {
-		this(author, sheets);
-		this.columnsAutoSize.addAll(columnsAutoSize);
-	}
-
-	/**
 	 * @return the sheets
 	 */
 	public final LinkedList<ExcelSheet> getSheets() {
@@ -48,10 +33,10 @@ public class ExcelDocumentData {
 	}
 
 	/**
-	 * @return the columnsAutoSize
+	 * @return the excelProperties
 	 */
-	public final LinkedHashSet<String> getColumnsAutoSize() {
-		return columnsAutoSize;
+	public final ExcelProperties getExcelProperties() {
+		return excelProperties;
 	}
 
 	/**
@@ -68,13 +53,6 @@ public class ExcelDocumentData {
 		this.fileName = fileName;
 	}
 
-	/**
-	 * @return the excelProperties
-	 */
-	public final ExcelProperties getExcelProperties() {
-		return excelProperties;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,8 +60,8 @@ public class ExcelDocumentData {
 	 */
 	@Override
 	public String toString() {
-		return "ExcelDocumentData [sheets=" + sheets + ", columnsAutoSize=" + columnsAutoSize + ", fileName=" + fileName
-				+ ", excelProperties=" + excelProperties + "]";
+		return "ExcelDocumentData [sheets=" + sheets + ", excelProperties=" + excelProperties + ", fileName=" + fileName
+				+ "]";
 	}
 
 }

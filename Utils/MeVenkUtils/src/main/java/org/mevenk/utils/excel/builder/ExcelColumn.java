@@ -16,6 +16,7 @@ public class ExcelColumn extends ExcelCell {
 
 	private boolean leftBorderRequired;
 	private boolean rightBorderRequired;
+	private boolean autoSizeRequired;
 
 	/**
 	 * @param booleanValue
@@ -74,6 +75,22 @@ public class ExcelColumn extends ExcelCell {
 	}
 
 	/**
+	 * @return the autoSizeRequired
+	 */
+	public final boolean isAutoSizeRequired() {
+		return autoSizeRequired;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public final ExcelColumn autoSize() {
+		autoSizeRequired = true;
+		return this;
+	}
+
+	/**
 	 * 
 	 * @return
 	 */
@@ -98,8 +115,8 @@ public class ExcelColumn extends ExcelCell {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "ExcelColumn [leftBorderRequired=" + leftBorderRequired + ", rightBorderRequired="
-				+ rightBorderRequired + "]";
+		return "ExcelColumn [leftBorderRequired=" + leftBorderRequired + ", rightBorderRequired=" + rightBorderRequired
+				+ ", autoSizeRequired=" + autoSizeRequired + "]";
 	}
 
 }

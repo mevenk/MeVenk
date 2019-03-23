@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -50,7 +49,6 @@ public class ExcelDocumentBuilder {
 	private XSSFWorkbook workbook;
 
 	private LinkedList<ExcelSheet> sheets;
-	private LinkedHashSet<String> columnsAutoSize;
 
 	/**
 	 * 
@@ -59,7 +57,6 @@ public class ExcelDocumentBuilder {
 	private ExcelDocumentBuilder(ExcelDocumentData excelDocumentData) throws Exception {
 
 		this.sheets = excelDocumentData.getSheets();
-		this.columnsAutoSize = excelDocumentData.getColumnsAutoSize();
 
 		this.workbook = new XSSFWorkbook();
 
@@ -165,12 +162,12 @@ public class ExcelDocumentBuilder {
 
 					setCellStyle(cellData.getCellStyle(), cellData, leftBorderRequired, rightBorderRequired);
 
-					if (columnsAutoSize.contains(cellHeader.getStringCellValue())) {
-						currentSheet.autoSizeColumn(columnIndex);
-					}
-
 				}
-
+				
+				if (excelCellColumnHeader.isAutoSizeRequired()) {
+					currentSheet.autoSizeColumn(columnIndex);
+				}
+				
 			}
 
 			int[] freezePoint = sheet.getFreezePoint();
