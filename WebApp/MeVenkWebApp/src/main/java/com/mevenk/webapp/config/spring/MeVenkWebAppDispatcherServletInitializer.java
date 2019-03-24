@@ -27,9 +27,9 @@ import com.mevenk.webapp.config.spring.database.MeVenkDatabaseConfiguration;
  * @author venky
  *
  */
-public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MeVenkWebAppDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-	private static final Logger LOG = getLogger(DispatcherServletInitializer.class);
+	private static final Logger LOG = getLogger(MeVenkWebAppDispatcherServletInitializer.class);
 
 	private static final String SYSTEM_PROPERTY_NAME_DEPLOYMENT_SERVER_NAME = "deploymentServerName";
 
