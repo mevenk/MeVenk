@@ -5,6 +5,7 @@ package org.mevenk.utils.git.report.log;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,20 +20,32 @@ import org.mevenk.utils.git.report.log.data.GitLogData;
  *
  */
 public class GitLogReportGenerator {
-
+	
+	private static final String LINE_SEPARATOR = System.lineSeparator();
+	
 	private static final String URL_REPO_MEVENK = "https://github.com/mevenk/MeVenk.git";
 	private static final String GIT_DIR_PATH_LOCAL_MEVENK = "/home/vkolisetty/RABOTA/MeVenk/.git";
 
-	private static final void printLogData(LinkedHashSet<GitLogData> gitLogDatas) {
+	/**
+	 * 
+	 * @param gitLogDatas
+	 * @param outputStream
+	 * @throws Exception 
+	 */
+	private static final void printLogData(LinkedHashSet<GitLogData> gitLogDatas, OutputStream outputStream)
+			throws Exception {
+
+		write(LINE_SEPARATOR + new Date() + LINE_SEPARATOR + LINE_SEPARATOR, outputStream);
 
 		for (GitLogData log : gitLogDatas) {
 
-			System.out.println("commit " + log.getAbbreviatedCommit() + "	[" + log.getCommit() + "]");
-			System.out.println("Author: " + log.getAuthorName() + " <" + log.getAuthorEmail() + ">");
-			System.out.println("Date: " + log.getWhen());
-			System.out.println();
-			System.out.println("	" + log.getCommitFullMessage());
-			System.out.println();
+			write("commit " + log.getAbbreviatedCommit() + "	[" + log.getCommit() + "]" + LINE_SEPARATOR,
+					outputStream);
+			write("Author: " + log.getAuthorName() + " <" + log.getAuthorEmail() + ">" + LINE_SEPARATOR, outputStream);
+			write("Date: " + log.getWhen() + LINE_SEPARATOR, outputStream);
+			write(LINE_SEPARATOR, outputStream);
+			write("	" + log.getCommitFullMessage() + LINE_SEPARATOR, outputStream);
+			write(LINE_SEPARATOR, outputStream);
 
 			for (GitDiffData diff : log.getGitDiffDatas()) {
 
@@ -40,21 +53,33 @@ public class GitLogReportGenerator {
 
 				switch (changeType) {
 				case RENAME:
-					System.out.println(
-							MessageFormat.format("{0}	{1}  {2}", changeType, diff.getOldPath(), diff.getNewPath()));
+					write(MessageFormat.format("{0}		{1}  {2}", changeType, diff.getOldPath(), diff.getNewPath()),
+							outputStream);
+					write(LINE_SEPARATOR, outputStream);
 					break;
 
 				default:
-					System.out.println(MessageFormat.format("{0}	{1}", changeType, diff.getNewPath()));
+					write(MessageFormat.format("{0}		{1}", changeType, diff.getNewPath()), outputStream);
+					write(LINE_SEPARATOR, outputStream);
 					break;
 				}
 
 			}
 
-			System.out.println();
+			write(LINE_SEPARATOR, outputStream);
 
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param string
+	 * @param outputStream
+	 * @throws Exception
+	 */
+	private static final void write(String string, OutputStream outputStream) throws Exception {
+		outputStream.write(string.getBytes());
 	}
 
 	/**
@@ -74,7 +99,7 @@ public class GitLogReportGenerator {
 
 		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(
 				new File(GIT_DIR_PATH_LOCAL_MEVENK), "master", 7, since, new Date(), new FileOutputStream(fileDiff));
-		printLogData(generateLogReport);
+		printLogData(generateLogReport, System.out);
 
 	}
 
