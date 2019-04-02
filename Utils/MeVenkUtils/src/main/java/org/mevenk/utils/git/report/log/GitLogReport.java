@@ -3,6 +3,9 @@
  */
 package org.mevenk.utils.git.report.log;
 
+import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARATOR;
+import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
+
 import java.io.File;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -50,7 +53,7 @@ public class GitLogReport {
 	private static final LinkedHashSet<GitLogData> generateLogReport(Repository repository, String tree,
 			int abbreviateCommitLength, RevFilter revFilter, OutputStream outputStreamDiff) throws Exception {
 
-		boolean difffWriteRequired = outputStreamDiff != null;
+		boolean diffWriteRequired = outputStreamDiff != null;
 		Git git = null;
 		DiffFormatter diffFormatter = null;
 
@@ -67,7 +70,7 @@ public class GitLogReport {
 				throw new IllegalArgumentException("Nothing found for" + tree);
 			}
 
-			diffFormatter = difffWriteRequired ? new DiffFormatter(outputStreamDiff)
+			diffFormatter = diffWriteRequired ? new DiffFormatter(outputStreamDiff)
 					: new DiffFormatter(DisabledOutputStream.INSTANCE);
 			diffFormatter.setRepository(repository);
 			diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
@@ -75,6 +78,7 @@ public class GitLogReport {
 
 			Iterable<RevCommit> revCommits = git.log().add(objectIdTree).setRevFilter(revFilter).call();
 
+			GitLogData gitLogData = null;
 			LinkedHashSet<GitLogData> gLogDatas = new LinkedHashSet<GitLogData>();
 			LinkedHashSet<GitDiffData> gitDiffDatas = null;
 
@@ -91,6 +95,21 @@ public class GitLogReport {
 					continue;
 				}
 
+				gitLogData = new GitLogData(objectIdRevCommit.name(),
+						objectIdRevCommit.abbreviate(abbreviateCommitLength).name(), authordent.getName(),
+						authordent.getEmailAddress(), authordent.getWhen(), commit.getFullMessage());
+
+				if (diffWriteRequired) {
+					writeToStream("@@@@@@@@@@@@@@@@@@@@@@@@@" + LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
+
+					writeToStream("@@ commit " + gitLogData.getAbbreviatedCommit() + "	[" + gitLogData.getCommit()
+							+ "] @@" + LINE_SEPARATOR, outputStreamDiff);
+					writeToStream("@@ Author: " + gitLogData.getAuthorName() + " <" + gitLogData.getAuthorEmail()
+							+ "> @@" + LINE_SEPARATOR, outputStreamDiff);
+
+					writeToStream(LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
+				}
+
 				List<DiffEntry> diffEntries = diffFormatter.scan(commitParent.getTree(), commit.getTree());
 				gitDiffDatas = new LinkedHashSet<GitDiffData>(diffEntries.size());
 				for (DiffEntry diff : diffEntries) {
@@ -98,15 +117,12 @@ public class GitLogReport {
 					String oldPath = diff.getOldPath();
 					String newPath = diff.getNewPath();
 					gitDiffDatas.add(new GitDiffData(changeType, null, oldPath, newPath));
-					if (difffWriteRequired) {
+					if (diffWriteRequired) {
 						diffFormatter.format(diff);
 					}
 				}
 
-				gLogDatas.add(new GitLogData(objectIdRevCommit.name(),
-						objectIdRevCommit.abbreviate(abbreviateCommitLength).name(), authordent.getName(),
-						authordent.getEmailAddress(), authordent.getWhen(), commit.getFullMessage())
-								.addGitDiffDatas(gitDiffDatas));
+				gLogDatas.add(gitLogData.addGitDiffDatas(gitDiffDatas));
 			}
 
 			return gLogDatas;

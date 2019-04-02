@@ -3,6 +3,9 @@
  */
 package org.mevenk.utils.git.report.log;
 
+import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARATOR;
+import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -20,9 +23,7 @@ import org.mevenk.utils.git.report.log.data.GitLogData;
  *
  */
 public class GitLogReportGenerator {
-	
-	private static final String LINE_SEPARATOR = System.lineSeparator();
-	
+
 	private static final String URL_REPO_MEVENK = "https://github.com/mevenk/MeVenk.git";
 	private static final String GIT_DIR_PATH_LOCAL_MEVENK = "/home/vkolisetty/RABOTA/MeVenk/.git";
 
@@ -30,22 +31,23 @@ public class GitLogReportGenerator {
 	 * 
 	 * @param gitLogDatas
 	 * @param outputStream
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	private static final void printLogData(LinkedHashSet<GitLogData> gitLogDatas, OutputStream outputStream)
 			throws Exception {
 
-		write(LINE_SEPARATOR + new Date() + LINE_SEPARATOR + LINE_SEPARATOR, outputStream);
+		writeToStream(LINE_SEPARATOR + new Date() + LINE_SEPARATOR + LINE_SEPARATOR, outputStream);
 
 		for (GitLogData log : gitLogDatas) {
 
-			write("commit " + log.getAbbreviatedCommit() + "	[" + log.getCommit() + "]" + LINE_SEPARATOR,
+			writeToStream("commit " + log.getAbbreviatedCommit() + "	[" + log.getCommit() + "]" + LINE_SEPARATOR,
 					outputStream);
-			write("Author: " + log.getAuthorName() + " <" + log.getAuthorEmail() + ">" + LINE_SEPARATOR, outputStream);
-			write("Date: " + log.getWhen() + LINE_SEPARATOR, outputStream);
-			write(LINE_SEPARATOR, outputStream);
-			write("	" + log.getCommitFullMessage() + LINE_SEPARATOR, outputStream);
-			write(LINE_SEPARATOR, outputStream);
+			writeToStream("Author: " + log.getAuthorName() + " <" + log.getAuthorEmail() + ">" + LINE_SEPARATOR,
+					outputStream);
+			writeToStream("Date: " + log.getWhen() + LINE_SEPARATOR, outputStream);
+			writeToStream(LINE_SEPARATOR, outputStream);
+			writeToStream("	" + log.getCommitFullMessage() + LINE_SEPARATOR, outputStream);
+			writeToStream(LINE_SEPARATOR, outputStream);
 
 			for (GitDiffData diff : log.getGitDiffDatas()) {
 
@@ -53,33 +55,23 @@ public class GitLogReportGenerator {
 
 				switch (changeType) {
 				case RENAME:
-					write(MessageFormat.format("{0}		{1}  {2}", changeType, diff.getOldPath(), diff.getNewPath()),
-							outputStream);
-					write(LINE_SEPARATOR, outputStream);
+					writeToStream(MessageFormat.format("{0}		{1}  {2}", changeType, diff.getOldPath(),
+							diff.getNewPath()), outputStream);
+					writeToStream(LINE_SEPARATOR, outputStream);
 					break;
 
 				default:
-					write(MessageFormat.format("{0}		{1}", changeType, diff.getNewPath()), outputStream);
-					write(LINE_SEPARATOR, outputStream);
+					writeToStream(MessageFormat.format("{0}		{1}", changeType, diff.getNewPath()), outputStream);
+					writeToStream(LINE_SEPARATOR, outputStream);
 					break;
 				}
 
 			}
 
-			write(LINE_SEPARATOR, outputStream);
+			writeToStream(LINE_SEPARATOR, outputStream);
 
 		}
 
-	}
-
-	/**
-	 * 
-	 * @param string
-	 * @param outputStream
-	 * @throws Exception
-	 */
-	private static final void write(String string, OutputStream outputStream) throws Exception {
-		outputStream.write(string.getBytes());
 	}
 
 	/**
