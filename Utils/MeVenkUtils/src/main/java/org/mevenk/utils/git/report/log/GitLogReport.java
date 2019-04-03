@@ -44,14 +44,14 @@ public class GitLogReport {
 	 * 
 	 * @param repository
 	 * @param tree
-	 * @param abbreviateCommitLength
+	 * @param abbreviatedCommitLength
 	 * @param revFilter
 	 * @param outputStreamDiff
 	 * @return
 	 * @throws Exception
 	 */
 	private static final LinkedHashSet<GitLogData> generateLogReport(Repository repository, String tree,
-			int abbreviateCommitLength, RevFilter revFilter, OutputStream outputStreamDiff) throws Exception {
+			int abbreviatedCommitLength, RevFilter revFilter, OutputStream outputStreamDiff) throws Exception {
 
 		boolean diffWriteRequired = outputStreamDiff != null;
 		Git git = null;
@@ -96,7 +96,7 @@ public class GitLogReport {
 				}
 
 				gitLogData = new GitLogData(objectIdRevCommit.name(),
-						objectIdRevCommit.abbreviate(abbreviateCommitLength).name(), authordent.getName(),
+						objectIdRevCommit.abbreviate(abbreviatedCommitLength).name(), authordent.getName(),
 						authordent.getEmailAddress(), authordent.getWhen(), commit.getFullMessage());
 
 				if (diffWriteRequired) {
@@ -106,6 +106,7 @@ public class GitLogReport {
 							+ "] @@" + LINE_SEPARATOR, outputStreamDiff);
 					writeToStream("@@ Author: " + gitLogData.getAuthorName() + " <" + gitLogData.getAuthorEmail()
 							+ "> @@" + LINE_SEPARATOR, outputStreamDiff);
+					writeToStream("@@ Date: " + gitLogData.getWhen() + " @@" + LINE_SEPARATOR, outputStreamDiff);
 
 					writeToStream(LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
 				}
@@ -138,7 +139,7 @@ public class GitLogReport {
 	 * 
 	 * @param gitDir
 	 * @param tree
-	 * @param abbreviateCommitLength
+	 * @param abbreviatedCommitLength
 	 * @param since
 	 * @param until
 	 * @param outputStreamDiff
@@ -146,12 +147,12 @@ public class GitLogReport {
 	 * @throws Exception
 	 */
 	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
-			int abbreviateCommitLength, Date since, Date until, OutputStream outputStreamDiff) throws Exception {
+			int abbreviatedCommitLength, Date since, Date until, OutputStream outputStreamDiff) throws Exception {
 
 		Repository repository = new FileRepositoryBuilder().setGitDir(gitDir).setMustExist(true).build();
 		RevFilter between = CommitTimeRevFilter.between(since, until);
 
-		return generateLogReport(repository, tree, abbreviateCommitLength, between, outputStreamDiff);
+		return generateLogReport(repository, tree, abbreviatedCommitLength, between, outputStreamDiff);
 
 	}
 

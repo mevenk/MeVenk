@@ -7,10 +7,8 @@ import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARAT
 import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
@@ -23,9 +21,6 @@ import org.mevenk.utils.git.report.log.data.GitLogData;
  *
  */
 public class GitLogReportGenerator {
-
-	private static final String URL_REPO_MEVENK = "https://github.com/mevenk/MeVenk.git";
-	private static final String GIT_DIR_PATH_LOCAL_MEVENK = "/home/vkolisetty/RABOTA/MeVenk/.git";
 
 	/**
 	 * 
@@ -75,23 +70,39 @@ public class GitLogReportGenerator {
 	}
 
 	/**
-	 * @param args
+	 * 
+	 * @param outputStreamReport
+	 * @param gitDir
+	 * @param tree
+	 * @param abbreviatedCommitLength
+	 * @param outputStreamDiff
+	 * @param since
+	 * @param until
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws Exception {
-		generateFromFile();
+	public static final void generateReport(OutputStream outputStreamReport, File gitDir, String tree,
+			int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since, Date until) throws Exception {
+
+		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(gitDir, tree,
+				abbreviatedCommitLength, since, until, outputStreamDiff);
+		printLogData(generateLogReport, outputStreamReport);
 
 	}
 
-	private static void generateFromFile() throws Exception {
-		Date since = GitLogReport.SIMPLE_DATE_FORMAT_COMMIT_TIME.parse("2019-03-12");
+	/**
+	 * 
+	 * @param outputStreamReport
+	 * @param gitDir
+	 * @param tree
+	 * @param abbreviatedCommitLength
+	 * @param outputStreamDiff
+	 * @param since
+	 * @throws Exception
+	 */
+	public static final void generateReport(OutputStream outputStreamReport, File gitDir, String tree,
+			int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since) throws Exception {
 
-		File fileDiff = new File("/home/vkolisetty/RABOTA/Temporary/GitDiffs/GitLogReport_"
-				+ new SimpleDateFormat("d-M-y_H-m-s").format(new Date()) + ".diff");
-
-		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(
-				new File(GIT_DIR_PATH_LOCAL_MEVENK), "master", 7, since, new Date(), new FileOutputStream(fileDiff));
-		printLogData(generateLogReport, System.out);
+		generateReport(outputStreamReport, gitDir, tree, abbreviatedCommitLength, outputStreamDiff, since, new Date());
 
 	}
 
