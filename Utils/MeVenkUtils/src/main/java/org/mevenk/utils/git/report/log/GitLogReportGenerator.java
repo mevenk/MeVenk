@@ -76,6 +76,25 @@ public class GitLogReportGenerator {
 	 * @param tree
 	 * @param abbreviatedCommitLength
 	 * @param outputStreamDiff
+	 * @param maxNoOfCommits
+	 * @throws Exception
+	 */
+	public static final void generateReport(OutputStream outputStreamReport, File gitDir, String tree,
+			int abbreviatedCommitLength, OutputStream outputStreamDiff, int maxNoOfCommits) throws Exception {
+
+		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(gitDir, tree,
+				abbreviatedCommitLength, maxNoOfCommits, outputStreamDiff);
+		printLogData(generateLogReport, outputStreamReport);
+
+	}
+
+	/**
+	 * 
+	 * @param outputStreamReport
+	 * @param gitDir
+	 * @param tree
+	 * @param abbreviatedCommitLength
+	 * @param outputStreamDiff
 	 * @param since
 	 * @param until
 	 * @throws Exception

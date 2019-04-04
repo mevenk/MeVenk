@@ -7,7 +7,6 @@ import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARAT
 import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,9 +21,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.filter.CommitTimeRevFilter;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 import org.mevenk.utils.git.report.log.data.GitDiffData;
 import org.mevenk.utils.git.report.log.data.GitLogData;
@@ -137,12 +134,23 @@ public class GitLogReport {
 	}
 
 	/**
+	 * 
 	 * @param gitDir
+	 * @param tree
+	 * @param abbreviatedCommitLength
+	 * @param maxNoOfCommits
+	 * @param outputStreamDiff
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	private static Repository getRepository(File gitDir) throws IOException {
-		return new FileRepositoryBuilder().setGitDir(gitDir).setMustExist(true).build();
+	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
+			int abbreviatedCommitLength, int maxNoOfCommits, OutputStream outputStreamDiff) throws Exception {
+
+		Repository repository = GitLogRepositoryFunctions.getRepository(gitDir);
+		RevFilter maxCount = GitLogFilterFunctions.maxNoOfCommits(maxNoOfCommits);
+
+		return generateLogReport(repository, tree, abbreviatedCommitLength, maxCount, outputStreamDiff);
+
 	}
 
 	/**
@@ -159,8 +167,8 @@ public class GitLogReport {
 	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
 			int abbreviatedCommitLength, Date since, Date until, OutputStream outputStreamDiff) throws Exception {
 
-		Repository repository = getRepository(gitDir);
-		RevFilter between = CommitTimeRevFilter.between(since, until);
+		Repository repository = GitLogRepositoryFunctions.getRepository(gitDir);
+		RevFilter between = GitLogFilterFunctions.between(since, until);
 
 		return generateLogReport(repository, tree, abbreviatedCommitLength, between, outputStreamDiff);
 
