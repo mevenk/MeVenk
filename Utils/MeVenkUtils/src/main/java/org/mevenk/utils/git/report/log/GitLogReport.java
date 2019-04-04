@@ -7,6 +7,7 @@ import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARAT
 import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -136,6 +137,15 @@ public class GitLogReport {
 	}
 
 	/**
+	 * @param gitDir
+	 * @return
+	 * @throws IOException
+	 */
+	private static Repository getRepository(File gitDir) throws IOException {
+		return new FileRepositoryBuilder().setGitDir(gitDir).setMustExist(true).build();
+	}
+
+	/**
 	 * 
 	 * @param gitDir
 	 * @param tree
@@ -149,7 +159,7 @@ public class GitLogReport {
 	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
 			int abbreviatedCommitLength, Date since, Date until, OutputStream outputStreamDiff) throws Exception {
 
-		Repository repository = new FileRepositoryBuilder().setGitDir(gitDir).setMustExist(true).build();
+		Repository repository = getRepository(gitDir);
 		RevFilter between = CommitTimeRevFilter.between(since, until);
 
 		return generateLogReport(repository, tree, abbreviatedCommitLength, between, outputStreamDiff);
