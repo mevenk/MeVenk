@@ -23,12 +23,12 @@ public final class GitLogReportUtil {
 
 	/**
 	 * 
-	 * @param string
+	 * @param value
 	 * @param outputStream
 	 * @throws Exception
 	 */
-	public static final void writeToStream(String string, OutputStream outputStream) throws Exception {
-		outputStream.write(string.getBytes());
+	public static final void writeToStream(Object value, OutputStream outputStream) throws Exception {
+		outputStream.write(String.valueOf(value).getBytes());
 	}
 
 }
