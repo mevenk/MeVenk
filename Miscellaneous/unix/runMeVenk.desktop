@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Run MeVenk
+Comment=Run MeVenk launch activities
+Exec="/home/vkolisetty/RABOTA/MeVenk/Miscellaneous/unix/runMeVenk.sh"
+Terminal=false
+Type=Application
