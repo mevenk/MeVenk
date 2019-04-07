@@ -20,6 +20,8 @@ import org.mevenk.utils.git.report.log.GitLogReportGenerator.GitLogReportType;
  */
 public class GitReportLogTester {
 
+	private static final String COMMIT_URL_PREFIX = "https://github.com/mevenk/MeVenk/commit";
+
 	private static final String URL_REPO_MEVENK = "https://github.com/mevenk/MeVenk.git";
 	private static final String GIT_DIR_PATH_LOCAL_MEVENK = "/home/vkolisetty/RABOTA/MeVenk/.git";
 
@@ -61,22 +63,22 @@ public class GitReportLogTester {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		//generateReportFromGitDirectory();
-		generateReportFromGitDirectory(15);
+		// generateReportFromGitDirectory();
+		generateReportFromGitDirectory(1500);
 
 	}
 
 	private static void generateReportFromGitDirectory(int maxNoOfCommits) throws Exception {
 
 		GitLogReportGenerator.generateReport(REPORT_TYPE_HTML, outputStreamGitLogReportFileHTML, GIT_DIR, TREE_MASTER,
-				ABBREVIATED_COMMIT_LENGTH, getDiffFileOutputStream(), maxNoOfCommits);
+				ABBREVIATED_COMMIT_LENGTH, getDiffFileOutputStream(), maxNoOfCommits, COMMIT_URL_PREFIX);
 
 	}
 
 	private static void generateReportFromGitDirectory() throws Exception {
 
 		GitLogReportGenerator.generateReport(REPORT_TYPE_TEXT, outputStreamGitLogReportFile, GIT_DIR, TREE_MASTER,
-				ABBREVIATED_COMMIT_LENGTH, getDiffFileOutputStream(), SINCE);
+				ABBREVIATED_COMMIT_LENGTH, getDiffFileOutputStream(), SINCE, COMMIT_URL_PREFIX);
 	}
 
 }

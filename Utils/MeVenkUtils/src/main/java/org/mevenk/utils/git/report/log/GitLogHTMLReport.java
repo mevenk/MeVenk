@@ -101,6 +101,10 @@ abstract class GitLogHTMLReport {
 					filePath = MessageFormat.format("{0}  {1}", diff.getOldPath(), diff.getNewPath());
 					break;
 
+				case DELETE:
+					filePath = diff.getOldPath();
+					break;
+
 				default:
 					filePath = diff.getNewPath();
 					break;
@@ -169,17 +173,6 @@ abstract class GitLogHTMLReport {
 	static final void generateHTMLReport(OutputStream outputStreamReport, LinkedHashSet<GitLogData> gitlogs,
 			String commitURLPrefix) throws Exception {
 		GitLogReportUtil.writeToStream(generateHTMLSource(gitlogs, commitURLPrefix), outputStreamReport);
-	}
-
-	/**
-	 * 
-	 * @param outputStreamReport
-	 * @param gitlogs
-	 * @throws Exception
-	 */
-	static final void generateHTMLReport(OutputStream outputStreamReport, LinkedHashSet<GitLogData> gitlogs)
-			throws Exception {
-		generateHTMLReport(outputStreamReport, gitlogs, null);
 	}
 
 }

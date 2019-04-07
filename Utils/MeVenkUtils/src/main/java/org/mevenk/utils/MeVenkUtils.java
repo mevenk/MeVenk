@@ -30,9 +30,10 @@ public abstract class MeVenkUtils {
 	}
 
 	/**
+	 * @throws Throwable 
 	 * 
 	 */
-	private static final void run() {
+	private static final void run() throws Throwable {
 
 		System.out.println();
 		System.out.println(new Date());

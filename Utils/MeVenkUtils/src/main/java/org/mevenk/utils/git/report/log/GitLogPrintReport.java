@@ -60,6 +60,11 @@ abstract class GitLogPrintReport {
 					writeToStream(LINE_SEPARATOR, outputStream);
 					break;
 
+				case DELETE:
+					writeToStream(MessageFormat.format("{0}		{1}", changeType, diff.getOldPath()), outputStream);
+					writeToStream(LINE_SEPARATOR, outputStream);
+					break;
+
 				default:
 					writeToStream(MessageFormat.format("{0}		{1}", changeType, diff.getNewPath()), outputStream);
 					writeToStream(LINE_SEPARATOR, outputStream);

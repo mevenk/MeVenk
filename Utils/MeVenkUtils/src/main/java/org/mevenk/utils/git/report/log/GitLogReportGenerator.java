@@ -29,15 +29,16 @@ public class GitLogReportGenerator {
 	 * @param abbreviatedCommitLength
 	 * @param outputStreamDiff
 	 * @param maxNoOfCommits
+	 * @param commitURLPrefix
 	 * @throws Exception
 	 */
 	public static final void generateReport(GitLogReportType reportType, OutputStream outputStreamReport, File gitDir,
-			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, int maxNoOfCommits)
-			throws Exception {
+			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, int maxNoOfCommits,
+			String commitURLPrefix) throws Exception {
 
 		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(gitDir, tree,
 				abbreviatedCommitLength, maxNoOfCommits, outputStreamDiff);
-		generateReport(reportType, outputStreamReport, generateLogReport);
+		generateReport(reportType, outputStreamReport, generateLogReport, commitURLPrefix);
 
 	}
 
@@ -51,15 +52,16 @@ public class GitLogReportGenerator {
 	 * @param outputStreamDiff
 	 * @param since
 	 * @param until
+	 * @param commitURLPrefix
 	 * @throws Exception
 	 */
 	public static final void generateReport(GitLogReportType reportType, OutputStream outputStreamReport, File gitDir,
-			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since, Date until)
-			throws Exception {
+			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since, Date until,
+			String commitURLPrefix) throws Exception {
 
 		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(gitDir, tree,
 				abbreviatedCommitLength, since, until, outputStreamDiff);
-		generateReport(reportType, outputStreamReport, generateLogReport);
+		generateReport(reportType, outputStreamReport, generateLogReport, commitURLPrefix);
 
 	}
 
@@ -72,13 +74,15 @@ public class GitLogReportGenerator {
 	 * @param abbreviatedCommitLength
 	 * @param outputStreamDiff
 	 * @param since
+	 * @param commitURLPrefix
 	 * @throws Exception
 	 */
 	public static final void generateReport(GitLogReportType reportType, OutputStream outputStreamReport, File gitDir,
-			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since) throws Exception {
+			String tree, int abbreviatedCommitLength, OutputStream outputStreamDiff, Date since, String commitURLPrefix)
+			throws Exception {
 
 		generateReport(reportType, outputStreamReport, gitDir, tree, abbreviatedCommitLength, outputStreamDiff, since,
-				new Date());
+				new Date(), commitURLPrefix);
 
 	}
 
@@ -87,14 +91,15 @@ public class GitLogReportGenerator {
 	 * @param reportType
 	 * @param outputStreamReport
 	 * @param gitlogs
+	 * @param commitURLPrefix
 	 * @throws Exception
 	 */
 	private static void generateReport(GitLogReportType reportType, OutputStream outputStreamReport,
-			LinkedHashSet<GitLogData> gitlogs) throws Exception {
+			LinkedHashSet<GitLogData> gitlogs, String commitURLPrefix) throws Exception {
 
 		switch (reportType) {
 		case HTML:
-			GitLogHTMLReport.generateHTMLReport(outputStreamReport, gitlogs);
+			GitLogHTMLReport.generateHTMLReport(outputStreamReport, gitlogs, commitURLPrefix);
 			break;
 		case TEXT:
 			GitLogPrintReport.printLogData(gitlogs, outputStreamReport);

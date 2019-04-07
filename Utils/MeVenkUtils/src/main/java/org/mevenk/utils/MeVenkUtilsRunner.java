@@ -9,6 +9,6 @@ package org.mevenk.utils;
  */
 public interface MeVenkUtilsRunner {
 
-	public void run();
+	public void run() throws Throwable;
 
 }
