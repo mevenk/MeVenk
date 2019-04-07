@@ -21,6 +21,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 import org.mevenk.utils.git.report.log.data.GitDiffData;
@@ -90,7 +91,6 @@ public class GitLogReport {
 					commitParent = commit.getParent(0);
 				} catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
 					commitParent = null;
-					continue;
 				}
 
 				gitLogData = new GitLogData(objectIdRevCommit.name(),
@@ -109,7 +109,8 @@ public class GitLogReport {
 					writeToStream(LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
 				}
 
-				List<DiffEntry> diffEntries = diffFormatter.scan(commitParent.getTree(), commit.getTree());
+				RevTree treeParent = commitParent != null ? commitParent.getTree() : null;
+				List<DiffEntry> diffEntries = diffFormatter.scan(treeParent, commit.getTree());
 				gitDiffDatas = new LinkedHashSet<GitDiffData>(diffEntries.size());
 				for (DiffEntry diff : diffEntries) {
 					String changeType = diff.getChangeType().name();
