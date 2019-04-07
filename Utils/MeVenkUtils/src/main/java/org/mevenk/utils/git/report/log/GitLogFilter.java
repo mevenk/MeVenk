@@ -16,12 +16,12 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
  * @author vkolisetty
  *
  */
-abstract class GitLogFilterFunctions {
+abstract class GitLogFilter {
 
 	/**
 	 * 
 	 */
-	public GitLogFilterFunctions() {
+	public GitLogFilter() {
 		// Prevent Object instantiation
 	}
 

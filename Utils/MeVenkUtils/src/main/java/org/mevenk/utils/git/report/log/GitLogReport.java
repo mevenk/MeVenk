@@ -146,8 +146,8 @@ public class GitLogReport {
 	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
 			int abbreviatedCommitLength, int maxNoOfCommits, OutputStream outputStreamDiff) throws Exception {
 
-		Repository repository = GitLogRepositoryFunctions.getRepository(gitDir);
-		RevFilter maxCount = GitLogFilterFunctions.maxNoOfCommits(maxNoOfCommits);
+		Repository repository = GitLogRepository.getRepository(gitDir);
+		RevFilter maxCount = GitLogFilter.maxNoOfCommits(maxNoOfCommits);
 
 		return generateLogReport(repository, tree, abbreviatedCommitLength, maxCount, outputStreamDiff);
 
@@ -167,8 +167,8 @@ public class GitLogReport {
 	public static final LinkedHashSet<GitLogData> generateLogReport(File gitDir, String tree,
 			int abbreviatedCommitLength, Date since, Date until, OutputStream outputStreamDiff) throws Exception {
 
-		Repository repository = GitLogRepositoryFunctions.getRepository(gitDir);
-		RevFilter between = GitLogFilterFunctions.between(since, until);
+		Repository repository = GitLogRepository.getRepository(gitDir);
+		RevFilter between = GitLogFilter.between(since, until);
 
 		return generateLogReport(repository, tree, abbreviatedCommitLength, between, outputStreamDiff);
 

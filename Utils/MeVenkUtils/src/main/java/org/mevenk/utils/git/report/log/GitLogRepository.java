@@ -13,12 +13,12 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
  * @author vkolisetty
  *
  */
-abstract class GitLogRepositoryFunctions {
+abstract class GitLogRepository {
 
 	/**
 	 * 
 	 */
-	private GitLogRepositoryFunctions() {
+	private GitLogRepository() {
 		// Prevent Object instantiation
 	}
 
