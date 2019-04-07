@@ -23,6 +23,13 @@ abstract class GitLogPrintReport {
 
 	/**
 	 * 
+	 */
+	private GitLogPrintReport() {
+		// Prevent instantiation
+	}
+
+	/**
+	 * 
 	 * @param gitLogDatas
 	 * @param outputStream
 	 * @throws Exception
