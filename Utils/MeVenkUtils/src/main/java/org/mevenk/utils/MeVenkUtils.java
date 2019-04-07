@@ -3,6 +3,8 @@
  */
 package org.mevenk.utils;
 
+import static java.lang.System.exit;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -44,6 +46,9 @@ public abstract class MeVenkUtils {
 		Scanner scanner = new Scanner(System.in);
 		int selected = scanner.nextInt();
 		scanner.close();
+		if (!modules.containsKey(selected)) {
+			throw new InvalidInputException("Valid inputs: " + modules.keySet());
+		}
 		modules.get(selected).getMeVenkUtilsRunner().run();
 
 	}
@@ -63,7 +68,22 @@ public abstract class MeVenkUtils {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		run();
+		int exitStatus = 1;
+		try {
+			run();
+			exitStatus = 0;
+		} catch (InvalidInputException invalidInputException) {
+			System.out.println();
+			System.out.println("Invalid Argument");
+			System.out.println(invalidInputException.getMessage());
+			exitStatus = 1;
+		} catch (Throwable throwable) {
+			System.out.println();
+			System.out.println("ERROR!!!");
+			exitStatus = 2;
+		} finally {
+			exit(exitStatus);
+		}
 
 	}
 
