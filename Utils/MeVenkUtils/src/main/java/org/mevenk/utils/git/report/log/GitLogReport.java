@@ -3,8 +3,8 @@
  */
 package org.mevenk.utils.git.report.log;
 
-import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARATOR;
-import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.writeToStream;
+import static org.mevenk.utils.helper.MeVenkUtilsHelper.LINE_SEPARATOR;
+import static org.mevenk.utils.helper.MeVenkUtilsHelper.writeToStream;
 
 import java.io.File;
 import java.io.OutputStream;

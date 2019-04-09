@@ -3,7 +3,7 @@
  */
 package org.mevenk.utils.git.report.log;
 
-import static org.mevenk.utils.git.report.log.util.GitLogReportUtil.LINE_SEPARATOR;
+import static org.mevenk.utils.helper.MeVenkUtilsHelper.LINE_SEPARATOR;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,7 @@ import org.apache.commons.text.StringSubstitutor;
 import org.mevenk.utils.git.report.log.data.GitDiffData;
 import org.mevenk.utils.git.report.log.data.GitDiffData.ChangeType;
 import org.mevenk.utils.git.report.log.data.GitLogData;
-import org.mevenk.utils.git.report.log.util.GitLogReportUtil;
+import org.mevenk.utils.helper.MeVenkUtilsHelper;
 
 /**
  * @author vkolisetty
@@ -172,7 +172,7 @@ abstract class GitLogHTMLReport {
 	 */
 	static final void generateHTMLReport(OutputStream outputStreamReport, LinkedHashSet<GitLogData> gitlogs,
 			String commitURLPrefix) throws Exception {
-		GitLogReportUtil.writeToStream(generateHTMLSource(gitlogs, commitURLPrefix), outputStreamReport);
+		MeVenkUtilsHelper.writeToStream(generateHTMLSource(gitlogs, commitURLPrefix), outputStreamReport);
 	}
 
 }

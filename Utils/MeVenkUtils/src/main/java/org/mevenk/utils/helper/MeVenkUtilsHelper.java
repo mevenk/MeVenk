@@ -1,15 +1,16 @@
 /**
  * 
  */
-package org.mevenk.utils.git.report.log.util;
+package org.mevenk.utils.helper;
 
+import java.io.File;
 import java.io.OutputStream;
 
 /**
  * @author vkolisetty
  *
  */
-public final class GitLogReportUtil {
+public final class MeVenkUtilsHelper {
 
 	public static final String LINE_SEPARATOR = System.lineSeparator();
 
@@ -17,8 +18,18 @@ public final class GitLogReportUtil {
 	 * 
 	 * @throws IllegalAccessException
 	 */
-	private GitLogReportUtil() throws IllegalAccessException {
+	private MeVenkUtilsHelper() throws IllegalAccessException {
 		throw new IllegalAccessException("Utility class");
+	}
+
+	/**
+	 * @param directory
+	 * @throws IllegalArgumentException
+	 */
+	public static final void verifyIfDirectory(File directory) throws IllegalArgumentException {
+		if (!directory.isDirectory()) {
+			throw new IllegalArgumentException(directory.getName() + " is not a directory");
+		}
 	}
 
 	/**
