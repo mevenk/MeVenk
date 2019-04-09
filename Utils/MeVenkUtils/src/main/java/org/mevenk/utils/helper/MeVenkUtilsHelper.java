@@ -23,13 +23,19 @@ public final class MeVenkUtilsHelper {
 	}
 
 	/**
+	 * 
 	 * @param directory
+	 * @param throwException
+	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public static final void verifyIfDirectory(File directory) throws IllegalArgumentException {
-		if (!directory.isDirectory()) {
+	public static final boolean verifyIfDirectory(File directory, boolean throwException)
+			throws IllegalArgumentException {
+		boolean isDirectory = directory.isDirectory();
+		if (!isDirectory && throwException) {
 			throw new IllegalArgumentException(directory.getName() + " is not a directory");
 		}
+		return isDirectory;
 	}
 
 	/**
