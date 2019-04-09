@@ -14,9 +14,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
@@ -51,8 +55,6 @@ public class GitLogReport {
 	 */
 	private static final LinkedHashSet<GitLogData> generateLogReport(Repository repository, String tree,
 			int abbreviatedCommitLength, RevFilter revFilter, OutputStream outputStreamDiff) throws Exception {
-
-		boolean diffWriteRequired = outputStreamDiff != null;
 		Git git = null;
 		DiffFormatter diffFormatter = null;
 
@@ -67,63 +69,11 @@ public class GitLogReport {
 				throw new IllegalArgumentException("Nothing found for" + tree);
 			}
 
-			diffFormatter = diffWriteRequired ? new DiffFormatter(outputStreamDiff)
-					: new DiffFormatter(DisabledOutputStream.INSTANCE);
-			diffFormatter.setRepository(repository);
-			diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
-			diffFormatter.setDetectRenames(true);
+			diffFormatter = getDiffFormatter(repository, outputStreamDiff);
 
-			Iterable<RevCommit> revCommits = git.log().add(objectIdTree).setRevFilter(revFilter).call();
+			Iterable<RevCommit> revCommits = getRevCommits(revFilter, git, objectIdTree);
 
-			GitLogData gitLogData = null;
-			LinkedHashSet<GitLogData> gLogDatas = new LinkedHashSet<GitLogData>();
-			LinkedHashSet<GitDiffData> gitDiffDatas = null;
-
-			for (RevCommit commit : revCommits) {
-
-				PersonIdent authordent = commit.getAuthorIdent();
-				ObjectId objectIdRevCommit = commit.getId();
-
-				RevCommit commitParent = null;
-				try {
-					commitParent = commit.getParent(0);
-				} catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
-					commitParent = null;
-				}
-
-				gitLogData = new GitLogData(objectIdRevCommit.name(),
-						objectIdRevCommit.abbreviate(abbreviatedCommitLength).name(), authordent.getName(),
-						authordent.getEmailAddress(), authordent.getWhen(), commit.getFullMessage());
-
-				if (diffWriteRequired) {
-					writeToStream("@@@@@@@@@@@@@@@@@@@@@@@@@" + LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
-
-					writeToStream("@@ commit " + gitLogData.getAbbreviatedCommit() + "	[" + gitLogData.getCommit()
-							+ "] @@" + LINE_SEPARATOR, outputStreamDiff);
-					writeToStream("@@ Author: " + gitLogData.getAuthorName() + " <" + gitLogData.getAuthorEmail()
-							+ "> @@" + LINE_SEPARATOR, outputStreamDiff);
-					writeToStream("@@ Date: " + gitLogData.getWhen() + " @@" + LINE_SEPARATOR, outputStreamDiff);
-
-					writeToStream(LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
-				}
-
-				RevTree treeParent = commitParent != null ? commitParent.getTree() : null;
-				List<DiffEntry> diffEntries = diffFormatter.scan(treeParent, commit.getTree());
-				gitDiffDatas = new LinkedHashSet<GitDiffData>(diffEntries.size());
-				for (DiffEntry diff : diffEntries) {
-					String changeType = diff.getChangeType().name();
-					String oldPath = diff.getOldPath();
-					String newPath = diff.getNewPath();
-					gitDiffDatas.add(new GitDiffData(changeType, null, oldPath, newPath));
-					if (diffWriteRequired) {
-						diffFormatter.format(diff);
-					}
-				}
-
-				gLogDatas.add(gitLogData.addGitDiffDatas(gitDiffDatas));
-			}
-
-			return gLogDatas;
+			return generateGitLogs(abbreviatedCommitLength, outputStreamDiff, diffFormatter, revCommits);
 
 		} finally {
 			if (diffFormatter != null) {
@@ -134,6 +84,102 @@ public class GitLogReport {
 			}
 		}
 
+	}
+
+	/**
+	 * @param revFilter
+	 * @param git
+	 * @param objectIdTree
+	 * @return
+	 * @throws GitAPIException
+	 * @throws NoHeadException
+	 * @throws MissingObjectException
+	 * @throws IncorrectObjectTypeException
+	 */
+	private static Iterable<RevCommit> getRevCommits(RevFilter revFilter, Git git, ObjectId objectIdTree)
+			throws GitAPIException, NoHeadException, MissingObjectException, IncorrectObjectTypeException {
+		return git.log().add(objectIdTree).setRevFilter(revFilter).call();
+	}
+
+	/**
+	 * 
+	 * @param abbreviatedCommitLength
+	 * @param outputStreamDiff
+	 * @param diffFormatter
+	 * @param revCommits
+	 * @return
+	 * @throws Exception
+	 */
+	private static LinkedHashSet<GitLogData> generateGitLogs(int abbreviatedCommitLength, OutputStream outputStreamDiff,
+			DiffFormatter diffFormatter, Iterable<RevCommit> revCommits) throws Exception {
+
+		boolean diffWriteRequired = outputStreamDiff != null && !(outputStreamDiff instanceof DisabledOutputStream);
+
+		GitLogData gitLogData = null;
+		LinkedHashSet<GitLogData> gitLogDatas = new LinkedHashSet<GitLogData>();
+		LinkedHashSet<GitDiffData> gitDiffDatas = null;
+
+		for (RevCommit commit : revCommits) {
+
+			PersonIdent authordent = commit.getAuthorIdent();
+			ObjectId objectIdRevCommit = commit.getId();
+
+			RevCommit commitParent = null;
+			try {
+				commitParent = commit.getParent(0);
+			} catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+				commitParent = null;
+			}
+
+			gitLogData = new GitLogData(objectIdRevCommit.name(),
+					objectIdRevCommit.abbreviate(abbreviatedCommitLength).name(), authordent.getName(),
+					authordent.getEmailAddress(), authordent.getWhen(), commit.getFullMessage());
+
+			if (diffWriteRequired) {
+				writeToStream("@@@@@@@@@@@@@@@@@@@@@@@@@" + LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
+
+				writeToStream("@@ commit " + gitLogData.getAbbreviatedCommit() + "	[" + gitLogData.getCommit() + "] @@"
+						+ LINE_SEPARATOR, outputStreamDiff);
+				writeToStream("@@ Author: " + gitLogData.getAuthorName() + " <" + gitLogData.getAuthorEmail() + "> @@"
+						+ LINE_SEPARATOR, outputStreamDiff);
+				writeToStream("@@ Date: " + gitLogData.getWhen() + " @@" + LINE_SEPARATOR, outputStreamDiff);
+
+				writeToStream(LINE_SEPARATOR + LINE_SEPARATOR, outputStreamDiff);
+			}
+
+			RevTree treeParent = commitParent != null ? commitParent.getTree() : null;
+			List<DiffEntry> diffEntries = diffFormatter.scan(treeParent, commit.getTree());
+			gitDiffDatas = new LinkedHashSet<GitDiffData>(diffEntries.size());
+			for (DiffEntry diff : diffEntries) {
+				String changeType = diff.getChangeType().name();
+				String oldPath = diff.getOldPath();
+				String newPath = diff.getNewPath();
+				gitDiffDatas.add(new GitDiffData(changeType, null, oldPath, newPath));
+				if (diffWriteRequired) {
+					diffFormatter.format(diff);
+				}
+			}
+
+			gitLogDatas.add(gitLogData.addGitDiffDatas(gitDiffDatas));
+		}
+
+		return gitLogDatas;
+	}
+
+	/**
+	 * 
+	 * @param repository
+	 * @param outputStreamDiff
+	 * @return
+	 */
+	private static DiffFormatter getDiffFormatter(Repository repository, OutputStream outputStreamDiff) {
+		DiffFormatter diffFormatter;
+		diffFormatter = outputStreamDiff != null ? new DiffFormatter(outputStreamDiff)
+				: new DiffFormatter(DisabledOutputStream.INSTANCE);
+		diffFormatter.setRepository(repository);
+		diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
+		diffFormatter.setDetectRenames(true);
+		return diffFormatter;
 	}
 
 	/**
