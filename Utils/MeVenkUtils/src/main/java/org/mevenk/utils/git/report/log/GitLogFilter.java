@@ -26,6 +26,56 @@ abstract class GitLogFilter {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	static final RevFilter none() {
+		return RevFilter.NONE;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	static final RevFilter noMerges() {
+		return RevFilter.NO_MERGES;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	static final RevFilter mergeBase() {
+		return RevFilter.MERGE_BASE;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	static final RevFilter onlyMerges() {
+		return RevFilter.ONLY_MERGES;
+	}
+
+	/**
+	 * 
+	 * @param before
+	 * @return
+	 */
+	static final RevFilter before(Date before) {
+		return CommitTimeRevFilter.before(before);
+	}
+
+	/**
+	 * 
+	 * @param afer
+	 * @return
+	 */
+	static final RevFilter after(Date after) {
+		return CommitTimeRevFilter.after(after);
+	}
+
+	/**
 	 * @param since
 	 * @param until
 	 * @return
