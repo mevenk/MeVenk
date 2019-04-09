@@ -62,9 +62,7 @@ public class GitLogReport {
 
 			LOG.info("Reading logs for " + tree);
 
-			String treeName = "remotes/origin/" + tree;
-
-			ObjectId objectIdTree = repository.resolve(treeName);
+			ObjectId objectIdTree = repository.resolve(tree);
 			if (objectIdTree == null || objectIdTree.getName() == null) {
 				throw new IllegalArgumentException("Nothing found for" + tree);
 			}
@@ -128,8 +126,12 @@ public class GitLogReport {
 			return gLogDatas;
 
 		} finally {
-			diffFormatter.close();
-			git.close();
+			if (diffFormatter != null) {
+				diffFormatter.close();
+			}
+			if (git != null) {
+				git.close();
+			}
 		}
 
 	}
