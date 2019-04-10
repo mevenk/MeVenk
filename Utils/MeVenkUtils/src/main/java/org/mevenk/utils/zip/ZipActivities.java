@@ -65,7 +65,6 @@ class ZipActivities {
 		}
 
 		zipOutputStream.close();
-		outputStream.close();
 
 	}
 
