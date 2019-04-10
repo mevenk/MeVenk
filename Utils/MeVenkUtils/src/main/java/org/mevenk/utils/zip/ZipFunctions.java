@@ -7,8 +7,11 @@ import static org.mevenk.utils.helper.MeVenkUtilsHelper.verifyIfDirectory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.LinkedHashSet;
 
 /**
  * @author vkolisetty
@@ -72,8 +75,8 @@ public final class ZipFunctions {
 	 * @return
 	 * @throws Exception
 	 */
-	public static InputStream[] unzip(InputStream inputStreamZip) throws Exception {
-		return null;
+	public static LinkedHashSet<ZipEntity> unzip(InputStream inputStreamZip) throws Exception {
+		return ZipActivities.unzip(inputStreamZip);
 	}
 
 	/**
@@ -84,6 +87,37 @@ public final class ZipFunctions {
 	 */
 	public static void unzip(InputStream inputStreamZip, File destinationDirectory) throws Exception {
 		verifyIfDirectory(destinationDirectory, true);
+
+		LinkedHashSet<ZipEntity> zipEntries = unzip(inputStreamZip);
+
+		File newFile = null;
+		FileOutputStream fileOutputStream = null;
+		for (ZipEntity entry : zipEntries) {
+			newFile = createDestinationFile(destinationDirectory, entry.getName());
+			fileOutputStream = new FileOutputStream(newFile);
+			fileOutputStream.write(entry.getBytes());
+			fileOutputStream.close();
+		}
+
 	}
 
+	/**
+	 * 
+	 * @param destinationDirectory
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
+	private static File createDestinationFile(File destinationDirectory, String fileName) throws Exception {
+		File destinationFile = new File(destinationDirectory, fileName);
+
+		String destinationDirectoryPath = destinationDirectory.getCanonicalPath();
+		String destinationFilePath = destinationFile.getCanonicalPath();
+
+		if (!destinationFilePath.startsWith(destinationDirectoryPath + File.separator)) {
+			throw new IOException("Entry is outside of the target dir: " + fileName);
+		}
+
+		return destinationFile;
+	}
 }
