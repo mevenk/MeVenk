@@ -13,6 +13,7 @@ import java.io.OutputStream;
 public final class MeVenkUtilsHelper {
 
 	public static final String LINE_SEPARATOR = System.lineSeparator();
+	public static final String FILE_SEPARATOR = File.separator;
 
 	/**
 	 * 
