@@ -3,6 +3,8 @@
  */
 package org.mevenk.utils.zip;
 
+import static org.mevenk.utils.helper.MeVenkUtilsHelper.FILE_SEPARATOR;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,20 +40,26 @@ class ZipActivities {
 
 		ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream);
 
-		ZipEntry zipEntry = null;
+		String entityName = null;
 		InputStream inputStreamEntry = null;
 		byte[] bytesEntry = null;
 
-		for (ZipEntity entry : zipEntities) {
+		for (ZipEntity entity : zipEntities) {
 
+			entityName = entity.getName();
 			inputStreamEntry = null;
 			bytesEntry = null;
 
-			zipEntry = new ZipEntry(entry.getName());
-			bytesEntry = entry.getBytes();
-			inputStreamEntry = entry.getInputStream();
+			bytesEntry = entity.getBytes();
+			inputStreamEntry = entity.getInputStream();
 
-			zipOutputStream.putNextEntry(zipEntry);
+			if (entityName.endsWith(FILE_SEPARATOR)) {
+				zipOutputStream.putNextEntry(new ZipEntry(entityName + "."));
+				zipOutputStream.closeEntry();
+				continue;
+			}
+
+			zipOutputStream.putNextEntry(new ZipEntry(entity.getName()));
 
 			if (bytesEntry != null) {
 				zipOutputStream.write(bytesEntry);

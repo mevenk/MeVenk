@@ -3,15 +3,21 @@
  */
 package org.mevenk.utils.zip;
 
+import static org.mevenk.utils.helper.MeVenkUtilsHelper.FILE_SEPARATOR;
 import static org.mevenk.utils.helper.MeVenkUtilsHelper.verifyIfDirectory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author vkolisetty
@@ -53,20 +59,51 @@ public final class ZipFunctions {
 	public static void generateZip(OutputStream outputStream, File directory, boolean allowEmpty) throws Exception {
 
 		verifyIfDirectory(directory, true);
-		File[] files = directory.listFiles();
-		int lengthFiles = files.length;
+		File[] filesFirstDirectory = directory.listFiles();
+		int lengthFiles = filesFirstDirectory.length;
 		if (!allowEmpty && lengthFiles == 0) {
 			throw new IllegalArgumentException(directory.getName() + " is empty");
 		}
 
-		ZipEntity[] zipEntities = new ZipEntity[lengthFiles];
-		int indexZipEntity = -1;
+		LinkedList<ZipEntity> zipEntities = new LinkedList<ZipEntity>();
+		List<String> directoriesNames = new LinkedList<String>();
+		generateZipEntities(filesFirstDirectory, zipEntities, directoriesNames);
+
+		generateZip(outputStream, true, zipEntities.toArray(new ZipEntity[] {}));
+
+	}
+
+	/**
+	 * 
+	 * @param files
+	 * @param zipEntities
+	 * @param directoriesNames
+	 * @throws FileNotFoundException
+	 */
+	private static void generateZipEntities(File[] files, LinkedList<ZipEntity> zipEntities,
+			List<String> directoriesNames) throws FileNotFoundException {
+
+		ZipEntity entity = null;
+		String fileName = null;
+
 		for (File file : files) {
-			zipEntities[++indexZipEntity] = new ZipEntity(file.getName(), new FileInputStream(file));
+			if (file.isHidden()) {
+				continue;
+			}
+			fileName = file.getName();
+			if (file.isDirectory()) {
+				directoriesNames.add(fileName);
+				entity = new ZipEntity(StringUtils.join(directoriesNames, FILE_SEPARATOR) + FILE_SEPARATOR);
+				generateZipEntities(file.listFiles(), zipEntities, directoriesNames);
+				directoriesNames.remove(directoriesNames.size() - 1);
+			} else {
+				entity = new ZipEntity(
+						directoriesNames.isEmpty() ? fileName
+								: StringUtils.join(directoriesNames, FILE_SEPARATOR) + FILE_SEPARATOR + fileName,
+						new FileInputStream(file));
+			}
+			zipEntities.add(entity);
 		}
-
-		generateZip(outputStream, true, zipEntities);
-
 	}
 
 	/**
@@ -94,6 +131,9 @@ public final class ZipFunctions {
 		FileOutputStream fileOutputStream = null;
 		for (ZipEntity entry : zipEntries) {
 			newFile = createDestinationFile(destinationDirectory, entry.getName());
+			if (newFile.isDirectory()) {
+				continue;
+			}
 			fileOutputStream = new FileOutputStream(newFile);
 			fileOutputStream.write(entry.getBytes());
 			fileOutputStream.close();
@@ -114,8 +154,13 @@ public final class ZipFunctions {
 		String destinationDirectoryPath = destinationDirectory.getCanonicalPath();
 		String destinationFilePath = destinationFile.getCanonicalPath();
 
-		if (!destinationFilePath.startsWith(destinationDirectoryPath + File.separator)) {
+		if (!destinationFilePath.startsWith(destinationDirectoryPath + FILE_SEPARATOR)) {
 			throw new IOException("Entry is outside of the target dir: " + fileName);
+		}
+
+		File parentFile = destinationFile.getParentFile();
+		if (!parentFile.isDirectory()) {
+			parentFile.mkdir();
 		}
 
 		return destinationFile;

@@ -14,6 +14,7 @@ public class ZipEntity {
 	private String name;
 	private InputStream inputStream;
 	private byte[] bytes;
+	private boolean directory;
 
 	/**
 	 * @param name
@@ -31,6 +32,16 @@ public class ZipEntity {
 	public ZipEntity(String name, byte[] bytes) {
 		this.name = name;
 		this.bytes = bytes;
+	}
+
+	/**
+	 * For directory
+	 * 
+	 * @param name
+	 */
+	public ZipEntity(String name) {
+		this.name = name;
+		this.directory = true;
 	}
 
 	/**
@@ -54,6 +65,13 @@ public class ZipEntity {
 		return bytes;
 	}
 
+	/**
+	 * @return the directory
+	 */
+	public final boolean isDirectory() {
+		return directory;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -62,7 +80,7 @@ public class ZipEntity {
 	@Override
 	public String toString() {
 		return "ZipEntity [name=" + name + ", inputStream=" + (inputStream != null) + ", bytes=" + (bytes != null)
-				+ "]";
+				+ ", directory=" + directory + "]";
 	}
 
 }
