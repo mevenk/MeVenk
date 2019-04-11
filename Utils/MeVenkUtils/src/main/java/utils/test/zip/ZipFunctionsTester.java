@@ -17,7 +17,7 @@ import org.mevenk.utils.zip.ZipFunctions;
  */
 public class ZipFunctionsTester {
 
-	private static final String DIRECTORY_TO_BE_ZIPPED = "/home/vkolisetty/RABOTA/Temporary/ExcelBuilder";
+	private static final String DIRECTORY_TO_BE_ZIPPED = "/home/vkolisetty/RABOTA/Temporary/ZipTester/zipTestFiolder";
 	private static final String DIR_ZIP_TESTER = "/home/vkolisetty/RABOTA/Temporary/ZipTester";
 	private static final File UNZIP_DIRECTORY = new File(DIR_ZIP_TESTER + "/unzips");
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT_ZIP = new SimpleDateFormat("d-M-y_H-m-s");
