@@ -3,8 +3,6 @@
  */
 package org.mevenk.utils.zip;
 
-import static org.mevenk.utils.helper.MeVenkUtilsHelper.FILE_SEPARATOR;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,6 +16,8 @@ import java.util.zip.ZipOutputStream;
  *
  */
 class ZipActivities {
+
+	static final String ZIP_DIRECTORY_NAME_SUFFIX = "/";
 
 	/**
 	 * 
@@ -40,26 +40,25 @@ class ZipActivities {
 
 		ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream);
 
-		String entityName = null;
+		ZipEntry zipEntry = null;
 		InputStream inputStreamEntry = null;
 		byte[] bytesEntry = null;
 
 		for (ZipEntity entity : zipEntities) {
 
-			entityName = entity.getName();
+			zipEntry = new ZipEntry(entity.getName());
 			inputStreamEntry = null;
 			bytesEntry = null;
 
 			bytesEntry = entity.getBytes();
 			inputStreamEntry = entity.getInputStream();
 
-			if (entityName.endsWith(FILE_SEPARATOR)) {
-				zipOutputStream.putNextEntry(new ZipEntry(entityName + "."));
+			zipOutputStream.putNextEntry(zipEntry);
+
+			if (zipEntry.isDirectory()) {
 				zipOutputStream.closeEntry();
 				continue;
 			}
-
-			zipOutputStream.putNextEntry(new ZipEntry(entity.getName()));
 
 			if (bytesEntry != null) {
 				zipOutputStream.write(bytesEntry);

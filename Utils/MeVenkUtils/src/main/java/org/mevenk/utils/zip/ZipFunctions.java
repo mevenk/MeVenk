@@ -5,6 +5,7 @@ package org.mevenk.utils.zip;
 
 import static org.mevenk.utils.helper.MeVenkUtilsHelper.FILE_SEPARATOR;
 import static org.mevenk.utils.helper.MeVenkUtilsHelper.verifyIfDirectory;
+import static org.mevenk.utils.zip.ZipActivities.ZIP_DIRECTORY_NAME_SUFFIX;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -93,13 +94,14 @@ public final class ZipFunctions {
 			fileName = file.getName();
 			if (file.isDirectory()) {
 				directoriesNames.add(fileName);
-				entity = new ZipEntity(StringUtils.join(directoriesNames, FILE_SEPARATOR) + FILE_SEPARATOR);
+				entity = new ZipEntity(
+						StringUtils.join(directoriesNames, ZIP_DIRECTORY_NAME_SUFFIX) + ZIP_DIRECTORY_NAME_SUFFIX);
 				generateZipEntities(file.listFiles(), zipEntities, directoriesNames);
 				directoriesNames.remove(directoriesNames.size() - 1);
 			} else {
-				entity = new ZipEntity(
-						directoriesNames.isEmpty() ? fileName
-								: StringUtils.join(directoriesNames, FILE_SEPARATOR) + FILE_SEPARATOR + fileName,
+				entity = new ZipEntity(directoriesNames.isEmpty() ? fileName
+						: StringUtils.join(directoriesNames, ZIP_DIRECTORY_NAME_SUFFIX) + ZIP_DIRECTORY_NAME_SUFFIX
+								+ fileName,
 						new FileInputStream(file));
 			}
 			zipEntities.add(entity);
