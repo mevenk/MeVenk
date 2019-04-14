@@ -88,26 +88,33 @@ class ZipActivities {
 
 		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
 
-		LinkedHashSet<ZipEntity> zipEntries = new LinkedHashSet<ZipEntity>();
+		LinkedHashSet<ZipEntity> zipEntities = new LinkedHashSet<ZipEntity>();
 
 		ByteArrayOutputStream byteArrayOutputStreamZipEntry = null;
 
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
+		ZipEntity zipEntity = null;
 		while (zipEntry != null) {
-			byteArrayOutputStreamZipEntry = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-			int len;
-			while ((len = zipInputStream.read(buffer)) > 0) {
-				byteArrayOutputStreamZipEntry.write(buffer, 0, len);
+			if (zipEntry.isDirectory()) {
+				zipEntity = new ZipEntity(zipEntry.getName());
+			} else {
+				byteArrayOutputStreamZipEntry = new ByteArrayOutputStream();
+				byte[] buffer = new byte[1024];
+				int len;
+				while ((len = zipInputStream.read(buffer)) > 0) {
+					byteArrayOutputStreamZipEntry.write(buffer, 0, len);
+				}
+				byteArrayOutputStreamZipEntry.close();
+				zipEntity = new ZipEntity(zipEntry.getName(), byteArrayOutputStreamZipEntry.toByteArray());
 			}
-			byteArrayOutputStreamZipEntry.close();
-			zipEntries.add(new ZipEntity(zipEntry.getName(), byteArrayOutputStreamZipEntry.toByteArray()));
+
+			zipEntities.add(zipEntity);
 			zipEntry = zipInputStream.getNextEntry();
 		}
 		zipInputStream.closeEntry();
 		zipInputStream.close();
 
-		return zipEntries;
+		return zipEntities;
 	}
 
 }

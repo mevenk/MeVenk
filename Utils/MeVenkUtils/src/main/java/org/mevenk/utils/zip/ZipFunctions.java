@@ -127,17 +127,17 @@ public final class ZipFunctions {
 	public static void unzip(InputStream inputStreamZip, File destinationDirectory) throws Exception {
 		verifyIfDirectory(destinationDirectory, true);
 
-		LinkedHashSet<ZipEntity> zipEntries = unzip(inputStreamZip);
+		LinkedHashSet<ZipEntity> zipEntities = unzip(inputStreamZip);
 
 		File newFile = null;
 		FileOutputStream fileOutputStream = null;
-		for (ZipEntity entry : zipEntries) {
-			newFile = createDestinationFile(destinationDirectory, entry.getName());
+		for (ZipEntity entity : zipEntities) {
+			newFile = createDestinationFile(destinationDirectory, entity.getName());
 			if (newFile.isDirectory()) {
 				continue;
 			}
 			fileOutputStream = new FileOutputStream(newFile);
-			fileOutputStream.write(entry.getBytes());
+			fileOutputStream.write(entity.getBytes());
 			fileOutputStream.close();
 		}
 
@@ -162,7 +162,11 @@ public final class ZipFunctions {
 
 		File parentFile = destinationFile.getParentFile();
 		if (!parentFile.isDirectory()) {
-			parentFile.mkdir();
+			parentFile.mkdirs();
+		}
+
+		if (fileName.endsWith(ZIP_DIRECTORY_NAME_SUFFIX)) {
+			destinationFile.mkdir();
 		}
 
 		return destinationFile;
