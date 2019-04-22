@@ -1,1 +1,6 @@
-/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/MeVenkWebServicesApplication.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/config/spring/MeVenkWebServicesRootConfiguration.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/MeVenkWebServicesApplication.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/config/spring/properties/BaseProperties.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/controller/RootController.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/config/spring/properties/MeVenkWebServicesPropertiesConfiguration.java
+/home/vkolisetty/RABOTA/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/util/MeVenkWebServicesUtil.java
