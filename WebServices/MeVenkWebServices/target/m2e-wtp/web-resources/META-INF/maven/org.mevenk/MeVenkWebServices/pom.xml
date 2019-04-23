@@ -8,11 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MeVenkWebServices Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-
-	<build>
-		<finalName>MeVenkWebServices</finalName>
-	</build>
-
+	
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -24,6 +20,7 @@
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
+	
 
 	<dependencies>
 
@@ -44,8 +41,29 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/eu.bitwalker/UserAgentUtils -->
+		<dependency>
+			<groupId>eu.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>1.21</version>
+		</dependency>
+
 	</dependencies>
 
-
+	<build>
+		<finalName>MeVenkWebServices</finalName>
+		 <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+	</build>
 
 </project>
