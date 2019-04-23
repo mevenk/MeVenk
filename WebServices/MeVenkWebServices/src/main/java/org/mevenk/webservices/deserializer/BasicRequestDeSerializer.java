@@ -6,6 +6,8 @@ package org.mevenk.webservices.deserializer;
 import java.io.IOException;
 
 import org.mevenk.webservices.controller.to.root.BasicRequest;
+import org.mevenk.webservices.logger.Logger;
+import org.mevenk.webservices.logger.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class BasicRequestDeSerializer extends JsonDeserializer<BasicRequest> {
 
+	private static final Logger LOG = LoggerFactory.getlogger(BasicRequestDeSerializer.class);
+
 	@Override
 	public BasicRequest deserialize(JsonParser jsonParser, DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
@@ -28,7 +32,7 @@ public class BasicRequestDeSerializer extends JsonDeserializer<BasicRequest> {
 
 		ObjectMapper sortedMapper = new ObjectMapper();
 		Object obj = sortedMapper.treeToValue(node, Object.class);
-		System.out.println(sortedMapper.writeValueAsString(obj));
+		LOG.info("Request: {}", sortedMapper.writeValueAsString(obj));
 
 		if (node.size() != 3) {
 			throw new IllegalArgumentException("Improper request data");
