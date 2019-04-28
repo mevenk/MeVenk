@@ -35,7 +35,7 @@ public final class MeVenkWebServicesUtil {
 	 * @param objects
 	 * @return
 	 */
-	public static final boolean validateNotNull(boolean throwException, Object... objects) {
+	public static final boolean validateNotNull(boolean throwException, Object[] objects) {
 		if (objects == null) {
 			throw NULL_POINTER_EXCEPTION;
 		}
@@ -50,6 +50,15 @@ public final class MeVenkWebServicesUtil {
 
 		}
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @param objects
+	 * @return
+	 */
+	public static final boolean validateNotNull(Object... objects) {
+		return validateNotNull(true, objects);
 	}
 
 }
