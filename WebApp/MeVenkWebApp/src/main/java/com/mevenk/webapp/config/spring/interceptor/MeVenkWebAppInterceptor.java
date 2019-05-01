@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author venky
  *
  */
-@Component
 public class MeVenkWebAppInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger LOG = getLogger(MeVenkWebAppInterceptor.class);

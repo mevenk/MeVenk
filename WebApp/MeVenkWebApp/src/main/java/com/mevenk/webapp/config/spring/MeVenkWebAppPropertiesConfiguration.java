@@ -27,6 +27,7 @@ import com.mevenk.webapp.config.spring.properties.HibernateProperties;
  */
 @Configuration
 @Import(MeVenkWebAppRootConfiguration.class)
+@PropertySource("${mevenkWebappPropertiesFileSource}")
 @PropertySource("${mevenkWebappBasePropertiesFileSource}")
 @PropertySource("${mevenkWebappDatabasePropertiesFileSource}")
 public class MeVenkWebAppPropertiesConfiguration {

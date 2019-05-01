@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
@@ -16,7 +15,6 @@ import org.springframework.web.context.request.WebRequestInterceptor;
  * @author venky
  *
  */
-@Component
 public class MeVenkWebAppWebRequestInterceptor implements WebRequestInterceptor {
 
 	private static final Logger LOG = getLogger(MeVenkWebAppWebRequestInterceptor.class);

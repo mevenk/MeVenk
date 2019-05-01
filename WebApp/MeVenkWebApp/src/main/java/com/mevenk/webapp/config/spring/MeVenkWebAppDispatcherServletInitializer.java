@@ -30,48 +30,15 @@ import com.mevenk.webapp.config.spring.database.MeVenkDatabaseConfiguration;
 public class MeVenkWebAppDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	private static final Logger LOG = getLogger(MeVenkWebAppDispatcherServletInitializer.class);
-
-	private static final String SYSTEM_PROPERTY_NAME_DEPLOYMENT_SERVER_NAME = "deploymentServerName";
+	
+	private static final String DEFAULT_SERVLET_CLASS_NAME = "org.apache.catalina.servlets.DefaultServlet";
 
 	private static final String URL_MAPPING_DISPATCHER_SERVLET_MEVENK = "*.mevenk";
-
-	private enum DeploymentServer {
-		TOMCAT("org.apache.catalina.servlets.DefaultServlet");
-
-		private String qualifiedClassNameDefaultServlet;
-
-		private DeploymentServer(String qualifiedClassNameDefaultServlet) {
-			this.qualifiedClassNameDefaultServlet = qualifiedClassNameDefaultServlet;
-		}
-
-		/**
-		 * @return the qualifiedClassNameDefaultServlet
-		 */
-		public final String getQualifiedClassNameDefaultServlet() {
-			return qualifiedClassNameDefaultServlet;
-		}
-
-	}
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
 		setCorrelationIdThreadContext("STARTUP");
-
-		String systemPropertyDeploymentServerName = System.getProperty(SYSTEM_PROPERTY_NAME_DEPLOYMENT_SERVER_NAME);
-
-		if (systemPropertyDeploymentServerName == null || systemPropertyDeploymentServerName.isEmpty()) {
-			throw new IllegalArgumentException(
-					"System Property[" + SYSTEM_PROPERTY_NAME_DEPLOYMENT_SERVER_NAME + "] not available!!");
-		}
-
-		LOG.log(CONFIG, "Deployment server:", systemPropertyDeploymentServerName);
-
-		DeploymentServer deploymentServer = DeploymentServer.valueOf(systemPropertyDeploymentServerName);
-		LOG.log(CONFIG, "DeploymentServer:", deploymentServer);
-		String qualifiedClassNameDefaultServletClass = deploymentServer.getQualifiedClassNameDefaultServlet();
-
-		LOG.log(CONFIG, "Default Servlet Class Name:", qualifiedClassNameDefaultServletClass);
 
 		LOG.log(CONFIG, "Dispatcher Servet startup" + this);
 
@@ -93,7 +60,7 @@ public class MeVenkWebAppDispatcherServletInitializer extends AbstractAnnotation
 		dispatcherDynamicServlet.setLoadOnStartup(1);
 
 		ServletRegistration.Dynamic defaultServlet = servletContext.addServlet("default",
-				qualifiedClassNameDefaultServletClass);
+				DEFAULT_SERVLET_CLASS_NAME);
 		for (String resourceTypeExt : RESOURCE_TYPE_CLIENT_RESOURCE) {
 			defaultServlet.addMapping("*." + resourceTypeExt);
 		}

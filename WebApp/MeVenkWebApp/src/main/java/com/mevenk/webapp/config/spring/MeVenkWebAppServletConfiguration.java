@@ -16,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import com.mevenk.webapp.config.spring.bind.GlobalBindingInitializer;
 import com.mevenk.webapp.config.spring.interceptor.MeVenkWebAppInterceptor;
@@ -54,7 +56,7 @@ public class MeVenkWebAppServletConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(loginInterceptor());
 	}
 
-	@Bean(name = "requestMappingHandlerAdapter")
+	@Bean(name = "requestMappingHandlerAdapterMeVenkWebApp")
 	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
 		RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
 		requestMappingHandlerAdapter.setWebBindingInitializer(new GlobalBindingInitializer());
@@ -69,13 +71,20 @@ public class MeVenkWebAppServletConfiguration implements WebMvcConfigurer {
 		return resolver;
 	}
 
-	@Bean(name = "viewResolver")
-	public ViewResolver viewResolver() {
+	@Bean(name = "internalResourceViewResolver")
+	public ViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/views/");
-		viewResolver.setSuffix(".jsp");
 		return viewResolver;
+	}
+
+	@Bean(name = "urlBasedViewResolver")
+	public UrlBasedViewResolver urlBasedViewResolver() {
+		UrlBasedViewResolver urlBasedViewResolver = new UrlBasedViewResolver();
+		urlBasedViewResolver.setViewClass(TilesView.class);
+		urlBasedViewResolver.setPrefix("/views/");
+		urlBasedViewResolver.setSuffix(".jsp");
+		return urlBasedViewResolver;
 	}
 
 }

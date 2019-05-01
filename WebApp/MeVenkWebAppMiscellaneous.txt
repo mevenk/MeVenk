@@ -12,6 +12,26 @@ C:\Users\venky\RABOTA\workspaces\MeVenk
 -DdeploymentServerName=TOMCAT -DmevenkWebAppLogsDirectoryLoaction="/home/vkolisetty/RABOTA//MeVenk/WebApp/Logs" -DmevenkWebAppLog4jSocketHost="VENKATESH-NUC" -DmevenkWebAppLog4jSocketPort="9898" -DmevenkWebappBasePropertiesFileSource="file:////home/vkolisetty/RABOTA/MeVenk/WebApp/sources/properties/mevenkwebapp.properties" -DmevenkWebappDatabasePropertiesFileSource="file:////home/vkolisetty/RABOTA/MeVenk/WebApp/sources/properties/mevenkwebappDatabase.properties"
 
 
+
+
+
+
+
+mevenkwebappBase
+
+-DmevenkWebAppLogsDirectoryLoaction="/home/vkolisetty/RABOTA//MeVenk/WebApp/Logs" -DmevenkWebAppLog4jSocketHost="VENKATESH-NUC" -DmevenkWebAppLog4jSocketPort="9898" -DmevenkWebappPropertiesFileSource="file:////home/vkolisetty/RABOTA/MeVenk/WebApp/sources/properties/mevenkwebapp.properties" -DmevenkWebappBasePropertiesFileSource="file:////home/vkolisetty/RABOTA/MeVenk/WebApp/sources/properties/mevenkwebappBase.properties" -DmevenkWebappDatabasePropertiesFileSource="file:////home/vkolisetty/RABOTA/MeVenk/WebApp/sources/properties/mevenkwebappDatabase.properties"
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+
 char[] messageOriginal = messageSource.getMessage().toCharArray();
 StringBuilder stringBuilderMessage = new StringBuilder();
 for (char charCurrent : messageOriginal) {
