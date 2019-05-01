@@ -1,14 +1,2 @@
-
-
-WebApp/MeVenkWebApp/.settings/*
-WebApp/MeVenkWebApp/.settings/*.*
-
-WebApp/MeVenkWebApp/.classpath
-
-WebApp/MeVenkWebApp/target/*
-
-*.log
-*Log.html
-
-*.log_*
-*Log.html_*
+**/target/**
+**/Logs/**
