@@ -47,4 +47,114 @@ fun main(args: Array<String>) {
 	println("Read only list - ${readOnlyList}")
 
 
+	val items = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+	println("First -- ${items.first()}")
+	println("Last -- ${items.last()}")
+	println("Even numbers -- ${items.filter { it % 2 == 0 }}")
+
+
+	val hashMap = hashMapOf("one" to 1, "two" to 2)
+	println("Map - ${hashMap}")
+	println("Map of - ${hashMap["one"]}")
+
+
+	val hashSet = hashSetOf("a", "b", "c", "d", "b")
+	println("hashSet - ${hashSet}")
+
+
+
+	for (jIndex in 1..4)
+		print(jIndex)
+
+	println()
+
+	val rangeIndex: Int = 2
+
+	if (rangeIndex in 1..10) {
+		println("Found index - ${rangeIndex}")
+	}
+
+
+	val aVal: Int = 5
+	val bVal: Int = 2
+	val maxVal: Int
+
+	if (aVal > bVal) {
+		maxVal = aVal;
+	} else {
+		maxVal = bVal
+	}
+
+	println("Max - ${maxVal}")
+
+	val maxValExp: Int = if (aVal > bVal) aVal else bVal
+	println("Max val exp - ${maxValExp}")
+
+
+	val xVal: Int = 5
+
+	when (xVal) {
+		1 -> println("xVal == 1")
+		2 -> println("xVal == 2")
+		else -> println("Neither 1 nor 2")
+	}
+
+	when (xVal) {
+		1, 2 -> println("xVal is either 1 or 2")
+		else -> {
+			println("xVal is neither 1 nor 2")
+		}
+	}
+
+
+	val itemsForLoop = listOf(10, 52, 38, 42)
+	for (i in itemsForLoop) println("Iten - ${i}")
+
+	println()
+
+	for ((index, value) in itemsForLoop.withIndex()) {
+		println("Index - ${index}  | Value - ${value}");
+	}
+
+
+	var whileX: Int = 0
+	println("While loop")
+
+	while (whileX <= 10) {
+		println(whileX)
+		whileX++
+	}
+
+
+	var doWhileX: Int = 0
+	println("Do While loop")
+
+	do {
+		doWhileX += 10
+		println("Inside Do - ${doWhileX}")
+	} while (doWhileX < 50)
+
+
+	fun doubleMe(x: Int): Int {
+		return x * 2
+	}
+
+	val xDoubleFun: Int = 10
+	println("Calling Double fun - ${doubleMe(xDoubleFun)}")
+
+
+
+	println("Break & Continue")
+
+	forLoop@ for (x in 1..10) {
+		if (x == 5) {
+			println("Breaking loop @ ${x}")
+			break@forLoop
+		} else {
+			println("Continue - ${x}")
+			continue@forLoop
+		}
+	}
+
+
 }
