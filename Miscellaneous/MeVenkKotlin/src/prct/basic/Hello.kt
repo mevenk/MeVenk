@@ -1,3 +1,5 @@
+import java.util.Date
+
 fun main(args: Array<String>) {
 
 	println("Hello, World!" + args.asList())
@@ -156,5 +158,154 @@ fun main(args: Array<String>) {
 		}
 	}
 
+	var objMyClass = myClass()
+	objMyClass.printMe()
+
+
+	val nestedDemo = Outer.Nested().foo()
+	println(nestedDemo)
+
+	val nestedClassInnerFun = Outer().NestedClassInner().foo()
+	println(nestedClassInnerFun)
+
+
+	println("Anonymous Inner Class")
+	val humanInstance: Human = object : Human {
+		override fun think() {
+			println("Overriden fun from interface - Anonymoys inner class")
+		}
+	}
+	humanInstance.think()
+
+
+	val person1 = Person("Venkatesh", 27)
+	println("Name ${person1.firstName}");
+	println("Age ${person1.age}");
+
+
+	var secondaryConstInst = SecondaryConst("Venkatesh", 27)
+	println("FN: ${secondaryConstInst.firstName} | Message ${secondaryConstInst.message} | Age ${secondaryConstInst.age}")
+
+
+	val subClassInst = SubClass()
+	subClassInst.supFun()
+
+	val subClassOverridemFunInst = SubClassOverridemFun()
+	subClassOverridemFunInst.supFun()
+	subClassOverridemFunInst.supFunOpen()
+
+
+	val exampleInterfaceImpInst = ExampleInterfaceImp()
+	println("Overriden var - ${exampleInterfaceImpInst.myVar}")
+	println("Abs met ${exampleInterfaceImpInst.absMethod()}")
+
+
+	val multipleInterfaceExampleInst = multipleInterfaceExample()
+	multipleInterfaceExampleInst.printMe()
+	multipleInterfaceExampleInst.printMeToo()
+
 
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+class myClass {
+
+	private var name: String = "Venkatesh"
+
+	fun printMe() {
+		println("My class -- ${Date()}")
+	}
+
+}
+
+class Outer {
+	private val welcomeMessage = "Outer class private message"
+
+	class Nested {
+		fun foo() = "Nested class fun"
+	}
+
+	inner class NestedClassInner {
+		fun foo() = welcomeMessage;
+	}
+}
+
+
+interface Human {
+	fun think()
+}
+
+
+class Person(val firstName: String, var age: Int) {
+}
+
+
+class SecondaryConst(val firstName: String, var age: Int) {
+	val message: String = "String message"
+
+	constructor(name: String, age: Int, message: String) : this(name, age) {
+
+	}
+}
+
+
+open class SuperClass {
+	fun supFun() {
+		println("Sup fun")
+	}
+
+	open fun supFunOpen() {
+		println("Sup fun")
+	}
+
+}
+
+
+class SubClass : SuperClass()
+
+class SubClassOverridemFun : SuperClass() {
+	override fun supFunOpen() {
+		println("Overrriden fun supFunOpen")
+	}
+}
+
+interface ExampleInterface {
+
+	var myVar: Int
+	fun absMethod(): String
+
+	fun defaultFun() {
+		println("Default Function Interface")
+	}
+
+}
+
+
+class ExampleInterfaceImp : ExampleInterface {
+
+	override var myVar = 27
+
+	override fun absMethod() = "Abs Overriden in Impl"
+
+}
+
+
+interface A {
+	fun printMe() {
+		println(" method of interface A")
+	}
+}
+
+interface B {
+	fun printMeToo() {
+		println("I am another Method from interface B")
+	}
+}
+
+// implements two interfaces A and B
+class multipleInterfaceExample : A, B
+
+
