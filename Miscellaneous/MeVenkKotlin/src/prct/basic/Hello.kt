@@ -4,6 +4,22 @@ fun main(args: Array<String>) {
 
 	println("Hello, World!" + args.asList())
 
+	variableDeclerations()
+
+	arraysAndCollections()
+
+	rangeAndLoops()
+
+	controlFlow()
+
+	classObjectsInheritanceInterface()
+
+
+}
+
+
+fun variableDeclerations() {
+
 	val a: Int = 10000
 	val d: Double = 100.00
 	val f: Float = 100.00f
@@ -35,6 +51,10 @@ fun main(args: Array<String>) {
 	println("Escaped-" + escapedString)
 	println("Raw-" + rawString)
 
+}
+
+
+fun arraysAndCollections() {
 
 	val intArray: IntArray = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
 	println("Int array ${intArray.asList()}")
@@ -63,7 +83,10 @@ fun main(args: Array<String>) {
 	val hashSet = hashSetOf("a", "b", "c", "d", "b")
 	println("hashSet - ${hashSet}")
 
+}
 
+
+fun rangeAndLoops() {
 
 	for (jIndex in 1..4)
 		print(jIndex)
@@ -76,6 +99,10 @@ fun main(args: Array<String>) {
 		println("Found index - ${rangeIndex}")
 	}
 
+}
+
+
+fun controlFlow() {
 
 	val aVal: Int = 5
 	val bVal: Int = 2
@@ -158,6 +185,11 @@ fun main(args: Array<String>) {
 		}
 	}
 
+}
+
+
+fun classObjectsInheritanceInterface() {
+
 	var objMyClass = myClass()
 	objMyClass.printMe()
 
@@ -204,9 +236,7 @@ fun main(args: Array<String>) {
 	multipleInterfaceExampleInst.printMe()
 	multipleInterfaceExampleInst.printMeToo()
 
-
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
