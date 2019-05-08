@@ -14,6 +14,15 @@ fun main(args: Array<String>) {
 
 	classObjectsInheritanceInterface()
 
+	visibilityControl()
+
+	extension()
+
+	dataClasses()
+
+	sealedClass()
+
+	generics()
 
 }
 
@@ -238,6 +247,90 @@ fun classObjectsInheritanceInterface() {
 
 }
 
+
+fun visibilityControl() {
+
+	// private, protected(currently not available ), internal, public(default)
+
+
+}
+
+
+fun extension() {
+
+	println("Extension")
+
+	val a1 = Alien()
+	a1.skills = "JAVA"
+
+	val a2 = Alien()
+	a2.skills = "SQL"
+
+	val a3 = Alien()
+	a3.skills = a1.addMySkills(a2)
+	a3.printMySkills()
+
+
+	println("Object Extension")
+
+	println(companionParentClassA.callCompanionObjectFun())
+
+}
+
+fun dataClasses() {
+
+	println("dataClasses")
+
+	data class DataClass(val name: String, var age: Int)
+
+	val dataClassInt: DataClass = DataClass("Venkatesh", 27)
+	println("Name - ${dataClassInt.name}")
+	println("Age - ${dataClassInt.age}")
+	dataClassInt.age = 25
+	println("DataClass - ${dataClassInt.toString()}")
+	println("Hash - ${dataClassInt.hashCode()}")
+
+}
+
+
+fun sealedClass() {
+
+
+//	val sealedClassObj: SealedClass = SealedClass.S1()
+//
+//	val type = when (sealedClassObj) {
+//		is SealedClass.S1 -> "S1"
+//		is SealedClass.S2 -> "S2"
+//	}
+//
+//	println(type)
+
+}
+
+fun generics() {
+
+	println("generics")
+
+	var integer: Int = 1
+	var number: Number = integer
+	println(number)
+
+
+
+	class GenericsExample<out T>(input: T) {
+		init {
+			println("Input provided - ${input}")
+		}
+	}
+
+
+	val genericsInstInt: GenericsExample<Int> = GenericsExample<Int>(25)
+	println(genericsInstInt)
+	val genericsInstString: GenericsExample<String> = GenericsExample<String>("VENKY")
+	println(genericsInstString)
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -338,4 +431,32 @@ interface B {
 // implements two interfaces A and B
 class multipleInterfaceExample : A, B
 
+
+class Alien {
+	var skills: String = "null"
+	fun printMySkills() {
+		println(skills)
+	}
+}
+
+fun Alien.addMySkills(a: Alien): String {
+	var a4: Alien = Alien()
+	a4.skills = this.skills + ", " + a.skills
+	return a4.skills
+}
+
+class companionParentClassA {
+
+	companion object {
+		fun callCompanionObjectFun(): String {
+			return "callCompanionObjectFun"
+		}
+	}
+
+}
+
+//sealed class SealedClass {
+//	class S1 : SealedClass()
+//	class S2 : SealedClass()
+//}
 
