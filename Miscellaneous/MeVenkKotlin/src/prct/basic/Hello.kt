@@ -24,6 +24,8 @@ fun main(args: Array<String>) {
 
 	generics()
 
+	delegation()
+
 }
 
 
@@ -331,6 +333,17 @@ fun generics() {
 
 }
 
+
+fun delegation() {
+
+
+	println("delegation")
+
+	val delInst: DelegationInterface = DelegationInterfaceImpl()
+	DelegationDerivedClass(delInst).printDate()
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -459,4 +472,17 @@ class companionParentClassA {
 //	class S1 : SealedClass()
 //	class S2 : SealedClass()
 //}
+
+
+interface DelegationInterface {
+	fun printDate()
+}
+
+class DelegationInterfaceImpl : DelegationInterface {
+	override fun printDate() {
+		println(Date())
+	}
+}
+
+class DelegationDerivedClass(d: DelegationInterface) : DelegationInterface by d 
 
