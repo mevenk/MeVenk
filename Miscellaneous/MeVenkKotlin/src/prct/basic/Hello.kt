@@ -1,4 +1,5 @@
 import java.util.Date
+import kotlin.reflect.KProperty
 
 fun main(args: Array<String>) {
 
@@ -25,6 +26,12 @@ fun main(args: Array<String>) {
 	generics()
 
 	delegation()
+
+	functions()
+
+	destructuringDeclarations()
+
+	exceptionHandling()
 
 }
 
@@ -341,6 +348,78 @@ fun delegation() {
 
 	val delInst: DelegationInterface = DelegationInterfaceImpl()
 	DelegationDerivedClass(delInst).printDate()
+
+
+	println("Delegation - property")
+
+	class Delegate {
+
+		operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+			return "$thisRef, thank you for delegating '${property.name}' to me!"
+		}
+
+		operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+			println("$value has been assigned to '${property.name} in $thisRef.'")
+		}
+
+	}
+
+	class Example {
+		var p: String by Delegate()
+	}
+
+}
+
+
+fun functions() {
+
+	println("Custom lambda")
+
+	val myLambda: (String) -> Unit = { s: String -> println("Hello " + s) }
+	val sampleStr = "Venkatesh"
+	myLambda(sampleStr)
+
+	println("Custom lambda - multiple inputs and return value")
+	val lambdaMulInpAndReturn: (String, Int) -> String = { s: String, i: Int -> s + "||" + i }
+	println(lambdaMulInpAndReturn("Venkatesh", 25))
+
+
+	println("Lambda inline")
+
+	fun customLambdaInline(action: (String, Int) -> String, s: String, i: Int) {
+		println("Lambda inline - inside function")
+		println(action(s, i))
+	}
+
+	customLambdaInline(lambdaMulInpAndReturn, "venky", 25)
+
+}
+
+fun destructuringDeclarations() {
+
+	println("destructuringDeclarations")
+
+	data class DataClass(val name: String, var age: Int)
+
+	val dataClassInt = DataClass("Vekatesh", 27)
+	val (name, age) = dataClassInt
+	println("Name - ${name}  -  Age - ${age}")
+
+}
+
+fun exceptionHandling() {
+
+	println("exceptionHandling")
+
+	try {
+		val valueString: String = "Venkatesh"
+		println(valueString.toInt())
+	} catch (e: Exception) {
+		println("Exception occured")
+		e.printStackTrace()
+	} finally {
+		println("Exception handling - finally")
+	}
 
 }
 
