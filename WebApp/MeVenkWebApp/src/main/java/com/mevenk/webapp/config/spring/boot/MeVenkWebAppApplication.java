@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,7 +19,7 @@ import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
  * @author vkolisetty
  *
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class MeVenkWebAppApplication {
 
 	/**
