@@ -48,7 +48,9 @@ public abstract class MeVenkWebAppUtil {
 
 	public static final IllegalAccessException ILLEGAL_ACCESS_EXCEPTION_UTILITY_CLASS = new IllegalAccessException(
 			"Utility class");
-
+	
+	private static final NullPointerException NULL_POINTER_EXCEPTION = new NullPointerException();
+	
 	private static final Random RANDOM = new Random();
 
 	/**
@@ -274,6 +276,37 @@ public abstract class MeVenkWebAppUtil {
 		StringWriter stringWriter = new StringWriter();
 		throwable.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
+	}
+	
+	/**
+	 * 
+	 * @param throwException
+	 * @param objects
+	 * @return
+	 */
+	public static final boolean validateNotNull(boolean throwException, Object[] objects) {
+		if (objects == null) {
+			throw NULL_POINTER_EXCEPTION;
+		}
+		for (Object obj : objects) {
+			if (obj == null) {
+				if (throwException) {
+					throw NULL_POINTER_EXCEPTION;
+				} else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * @param objects
+	 * @return
+	 */
+	public static final boolean validateNotNull(Object... objects) {
+		return validateNotNull(true, objects);
 	}
 
 }
