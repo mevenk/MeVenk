@@ -3,6 +3,8 @@
  */
 package com.mevenk.webapp.config.spring.email;
 
+import static com.mevenk.webapp.util.MeVenkWebAppUtil.LINE_SEPARATOR;
+
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
  */
 public class MeVenkWebAppMailSender {
 
-	private JavaMailSender javaMailSender;
+	private static JavaMailSender javaMailSender;
 	private static String fromEmail;
 
 	/**
@@ -25,7 +27,7 @@ public class MeVenkWebAppMailSender {
 	 * @param from
 	 */
 	MeVenkWebAppMailSender(JavaMailSender javaMailSender, String from) {
-		this.javaMailSender = javaMailSender;
+		MeVenkWebAppMailSender.javaMailSender = javaMailSender;
 		fromEmail = from;
 	}
 
@@ -34,24 +36,27 @@ public class MeVenkWebAppMailSender {
 		if (javaMailSender == null || fromEmail == null || fromEmail.trim().isEmpty()) {
 			throw new IllegalArgumentException("All parameters required !!!");
 		}
-		Date sentDate = new Date();
-		SimpleMailMessage testEmail = generateSimpleMailMessage();
-		testEmail.setSentDate(sentDate);
-		testEmail.setTo("");
-		testEmail.setSubject("MeVenkWebApp email test @ " + sentDate);
-		testEmail.setCc("");
-		testEmail.setText("MeVenkWebApp test Email......" + sentDate);
-		send(testEmail);
 	}
 
-	private void send(SimpleMailMessage simpleMailMessage) {
+	private static void send(SimpleMailMessage simpleMailMessage) {
 		javaMailSender.send(simpleMailMessage);
 	}
 
-	private static final SimpleMailMessage generateSimpleMailMessage() {
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+	public static final void send(EmailTO emailTO) {
+		SimpleMailMessage simpleMailMessage = emailTO.generateSimpleMailMessage();
+		simpleMailMessage.setSentDate(new Date());
 		simpleMailMessage.setFrom(fromEmail);
-		return simpleMailMessage;
+		simpleMailMessage.setText(generateEmailText(emailTO.getText()));
+		send(simpleMailMessage);
+	}
+
+	private static final String generateEmailText(String text) {
+		StringBuilder emailText = new StringBuilder(LINE_SEPARATOR);
+
+		emailText.append(
+				"<html>" + LINE_SEPARATOR + LINE_SEPARATOR + text + LINE_SEPARATOR + LINE_SEPARATOR + "</html>");
+
+		return emailText.toString();
 	}
 
 }
