@@ -3,20 +3,21 @@
  */
 package com.mevenk.webapp.config.spring.email;
 
-import static com.mevenk.webapp.util.MeVenkWebAppUtil.LINE_SEPARATOR;
-
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.mail.internet.MimeMessage;
 
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 /**
  * @author vkolisetty
  *
  */
 public class MeVenkWebAppMailSender {
+
+	static final String LINE_BREAK = "<br/>";
 
 	private static JavaMailSender javaMailSender;
 	private static String fromEmail;
@@ -38,23 +39,42 @@ public class MeVenkWebAppMailSender {
 		}
 	}
 
-	private static void send(SimpleMailMessage simpleMailMessage) {
-		javaMailSender.send(simpleMailMessage);
+	/**
+	 * 
+	 * @param mimeMessage
+	 */
+	private static void send(MimeMessage mimeMessage) {
+		javaMailSender.send(mimeMessage);
 	}
 
-	public static final void send(EmailTO emailTO) {
-		SimpleMailMessage simpleMailMessage = emailTO.generateSimpleMailMessage();
-		simpleMailMessage.setSentDate(new Date());
-		simpleMailMessage.setFrom(fromEmail);
-		simpleMailMessage.setText(generateEmailText(emailTO.getText()));
-		send(simpleMailMessage);
+	/**
+	 * 
+	 * @param emailTO
+	 * @throws Exception
+	 */
+	public static final void send(EmailTO emailTO) throws Exception {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+		emailTO.populateMimeMessageHelper(mimeMessageHelper);
+		mimeMessageHelper.setSentDate(new Date());
+		mimeMessageHelper.setFrom(fromEmail);
+		mimeMessageHelper.setText(generateEmailText(emailTO.getText()), true);
+		send(mimeMessage);
 	}
 
+	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
 	private static final String generateEmailText(String text) {
-		StringBuilder emailText = new StringBuilder(LINE_SEPARATOR);
+		StringBuilder emailText = new StringBuilder(LINE_BREAK);
 
-		emailText.append(
-				"<html>" + LINE_SEPARATOR + LINE_SEPARATOR + text + LINE_SEPARATOR + LINE_SEPARATOR + "</html>");
+		emailText.append(LINE_BREAK + LINE_BREAK);
+
+		emailText.append(text);
+
+		emailText.append(LINE_BREAK + LINE_BREAK);
 
 		return emailText.toString();
 	}
