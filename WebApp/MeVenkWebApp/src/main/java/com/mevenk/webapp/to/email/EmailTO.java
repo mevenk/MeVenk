@@ -1,10 +1,9 @@
 /**
  * 
  */
-package com.mevenk.webapp.config.spring.email;
+package com.mevenk.webapp.to.email;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.mevenk.webapp.to.BaseTO;
 
@@ -19,18 +18,14 @@ public class EmailTO extends BaseTO {
 	 */
 	private static final long serialVersionUID = 6831610080606895991L;
 
-	public static final String LINE_BREAK = MeVenkWebAppMailSender.LINE_BREAK;
-
-	public static final String HORIZANTAL_LINE = LINE_BREAK
-			+ "<hr style=\"display: block; height: 1px; border: 0; border-top: 1px solid red; margin: 1em 0; padding: 0;\" />"
-			+ LINE_BREAK;
+	public static final String LINE_BREAK = "<br/>";
 
 	private String subject;
 	private String to[];
 	private String cc[];
 	private String bcc[];
 	private String text;
-	
+
 	/**
 	 * 
 	 * @param subject
@@ -140,23 +135,6 @@ public class EmailTO extends BaseTO {
 	 */
 	public final String getText() {
 		return text;
-	}
-
-	/**
-	 * 
-	 * @param mimeMessageHelper
-	 * @throws Exception
-	 */
-	final void setRecipients(MimeMessageHelper mimeMessageHelper) throws Exception {
-		
-		mimeMessageHelper.setTo(to);
-		if (cc != null && cc.length > 0) {
-			mimeMessageHelper.setCc(cc);
-		}
-		if (bcc != null && bcc.length > 0) {
-			mimeMessageHelper.setBcc(bcc);
-		}
-
 	}
 
 }

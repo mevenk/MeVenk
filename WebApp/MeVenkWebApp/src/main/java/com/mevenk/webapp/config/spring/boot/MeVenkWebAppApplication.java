@@ -3,7 +3,7 @@
  */
 package com.mevenk.webapp.config.spring.boot;
 
-import static com.mevenk.webapp.config.spring.email.EmailTO.LINE_BREAK;
+import static com.mevenk.webapp.to.email.EmailTO.LINE_BREAK;
 
 import java.util.Date;
 
@@ -16,8 +16,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
-import com.mevenk.webapp.config.spring.email.EmailTO;
 import com.mevenk.webapp.config.spring.email.MeVenkWebAppMailSender;
+import com.mevenk.webapp.to.email.EmailTO;
 
 /**
  * @author vkolisetty
@@ -42,19 +42,24 @@ public class MeVenkWebAppApplication {
 		ConfigurableApplicationContext configurableApplicationContext = new SpringApplicationBuilder(
 				MeVenkWebAppRootConfiguration.class).run(args);
 
-		System.out.println("Context: " + configurableApplicationContext.getDisplayName());
+		try {
+			System.out.println("Context: " + configurableApplicationContext.getDisplayName());
 
-		ConfigurableEnvironment environment = configurableApplicationContext.getEnvironment();
-		String startupEmailTo = environment.getProperty("startup.email.to");
-		String startupEmailCc = environment.getProperty("startup.email.cc");
+			ConfigurableEnvironment environment = configurableApplicationContext.getEnvironment();
+			String startupEmailTo = environment.getProperty("startup.email.to");
+			String startupEmailCc = environment.getProperty("startup.email.cc");
 
-		if (StringUtils.isBlank(startupEmailTo) || StringUtils.isBlank(startupEmailCc)) {
-			throw new IllegalStateException("Startup email properties not proper");
+			if (StringUtils.isBlank(startupEmailTo) || StringUtils.isBlank(startupEmailCc)) {
+				throw new IllegalStateException("Startup email properties not proper");
+			}
+
+			sendEmailApplicationStarted(configurableApplicationContext, startupEmailTo, startupEmailCc);
+
+			applicationStarted = true;
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			System.exit(1);
 		}
-
-		sendEmailApplicationStarted(configurableApplicationContext, startupEmailTo, startupEmailCc);
-
-		applicationStarted = true;
 
 	}
 
@@ -78,19 +83,19 @@ public class MeVenkWebAppApplication {
 		emailText.append("Id: " + applicationContext.getId() + LINE_BREAK);
 
 		emailText.append(LINE_BREAK);
-		emailText.append(EmailTO.HORIZANTAL_LINE);
-		emailText.append(LINE_BREAK);
+		emailText.append("<p>");
 		emailText.append("Environment: " + applicationContext.getEnvironment() + LINE_BREAK);
-		emailText.append(LINE_BREAK);
-		emailText.append(EmailTO.HORIZANTAL_LINE);
-		emailText.append(LINE_BREAK);
+		emailText.append("</p>");
 
+		emailText.append(LINE_BREAK);
+		emailText.append("<p>");
 		emailText.append("No of Beans: " + applicationContext.getBeanDefinitionCount() + LINE_BREAK);
 		emailText.append(LINE_BREAK);
 		for (String name : applicationContext.getBeanDefinitionNames()) {
 			emailText.append(name + LINE_BREAK);
 		}
-		emailText.append(EmailTO.HORIZANTAL_LINE);
+		emailText.append("</p>");
+
 		emailText.append(LINE_BREAK);
 		emailText.append(LINE_BREAK);
 
