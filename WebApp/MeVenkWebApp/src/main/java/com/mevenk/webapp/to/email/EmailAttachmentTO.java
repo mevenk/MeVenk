@@ -9,10 +9,12 @@ import java.io.InputStream;
 import java.util.Objects;
 
 import javax.activation.DataSource;
+import javax.activation.FileTypeMap;
 import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.ConfigurableMimeFileTypeMap;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mevenk.webapp.to.BaseTO;
@@ -27,6 +29,8 @@ public class EmailAttachmentTO extends BaseTO {
 	 * 
 	 */
 	private static final long serialVersionUID = -5144389974603783944L;
+
+	private static final FileTypeMap DEFAULT_FILE_TYPE_MAP = ConfigurableMimeFileTypeMap.getDefaultFileTypeMap();
 
 	private String attachmentFileName;
 
@@ -75,32 +79,31 @@ public class EmailAttachmentTO extends BaseTO {
 	 * 
 	 * @param attachmentFileName
 	 * @param data
-	 * @param type
 	 * @throws IOException
 	 */
-	public EmailAttachmentTO(String attachmentFileName, String data, String type) throws IOException {
-		this(attachmentFileName, new ByteArrayDataSource(data, type));
+	public EmailAttachmentTO(String attachmentFileName, String data) throws IOException {
+		this(attachmentFileName,
+				new ByteArrayDataSource(data, DEFAULT_FILE_TYPE_MAP.getContentType(attachmentFileName)));
 	}
 
 	/**
 	 * 
 	 * @param attachmentFileName
 	 * @param is
-	 * @param type
 	 * @throws IOException
 	 */
-	public EmailAttachmentTO(String attachmentFileName, InputStream is, String type) throws IOException {
-		this(attachmentFileName, new ByteArrayDataSource(is, type));
+	public EmailAttachmentTO(String attachmentFileName, InputStream is) throws IOException {
+		this(attachmentFileName, new ByteArrayDataSource(is, DEFAULT_FILE_TYPE_MAP.getContentType(attachmentFileName)));
 	}
 
 	/**
 	 * 
 	 * @param attachmentFileName
 	 * @param data
-	 * @param type
 	 */
-	public EmailAttachmentTO(String attachmentFileName, byte[] data, String type) {
-		this(attachmentFileName, new ByteArrayDataSource(data, type));
+	public EmailAttachmentTO(String attachmentFileName, byte[] data) {
+		this(attachmentFileName,
+				new ByteArrayDataSource(data, DEFAULT_FILE_TYPE_MAP.getContentType(attachmentFileName)));
 	}
 
 	/**
