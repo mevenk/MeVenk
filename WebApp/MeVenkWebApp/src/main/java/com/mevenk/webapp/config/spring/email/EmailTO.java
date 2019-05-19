@@ -30,6 +30,39 @@ public class EmailTO extends BaseTO {
 	private String cc[];
 	private String bcc[];
 	private String text;
+	
+	/**
+	 * 
+	 * @param subject
+	 * @param to
+	 * @param text
+	 */
+	public EmailTO(String subject, String to, String text) {
+		this(subject, new String[] { to }, text);
+	}
+
+	/**
+	 * 
+	 * @param subject
+	 * @param to
+	 * @param cc
+	 * @param text
+	 */
+	public EmailTO(String subject, String to, String cc, String text) {
+		this(subject, new String[] { to }, new String[] { cc }, text);
+	}
+
+	/**
+	 * 
+	 * @param subject
+	 * @param to
+	 * @param cc
+	 * @param bcc
+	 * @param text
+	 */
+	public EmailTO(String subject, String to, String cc, String bcc, String text) {
+		this(subject, new String[] { to }, new String[] { cc }, new String[] { bcc }, text);
+	}
 
 	/**
 	 * @param subject
@@ -114,9 +147,8 @@ public class EmailTO extends BaseTO {
 	 * @param mimeMessageHelper
 	 * @throws Exception
 	 */
-	final void populateMimeMessageHelper(MimeMessageHelper mimeMessageHelper) throws Exception {
-
-		mimeMessageHelper.setSubject(subject);
+	final void setRecipients(MimeMessageHelper mimeMessageHelper) throws Exception {
+		
 		mimeMessageHelper.setTo(to);
 		if (cc != null && cc.length > 0) {
 			mimeMessageHelper.setCc(cc);

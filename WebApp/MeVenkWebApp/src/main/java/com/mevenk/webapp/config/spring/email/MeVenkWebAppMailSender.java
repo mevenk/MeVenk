@@ -55,9 +55,10 @@ public class MeVenkWebAppMailSender {
 	public static final void send(EmailTO emailTO) throws Exception {
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-		emailTO.populateMimeMessageHelper(mimeMessageHelper);
+		emailTO.setRecipients(mimeMessageHelper);
 		mimeMessageHelper.setSentDate(new Date());
 		mimeMessageHelper.setFrom(fromEmail);
+		mimeMessageHelper.setSubject(emailTO.getSubject());
 		mimeMessageHelper.setText(generateEmailText(emailTO.getText()), true);
 		send(mimeMessage);
 	}

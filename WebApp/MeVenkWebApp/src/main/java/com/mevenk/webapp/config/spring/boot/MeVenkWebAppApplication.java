@@ -94,8 +94,7 @@ public class MeVenkWebAppApplication {
 		emailText.append(LINE_BREAK);
 		emailText.append(LINE_BREAK);
 
-		MeVenkWebAppMailSender.send(new EmailTO(subject, new String[] { startupEmailTo },
-				new String[] { startupEmailCc }, emailText.toString()));
+		MeVenkWebAppMailSender.send(new EmailTO(subject, startupEmailTo, startupEmailCc, emailText.toString()));
 	}
 
 }
