@@ -6,15 +6,22 @@ package com.mevenk.webapp.config.spring.email;
 import static com.mevenk.webapp.to.email.EmailTO.LINE_BREAK;
 import static com.mevenk.webapp.util.MeVenkWebAppUtil.LINE_SEPARATOR;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 
+import javax.activation.DataSource;
 import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import com.mevenk.webapp.to.email.EmailAttachmentTO;
 import com.mevenk.webapp.to.email.EmailTO;
 
 /**
@@ -147,8 +154,46 @@ public class MeVenkWebAppMailSender {
 	 * 
 	 * @param emailTO
 	 * @param mimeMessageHelper
+	 * @throws MessagingException
+	 * @throws IOException
 	 */
-	private static final void setAttachments(EmailTO emailTO, MimeMessageHelper mimeMessageHelper) {
+	private static final void setAttachments(EmailTO emailTO, MimeMessageHelper mimeMessageHelper)
+			throws IOException, MessagingException {
+
+		Set<EmailAttachmentTO> emailAttachments = emailTO.getEmailAttachments();
+		if (emailAttachments == null || emailAttachments.isEmpty()) {
+			return;
+		}
+
+		String attachmentFileName = null;
+
+		File file = null;
+		DataSource dataSource = null;
+		InputStreamSource inputStreamSource = null;
+
+		for (EmailAttachmentTO attachment : emailAttachments) {
+
+			attachmentFileName = attachment.getAttachmentFileName();
+
+			file = attachment.getFile();
+			if (file != null) {
+				mimeMessageHelper.addAttachment(attachmentFileName, file);
+				continue;
+			}
+
+			inputStreamSource = attachment.getInputStreamSource();
+			if (inputStreamSource != null) {
+				mimeMessageHelper.addAttachment(attachmentFileName, inputStreamSource);
+				continue;
+			}
+
+			dataSource = attachment.getDataSource();
+			if (dataSource != null) {
+				mimeMessageHelper.addAttachment(attachmentFileName, dataSource);
+				continue;
+			}
+
+		}
 
 	}
 

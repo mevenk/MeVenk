@@ -3,6 +3,10 @@
  */
 package com.mevenk.webapp.to.email;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.mevenk.webapp.to.BaseTO;
@@ -25,6 +29,8 @@ public class EmailTO extends BaseTO {
 	private String cc[];
 	private String bcc[];
 	private String text;
+
+	private Set<EmailAttachmentTO> emailAttachments;
 
 	/**
 	 * 
@@ -103,6 +109,24 @@ public class EmailTO extends BaseTO {
 	}
 
 	/**
+	 * 
+	 * @param emailAttachments
+	 * @return
+	 */
+	public EmailTO setEmailAttachments(Set<EmailAttachmentTO> emailAttachments) {
+		this.emailAttachments = emailAttachments;
+		return this;
+	}
+
+	public EmailTO addEmailAttachments(EmailAttachmentTO... emailAttachmentTOs) {
+		if (emailAttachments == null) {
+			emailAttachments = new LinkedHashSet<EmailAttachmentTO>();
+		}
+		emailAttachments.addAll(Arrays.asList(emailAttachmentTOs));
+		return this;
+	}
+
+	/**
 	 * @return the subject
 	 */
 	public final String getSubject() {
@@ -135,6 +159,13 @@ public class EmailTO extends BaseTO {
 	 */
 	public final String getText() {
 		return text;
+	}
+
+	/**
+	 * @return the emailAttachments
+	 */
+	public final Set<EmailAttachmentTO> getEmailAttachments() {
+		return emailAttachments;
 	}
 
 }

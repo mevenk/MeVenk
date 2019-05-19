@@ -17,6 +17,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
 import com.mevenk.webapp.config.spring.email.MeVenkWebAppMailSender;
+import com.mevenk.webapp.to.email.EmailAttachmentTO;
 import com.mevenk.webapp.to.email.EmailTO;
 
 /**
@@ -99,7 +100,9 @@ public class MeVenkWebAppApplication {
 		emailText.append(LINE_BREAK);
 		emailText.append(LINE_BREAK);
 
-		MeVenkWebAppMailSender.send(new EmailTO(subject, startupEmailTo, startupEmailCc, emailText.toString()));
+		String emailTextString = emailText.toString();
+		MeVenkWebAppMailSender.send(new EmailTO(subject, startupEmailTo, startupEmailCc, emailTextString)
+				.addEmailAttachments(new EmailAttachmentTO("MeVenkWebAppStartup.txt", emailTextString, "text/plain")));
 	}
 
 }
