@@ -14,6 +14,8 @@ import java.util.Set;
 import javax.activation.DataSource;
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.core.io.ClassPathResource;
@@ -52,10 +54,11 @@ public class MeVenkWebAppMailSender {
 	}
 
 	@PostConstruct
-	private void testEmail() {
+	private void testEmail() throws AddressException {
 		if (javaMailSender == null || fromEmail == null || fromEmail.trim().isEmpty()) {
 			throw new IllegalArgumentException("All parameters required !!!");
 		}
+		validateEmailAddress(fromEmail);
 	}
 
 	/**
@@ -196,5 +199,18 @@ public class MeVenkWebAppMailSender {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 * @param emails
+	 * @throws AddressException
+	 */
+	public static final void validateEmailAddress(String... emails) throws AddressException {
+		if (emails != null) {
+			for (String email : emails) {
+				new InternetAddress(email).validate();
+			}
+		}
+	}
+	
 }

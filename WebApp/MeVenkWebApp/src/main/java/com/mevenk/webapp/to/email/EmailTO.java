@@ -3,9 +3,13 @@
  */
 package com.mevenk.webapp.to.email;
 
+import static com.mevenk.webapp.config.spring.email.MeVenkWebAppMailSender.validateEmailAddress;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.mail.internet.AddressException;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,8 +41,9 @@ public class EmailTO extends BaseTO {
 	 * @param subject
 	 * @param to
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String to, String text) {
+	public EmailTO(String subject, String to, String text) throws AddressException {
 		this(subject, new String[] { to }, text);
 	}
 
@@ -48,8 +53,9 @@ public class EmailTO extends BaseTO {
 	 * @param to
 	 * @param cc
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String to, String cc, String text) {
+	public EmailTO(String subject, String to, String cc, String text) throws AddressException {
 		this(subject, new String[] { to }, new String[] { cc }, text);
 	}
 
@@ -60,8 +66,9 @@ public class EmailTO extends BaseTO {
 	 * @param cc
 	 * @param bcc
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String to, String cc, String bcc, String text) {
+	public EmailTO(String subject, String to, String cc, String bcc, String text) throws AddressException {
 		this(subject, new String[] { to }, new String[] { cc }, new String[] { bcc }, text);
 	}
 
@@ -69,8 +76,9 @@ public class EmailTO extends BaseTO {
 	 * @param subject
 	 * @param to
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String[] to, String text) {
+	public EmailTO(String subject, String[] to, String text) throws AddressException {
 		this(subject, to, null, null, text);
 	}
 
@@ -79,8 +87,9 @@ public class EmailTO extends BaseTO {
 	 * @param to
 	 * @param cc
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String[] to, String[] cc, String text) {
+	public EmailTO(String subject, String[] to, String[] cc, String text) throws AddressException {
 		this(subject, to, cc, null, text);
 	}
 
@@ -90,13 +99,18 @@ public class EmailTO extends BaseTO {
 	 * @param cc
 	 * @param bcc
 	 * @param text
+	 * @throws AddressException
 	 */
-	public EmailTO(String subject, String[] to, String[] cc, String[] bcc, String text) {
+	public EmailTO(String subject, String[] to, String[] cc, String[] bcc, String text) throws AddressException {
 		if (StringUtils.isAnyEmpty(subject)) {
 			throw new IllegalArgumentException("Subject to cannot be null or empty");
 		}
-		if (StringUtils.isAnyEmpty(to)) {
-			throw new IllegalArgumentException("To to cannot be null or empty");
+		validateEmailAddress(to);
+		if (cc != null) {
+			validateEmailAddress(cc);
+		}
+		if (bcc != null) {
+			validateEmailAddress(bcc);
 		}
 		if (StringUtils.isAnyEmpty(text)) {
 			throw new IllegalArgumentException("Text to cannot be null or empty");
