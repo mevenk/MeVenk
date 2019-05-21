@@ -183,7 +183,7 @@ public class MeVenkWebAppMailSender {
 
 			inputStreamSource = attachment.getInputStreamSource();
 			if (inputStreamSource != null) {
-				mimeMessageHelper.addAttachment(attachmentFileName, inputStreamSource);
+				mimeMessageHelper.addAttachment(attachmentFileName, inputStreamSource, attachment.getContentType());
 				continue;
 			}
 

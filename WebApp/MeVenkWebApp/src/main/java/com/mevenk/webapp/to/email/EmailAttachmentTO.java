@@ -33,6 +33,7 @@ public class EmailAttachmentTO extends BaseTO {
 	private static final FileTypeMap DEFAULT_FILE_TYPE_MAP = ConfigurableMimeFileTypeMap.getDefaultFileTypeMap();
 
 	private String attachmentFileName;
+	private String contentType;
 
 	private File file;
 	private DataSource dataSource;
@@ -73,6 +74,7 @@ public class EmailAttachmentTO extends BaseTO {
 	public EmailAttachmentTO(String attachmentFileName, InputStreamSource inputStreamSource) {
 		this(attachmentFileName);
 		this.inputStreamSource = inputStreamSource;
+		this.contentType = DEFAULT_FILE_TYPE_MAP.getContentType(attachmentFileName);
 	}
 
 	/**
@@ -120,6 +122,13 @@ public class EmailAttachmentTO extends BaseTO {
 	public final String getAttachmentFileName() {
 		return attachmentFileName;
 	}
+	
+	/**
+	 * @return the contentType
+	 */
+	public final String getContentType() {
+		return contentType;
+	}
 
 	/**
 	 * @return the file
@@ -166,28 +175,7 @@ public class EmailAttachmentTO extends BaseTO {
 		if (getClass() != obj.getClass())
 			return false;
 		EmailAttachmentTO other = (EmailAttachmentTO) obj;
-		if (file == null) {
-			if (other.file != null)
-				return false;
-		} else if (!file.equals(other.file))
-			return false;
-		if (attachmentFileName == null) {
-			if (other.attachmentFileName != null)
-				return false;
-		} else if (!attachmentFileName.equals(other.attachmentFileName))
-			return false;
-		if (dataSource == null) {
-			if (other.dataSource != null)
-				return false;
-		} else if (!dataSource.equals(other.dataSource))
-			return false;
-
-		if (inputStreamSource == null) {
-			if (other.inputStreamSource != null)
-				return false;
-		} else if (!inputStreamSource.equals(other.inputStreamSource))
-			return false;
-		return true;
+		return attachmentFileName.equalsIgnoreCase(other.attachmentFileName);
 	}
 
 }
