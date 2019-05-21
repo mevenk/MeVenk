@@ -13,7 +13,7 @@ import com.mevenk.webapp.entity.cache.MessageSource;
  */
 public interface CacheDataDao {
 
-	public List<MessageSource> getMessageSource();
+	public Iterable<MessageSource> getMessageSource();
 
 	public List<MessageSource> getMessageSource(int messageId);
 

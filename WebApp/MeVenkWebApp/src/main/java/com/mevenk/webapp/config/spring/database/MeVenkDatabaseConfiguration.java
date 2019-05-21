@@ -16,8 +16,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -34,6 +38,7 @@ import com.mevenk.webapp.config.spring.database.cache.CacheManagerConfig;
 @ComponentScan(basePackages = BASE_PACKAGE)
 @Import(MeVenkWebAppRootConfiguration.class)
 @EnableTransactionManagement
+@EnableJpaRepositories({ "com.mevenk.webapp.cache.dao.repository" })
 public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBase {
 
 	public static final String BEAN_NAME_TRANSACTION_MANAGER = "transactionManager";
@@ -79,6 +84,22 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 		}
 
 		return comboPooledDataSource;
+	}
+
+	@Bean(name = "entityManagerFactory")
+	public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
+		LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
+		lcemfb.setJpaVendorAdapter(getJpaVendorAdapter());
+		lcemfb.setDataSource(dataSource());
+		lcemfb.setPersistenceUnitName("MeVenkWebAppJpaPersistenceUnit");
+		lcemfb.setPackagesToScan("com.mevenk.webapp.entity");
+		lcemfb.setJpaProperties(getHibernateProperties());
+		return lcemfb;
+	}
+
+	@Bean
+	public JpaVendorAdapter getJpaVendorAdapter() {
+		return new HibernateJpaVendorAdapter();
 	}
 
 	@Bean
