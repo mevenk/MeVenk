@@ -3,8 +3,6 @@
  */
 package com.mevenk.webapp.cache.dao;
 
-import java.util.List;
-
 import com.mevenk.webapp.entity.cache.MessageSource;
 
 /**
@@ -15,8 +13,8 @@ public interface CacheDataDao {
 
 	public Iterable<MessageSource> getMessageSource();
 
-	public List<MessageSource> getMessageSource(int messageId);
+	public Iterable<MessageSource> getMessageSource(int messageId);
 
-	public List<Integer> getMessageIds();
+	public Iterable<Integer> getMessageIds();
 
 }

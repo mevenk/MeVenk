@@ -3,8 +3,6 @@
  */
 package com.mevenk.webapp.cache.dao.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,14 +27,14 @@ public class CacheDataDaoImpl implements CacheDataDao {
 	}
 
 	@Override
-	public List<MessageSource> getMessageSource(int messageId) {
+	public Iterable<MessageSource> getMessageSource(int messageId) {
 
 		return messageSourceRepository.findByMessageId(messageId);
 
 	}
 
 	@Override
-	public List<Integer> getMessageIds() {
+	public Iterable<Integer> getMessageIds() {
 
 		return messageSourceRepository.getMessageIds();
 	}

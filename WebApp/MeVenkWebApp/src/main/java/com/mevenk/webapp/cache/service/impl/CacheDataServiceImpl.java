@@ -11,8 +11,6 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -107,23 +105,19 @@ public class CacheDataServiceImpl implements CacheDataService {
 	 */
 	private void loadMessageSourceData() throws IllegalAccessException {
 
-		List<Integer> messageIds = cacheDataDao.getMessageIds();
+		Iterable<Integer> messageIds = cacheDataDao.getMessageIds();
 
 		Map<Integer, Map<Integer, String>> messageSourceMasterData = new HashMap<>();
 
 		Map<Integer, String> messages = null;
-		List<MessageSource> messageSources = null;
+		Iterable<MessageSource> messageSources = null;
 
-		for (Iterator<Integer> iteratorMessageIds = messageIds.iterator(); iteratorMessageIds
-				.hasNext();) {
-
-			Integer messageId = iteratorMessageIds.next();
+		for (Integer messageId : messageIds) {
+			
 			messageSources = cacheDataDao.getMessageSource(messageId);
 			messages = new HashMap<>();
 
-			for (Iterator<MessageSource> iteratorMessageSources = messageSources.iterator(); iteratorMessageSources
-					.hasNext();) {
-				MessageSource messageSource = iteratorMessageSources.next();
+			for (MessageSource messageSource : messageSources) {
 				messages.put(messageSource.getLocaleId(), messageSource.getMessage());
 			}
 
