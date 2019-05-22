@@ -9,7 +9,6 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -24,7 +23,7 @@ import com.mevenk.webapp.to.email.EmailTO;
  * @author vkolisetty
  *
  */
-@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
+@SpringBootApplication
 public class MeVenkWebAppApplication {
 
 	private static boolean applicationStarted;
