@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/.apt_generated_tests"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/util/java"/>
         <property name="context-root" value="MeVenkWebApp"/>
         <property name="java-output-path" value="/MeVenkWebApp/target/classes"/>
     </wb-module>
