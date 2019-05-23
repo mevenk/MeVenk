@@ -39,7 +39,7 @@ import com.mevenk.webapp.config.spring.database.cache.CacheManagerConfig;
 @ComponentScan(basePackages = BASE_PACKAGE)
 @Import(MeVenkWebAppRootConfiguration.class)
 @EnableTransactionManagement
-@EnableJpaRepositories({ "com.mevenk.webapp.cache.dao.repository" })
+@EnableJpaRepositories({ "com.mevenk.webapp.cache.dao.repository", "com.mevenk.webapp.dao.repository" })
 public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBase {
 
 	public static final String BEAN_NAME_TRANSACTION_MANAGER = "transactionManager";
