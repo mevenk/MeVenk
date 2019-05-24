@@ -74,7 +74,6 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 			comboPooledDataSource.setAcquireRetryAttempts(getAcquireRetryAttempts());
 			comboPooledDataSource.setUnreturnedConnectionTimeout(getTimeoutConnectionUnReturned());
 			comboPooledDataSource.setCheckoutTimeout(getTimeoutCheckout());
-			comboPooledDataSource.getConnection().getSchema();
 		} catch (Exception exception) {
 			throw new DatabaseConfigException(exception, "DataSource(ComboPooledDataSource)",
 					"Exception occurred while setting up database datasource connection",
