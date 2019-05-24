@@ -13,6 +13,8 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 import org.apache.logging.log4j.Logger;
 
+import com.mevenk.webapp.exception.config.properties.PropertiesConfigException;
+
 /**
  * @author venky
  *
@@ -123,7 +125,7 @@ public abstract class PropertiesLoaderHelper {
 	 * @author venky
 	 *
 	 */
-	private static final class EmptyPropertyException extends IllegalArgumentException {
+	private static final class EmptyPropertyException extends PropertiesConfigException {
 
 		/**
 		 *
@@ -135,7 +137,7 @@ public abstract class PropertiesLoaderHelper {
 		 * @param propertyName
 		 */
 		protected EmptyPropertyException(String propertyName) {
-			super("Value for property [" + propertyName + "] is empty");
+			super(new IllegalArgumentException(), "Value for property [" + propertyName + "] is empty");
 		}
 
 	}
@@ -145,7 +147,7 @@ public abstract class PropertiesLoaderHelper {
 	 * @author venky
 	 *
 	 */
-	private static final class InvalidNumberException extends IllegalArgumentException {
+	private static final class InvalidNumberException extends PropertiesConfigException {
 
 		/**
 		 *
@@ -158,7 +160,8 @@ public abstract class PropertiesLoaderHelper {
 		 * @param propertyValue
 		 */
 		protected InvalidNumberException(String propertyName, String propertyValue) {
-			super("Invalid number[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
+			super(new IllegalArgumentException(propertyValue),
+					"Invalid number[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
 		}
 
 	}
@@ -168,7 +171,7 @@ public abstract class PropertiesLoaderHelper {
 	 * @author venky
 	 *
 	 */
-	private static final class InvalidBooleanValueException extends IllegalArgumentException {
+	private static final class InvalidBooleanValueException extends PropertiesConfigException {
 
 		/**
 		 *
@@ -181,7 +184,8 @@ public abstract class PropertiesLoaderHelper {
 		 * @param propertyValue
 		 */
 		protected InvalidBooleanValueException(String propertyName, String propertyValue) {
-			super("Invalid boolean[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
+			super(new IllegalArgumentException(propertyValue),
+					"Invalid boolean[" + propertyValue + SET_FOR_PROPERTY + propertyName + "]");
 		}
 
 	}
@@ -193,7 +197,7 @@ public abstract class PropertiesLoaderHelper {
  * @author venky
  *
  */
-final class InvalidPropertyValueException extends IllegalArgumentException {
+final class InvalidPropertyValueException extends PropertiesConfigException {
 
 	/**
 	 *
@@ -207,8 +211,8 @@ final class InvalidPropertyValueException extends IllegalArgumentException {
 	 * @param errorMessage
 	 */
 	protected InvalidPropertyValueException(String propertyName, String propertyValue, String errorMessage) {
-		super("Invalid number[" + propertyValue + PropertiesLoaderHelper.SET_FOR_PROPERTY + propertyName + "] - "
-				+ errorMessage);
+		super(new IllegalArgumentException(propertyValue), "Invalid number[" + propertyValue
+				+ PropertiesLoaderHelper.SET_FOR_PROPERTY + propertyName + "] - " + errorMessage);
 	}
 
 }

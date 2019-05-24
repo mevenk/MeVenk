@@ -100,7 +100,7 @@ public class MeVenkWebAppApplication {
 		emailText.append(LINE_BREAK);
 
 		String emailTextString = emailText.toString();
-		MeVenkWebAppMailSender.send(new EmailTO(subject, startupEmailTo, startupEmailCc, emailTextString)
+		MeVenkWebAppMailSender.send(new EmailTO(subject, startupEmailTo, emailTextString)
 				.addEmailAttachments(new EmailAttachmentTO("MeVenkWebAppStartup.txt", emailTextString)));
 	}
 

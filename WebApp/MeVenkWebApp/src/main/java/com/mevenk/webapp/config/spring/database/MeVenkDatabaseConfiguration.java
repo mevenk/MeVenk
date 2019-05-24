@@ -6,8 +6,6 @@ package com.mevenk.webapp.config.spring.database;
 import static com.mevenk.webapp.config.spring.properties.DatabaseProperties.BEAN_DATABASE_PROPERTIES;
 import static com.mevenk.webapp.util.constants.MeVenkWebAppConstants.BASE_PACKAGE;
 
-import java.beans.PropertyVetoException;
-
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -30,6 +28,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
 import com.mevenk.webapp.config.spring.database.cache.CacheManagerConfig;
+import com.mevenk.webapp.exception.config.dao.DatabaseConfigException;
 
 /**
  * @author venky
@@ -75,13 +74,11 @@ public class MeVenkDatabaseConfiguration extends AbstractDatabaseConfigurationBa
 			comboPooledDataSource.setAcquireRetryAttempts(getAcquireRetryAttempts());
 			comboPooledDataSource.setUnreturnedConnectionTimeout(getTimeoutConnectionUnReturned());
 			comboPooledDataSource.setCheckoutTimeout(getTimeoutCheckout());
-
-		} catch (PropertyVetoException exception) {
-			throw new IllegalStateException(
-					"Exception occurred while setting up database connection properties due to: "
-							+ exception.getMessage(),
-					exception);
-
+			comboPooledDataSource.getConnection().getSchema();
+		} catch (Exception exception) {
+			throw new DatabaseConfigException(exception, "DataSource(ComboPooledDataSource)",
+					"Exception occurred while setting up database datasource connection",
+					"Please check database datasource properties");
 		}
 
 		return comboPooledDataSource;
