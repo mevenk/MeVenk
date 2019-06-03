@@ -1,0 +1,5 @@
+
+https://start.spring.io/starter.zip
+
+https://start.spring.io/starter.zip?name=MeVenkStandalone&groupId=org.mevenk&artifactId=MeVenkStandalone&version=0.0.1-SNAPSHOT&description=MeVenkStandalone&packageName=org.mevenk&type=maven-project&packaging=jar&javaVersion=1.8&language=java&bootVersion=2.1.3.RELEASE&dependencies=web
+
