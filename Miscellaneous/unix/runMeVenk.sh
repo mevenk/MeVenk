@@ -13,4 +13,8 @@ nautilus $baseDirectoryMeVenk
 ## Open GitDiffs directory
 nautilus /home/vkolisetty/RABOTA/Temporary/GitDiffs
 
+## Open Zips directory
+#nautilus /home/vkolisetty/RABOTA/Temporary/ZipTester/zips
+#nautilus /home/vkolisetty/RABOTA/Temporary/ZipTester/unzips
+
 
