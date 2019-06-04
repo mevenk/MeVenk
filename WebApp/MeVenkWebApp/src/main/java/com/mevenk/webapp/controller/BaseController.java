@@ -3,8 +3,6 @@
  */
 package com.mevenk.webapp.controller;
 
-import static com.mevenk.webapp.util.HTTPUtil.SESSION_ATTRIBUTE_NAME_USER;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mevenk.webapp.bdo.BaseBDO;
 import com.mevenk.webapp.modelattribute.SampleForm;
-import com.mevenk.webapp.to.user.UserTO;
 import com.mevenk.webapp.validator.sampleform.SampleFormValidator;
 
 /**
@@ -31,7 +27,6 @@ import com.mevenk.webapp.validator.sampleform.SampleFormValidator;
  *
  */
 @Controller
-@SessionAttributes(SESSION_ATTRIBUTE_NAME_USER)
 public class BaseController {
 
 	private static final String WELCOME = "welcome";
@@ -43,8 +38,7 @@ public class BaseController {
 	private BaseBDO baseBDO;
 
 	@GetMapping(value = WELCOME)
-	public ModelAndView welcome(ModelMap modelMap, HttpServletRequest httpServletRequest,
-			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTO) {
+	public ModelAndView welcome(ModelMap modelMap, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndViewWelcome = new ModelAndView(WELCOME);
 		modelAndViewWelcome.addObject("welcomeMessage", "Hello!!" + new Date());
 		Date databaseTime = baseBDO.databaseTime();
@@ -55,8 +49,7 @@ public class BaseController {
 	}
 
 	@GetMapping(value = "/sampleFormSubmitter")
-	public ModelAndView sampleFormSubmitter(ModelMap modelMap, HttpServletRequest httpServletRequest,
-			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTO) {
+	public ModelAndView sampleFormSubmitter(ModelMap modelMap, HttpServletRequest httpServletRequest) {
 		ModelAndView modelAndViewSampleFormSubmitter = new ModelAndView("sampleFormSubmission");
 
 		modelAndViewSampleFormSubmitter.addObject("sampleForm", new SampleForm());
@@ -68,8 +61,7 @@ public class BaseController {
 
 	@PostMapping(value = "/sampleFormSubmit")
 	public ModelAndView sampleFormSubmit(ModelMap modelMap, HttpServletRequest httpServletRequest,
-			@ModelAttribute("sampleForm") SampleForm sampleForm, BindingResult bindingResult,
-			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTO) {
+			@ModelAttribute("sampleForm") SampleForm sampleForm, BindingResult bindingResult) {
 
 		ModelAndView modelAndViewSampleFormSubmit = new ModelAndView("sampleFormSubmission");
 

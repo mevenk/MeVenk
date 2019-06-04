@@ -1,6 +1,5 @@
 package com.mevenk.webapp.controller.login;
 
-import static com.mevenk.webapp.util.HTTPUtil.SESSION_ATTRIBUTE_NAME_USER;
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,7 +28,6 @@ import com.mevenk.webapp.validator.login.LoginUserValidator;
  *
  */
 @Controller
-@SessionAttributes(SESSION_ATTRIBUTE_NAME_USER)
 public class LoginController {
 
 	private static final Logger LOG = getLogger(LoginController.class);
@@ -42,11 +39,6 @@ public class LoginController {
 	
 	@Autowired
 	private LoginService loginService;
-
-	@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER)
-	public UserTO setUpUserTO() {
-		return new UserTO();
-	}
 
 	@GetMapping(value = "/login")
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, SessionStatus sessionStatus,
@@ -63,8 +55,7 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/loginUser")
-	public ModelAndView loginUser(@ModelAttribute("userLogin") UserLoginTO userLoginTO, BindingResult bindingResult,
-			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTO, HttpServletRequest request,
+	public ModelAndView loginUser(@ModelAttribute("userLogin") UserLoginTO userLoginTO, BindingResult bindingResult, HttpServletRequest request,
 			HttpServletResponse response) throws LoginUserException {
 
 		try {
@@ -76,7 +67,7 @@ public class LoginController {
 				return modelAndViewLoginUserValidatorError;
 			}
 
-			userTO = loginService.loginUser(userLoginTO);
+			UserTO userTO = loginService.loginUser(userLoginTO);
 			userTO = HTTPUtil.addUserToSession(userTO, request);
 
 			return new ModelAndView("redirect:./welcome.mevenk");
@@ -89,9 +80,9 @@ public class LoginController {
 	}
 
 	@GetMapping(value = "/logoutUser")
-	public ModelAndView logoutUser(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute(SESSION_ATTRIBUTE_NAME_USER) UserTO userTo, SessionStatus sessionStatus) {
+	public ModelAndView logoutUser(HttpServletRequest request, HttpServletResponse response, SessionStatus sessionStatus) {
 
+		UserTO userTo = HTTPUtil.getUserFromSession(request);
 		LOG.info("Logout User:", userTo);
 		sessionStatus.setComplete();
 		request.getSession(false).invalidate();
