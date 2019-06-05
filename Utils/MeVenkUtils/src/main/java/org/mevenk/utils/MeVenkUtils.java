@@ -30,7 +30,7 @@ public abstract class MeVenkUtils {
 	}
 
 	/**
-	 * @throws Throwable 
+	 * @throws Throwable
 	 * 
 	 */
 	private static final void run() throws Throwable {
@@ -60,7 +60,8 @@ public abstract class MeVenkUtils {
 	private static final void printModules() {
 
 		for (Map.Entry<Integer, MeVenkUtilsModule> module : modules.entrySet()) {
-			System.out.println(module.getKey() + ".    " + module.getValue().getDisplayDescription());
+			System.out.println(
+					module.getKey() + ".    " + module.getValue().getMeVenkUtilsRunner().getDisplayDescription());
 		}
 
 	}

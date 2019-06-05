@@ -9,6 +9,8 @@ package org.mevenk.utils;
  */
 public interface MeVenkUtilsRunner {
 
+	public String getDisplayDescription();
+
 	public void run() throws Throwable;
 
 }

@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.mevenk.utils.git.report.log.GitLogReport;
@@ -32,6 +33,7 @@ public class GitReportLogTester {
 	private static final int ABBREVIATED_COMMIT_LENGTH = 7;
 
 	private static Date SINCE = null;
+	private static Date UNTIL = null;
 
 	private static final File GIT_DIR = new File(GIT_DIR_PATH_LOCAL_MEVENK);
 
@@ -40,7 +42,15 @@ public class GitReportLogTester {
 
 	static {
 		try {
-			SINCE = GitLogReport.SIMPLE_DATE_FORMAT_COMMIT_TIME.parse("2019-02-12");
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(2019, 3, 8, 0, 0, 0);
+			
+			SINCE = calendar.getTime();
+			
+			calendar.set(2019, 3, 9, 23, 59, 59);
+			UNTIL = calendar.getTime();
+			
 			outputStreamGitLogReportFile = new FileOutputStream(
 					"/home/vkolisetty/RABOTA/Temporary/GitDiffs/GitLogReport.txt");
 			outputStreamGitLogReportFileHTML = new FileOutputStream(
@@ -63,14 +73,14 @@ public class GitReportLogTester {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		// generateReportFromGitDirectory();
-		generateReportFromGitDirectory(1500);
+		generateReportFromGitDirectory();
+		generateReportFromGitDirectory(15);
 
 	}
 
 	private static void generateReportFromGitDirectory(int maxNoOfCommits) throws Exception {
 
-		GitLogReportGenerator.generateReport(REPORT_TYPE_HTML, outputStreamGitLogReportFileHTML, GIT_DIR, TREE_MASTER,
+		GitLogReportGenerator.generateReport(REPORT_TYPE_HTML, outputStreamGitLogReportFileHTML, GIT_DIR, "1a74a5f42e1fe78d0c8516d4cc84b90fe511f02e",
 				ABBREVIATED_COMMIT_LENGTH, getDiffFileOutputStream(), maxNoOfCommits, COMMIT_URL_PREFIX);
 
 	}
