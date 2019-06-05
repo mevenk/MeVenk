@@ -5,6 +5,8 @@ package org.mevenk.webservices;
 
 import java.util.Arrays;
 
+import org.mevenk.webservices.logger.Logger;
+import org.mevenk.webservices.logger.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,6 +22,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MeVenkWebServicesApplication {
 
+	private static final Logger LOG = LoggerFactory.getlogger(MeVenkWebServicesApplication.class);
+
 	/**
 	 * @param args
 	 */
@@ -32,13 +36,7 @@ public class MeVenkWebServicesApplication {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 
-			System.out.println("Beans:");
-
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}
+			LOG.info("Beans: " + Arrays.toString(ctx.getBeanDefinitionNames()));
 
 		};
 	}

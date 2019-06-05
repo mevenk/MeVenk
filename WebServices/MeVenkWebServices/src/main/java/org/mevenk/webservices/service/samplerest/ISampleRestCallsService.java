@@ -3,12 +3,15 @@
  */
 package org.mevenk.webservices.service.samplerest;
 
+import org.mevenk.webservices.controller.to.root.BasicResponse;
+import org.springframework.http.ResponseEntity;
+
 /**
  * @author vkolisetty
  *
  */
 public interface ISampleRestCallsService {
 
-	String sampleGet() throws Throwable;
+	ResponseEntity<BasicResponse> sampleGet(String basicRequestURI) throws Throwable;
 
 }

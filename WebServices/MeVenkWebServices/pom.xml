@@ -89,6 +89,17 @@
 		
 		<!-- kotlin - END -->
 		
+		<!-- Log4j -->
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-kotlin -->
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api-kotlin</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		
+		<!-- Log4j - END -->
+		
 	</dependencies>
 
 	<build>
