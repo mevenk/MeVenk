@@ -1,3 +1,31 @@
 
 
 Excel
+
+
+
+
+JGit
+----
+
+FileRepositoryBuilder builder = new FileRepositoryBuilder();
+		Repository repo = builder.setGitDir(new File("/home/vkolisetty/RABOTA/MeVenk/.git")).setMustExist(true).build();
+		Git git = new Git(repo);
+
+
+
+
+
+-------------------------------------
+
+Date since = GitLogReport.SIMPLE_DATE_FORMAT_COMMIT_TIME.parse("2019-03-12");
+
+		File fileDiff = new File("/home/vkolisetty/RABOTA/Temporary/GitDiffs/GitLogReport_"
+				+ new SimpleDateFormat("d-M-y_H-m-s").format(new Date()) + ".diff");
+
+		LinkedHashSet<GitLogData> generateLogReport = GitLogReport.generateLogReport(
+				new File(GIT_DIR_PATH_LOCAL_MEVENK), "master", 7, since, new Date(), new FileOutputStream(fileDiff));
+		printLogData(generateLogReport,
+				new FileOutputStream("/home/vkolisetty/RABOTA/Temporary/GitDiffs/GitLogReport.txt"));
+
+
