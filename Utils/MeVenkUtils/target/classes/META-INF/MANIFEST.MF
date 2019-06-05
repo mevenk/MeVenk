@@ -1,5 +1,14 @@
 Manifest-Version: 1.0
-Built-By: venky
+Built-By: vkolisetty
+Class-Path: poi-4.0.1.jar commons-codec-1.11.jar commons-collections4-
+ 4.2.jar commons-math3-3.6.1.jar poi-ooxml-4.0.1.jar poi-ooxml-schemas
+ -4.0.1.jar xmlbeans-3.0.2.jar commons-compress-1.18.jar curvesapi-1.0
+ 5.jar commons-text-1.6.jar commons-lang3-3.8.1.jar org.eclipse.jgit-5
+ .3.0.201903130848-r.jar jsch-0.1.54.jar jzlib-1.1.1.jar JavaEWAH-1.1.
+ 6.jar slf4j-api-1.7.2.jar bcpg-jdk15on-1.60.jar bcprov-jdk15on-1.60.j
+ ar bcpkix-jdk15on-1.60.jar org.eclipse.jgit.archive-5.3.0.20190313084
+ 8-r.jar org.osgi.core-4.3.1.jar
 Build-Jdk: 1.8.0_201
 Created-By: Maven Integration for Eclipse
+Main-Class: org.mevenk.utils.MeVenkUtils
 
