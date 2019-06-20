@@ -3,8 +3,6 @@
  */
 package com.mevenk.webapp.config.spring.registration.servlet;
 
-import static com.mevenk.webapp.util.http.client.MeVenkWebAppClientUtil.RESOURCE_TYPE_CLIENT_RESOURCE;
-
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -17,9 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.mevenk.webapp.config.servlet.DefaultServlet;
 import com.mevenk.webapp.config.servlet.InitialContextServlet;
-import com.mevenk.webapp.config.servlet.MeVenkWebAppApplicationLaunchServlet;
 import com.mevenk.webapp.config.spring.MeVenkWebAppRootConfiguration;
 
 /**
@@ -68,19 +64,6 @@ public class MeVenkWebAppServletRegistration implements ApplicationContextAware 
 
 	}
 
-	@Bean("defaultServlet")
-	ServletRegistrationBean<DefaultServlet> defaultServlet() {
-
-		ServletRegistrationBean<DefaultServlet> servletRegistrationBeanDefaultServlet = new ServletRegistrationBean<DefaultServlet>();
-		servletRegistrationBeanDefaultServlet.setName("defaultServlet");
-		servletRegistrationBeanDefaultServlet.setServlet(new DefaultServlet());
-		for (String resourceTypeExt : RESOURCE_TYPE_CLIENT_RESOURCE) {
-			servletRegistrationBeanDefaultServlet.addUrlMappings("*." + resourceTypeExt);
-		}
-		return servletRegistrationBeanDefaultServlet;
-
-	}
-
 	@Bean("initialContextServlet")
 	ServletRegistrationBean<InitialContextServlet> initialContextServlet() {
 
@@ -89,16 +72,6 @@ public class MeVenkWebAppServletRegistration implements ApplicationContextAware 
 		servletRegistrationBeanInitialContextServlet.setName("InitialContextServlet");
 		servletRegistrationBeanInitialContextServlet.setLoadOnStartup(2);
 		return servletRegistrationBeanInitialContextServlet;
-
-	}
-
-	@Bean("MeVenkWebAppApplicationLaunchServlet")
-	ServletRegistrationBean<MeVenkWebAppApplicationLaunchServlet> meVenkWebAppApplicationLaunchServlet() {
-
-		ServletRegistrationBean<MeVenkWebAppApplicationLaunchServlet> servletRegistrationBeanMeVenkWebAppApplicationLaunchServlet = new ServletRegistrationBean<MeVenkWebAppApplicationLaunchServlet>(
-				new MeVenkWebAppApplicationLaunchServlet(), "/");
-		servletRegistrationBeanMeVenkWebAppApplicationLaunchServlet.setName("MeVenkWebAppApplicationLaunchServlet");
-		return servletRegistrationBeanMeVenkWebAppApplicationLaunchServlet;
 
 	}
 
