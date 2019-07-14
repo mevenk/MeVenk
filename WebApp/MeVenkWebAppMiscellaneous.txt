@@ -23,6 +23,26 @@ mevenkwebappBase
 
 
 
+------------------------------------
+
+
+
+docker run --name mevenk_mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Feb@2019 -e MYSQL_DATABASE=mevenk -e MYSQL_USER=venkatesh -e MYSQL_PASSWORD=venkatesh -d mysql
+
+docker run --name mevenk_mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Feb@2019 -e MYSQL_DATABASE=mevenk -e MYSQL_USER=mevenk_webapp_application -e MYSQL_PASSWORD=Feb@2019 -d mysql
+
+
+docker run -d --name mevenk_oracle-db -p 1521:1521 -e DB_SID=mevenk  store/oracle/database-enterprise:12.2.0.1
+
+Defauly sys password: Oradoc_db1
+alter user sys identified by <new-password>;
+
+
+
+
+alter session set "_ORACLE_SCRIPT"=true;
+
+mevenk_webapp_application
 
 
 --------------------------------------------------------------------
