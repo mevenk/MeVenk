@@ -1,0 +1,32 @@
+<h2>My heroes</h2>
+
+<div>
+  <label>Hero name:
+    <input #heroName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(heroName.value); heroName.value=''">
+    add
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">
+        {{hero.id}}
+      </span>
+      {{hero.name}}
+    </a>
+    <button class="delete" title="delete hero" (click)="delete(hero)">x</button>
+  </li>
+</ul>
+
+
+
+
+<div style="border: 5px solid red;top: 10px;max-height: 250px; max-width: 25%; overflow: scroll;">
+
+  <ngx-json-viewer [json]="heroes"></ngx-json-viewer>
+
+</div>
