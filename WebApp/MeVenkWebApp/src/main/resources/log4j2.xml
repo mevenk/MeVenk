@@ -341,8 +341,10 @@
 			<AppenderRef ref="rootLogRollingFile" level="ALL" />
 		</Logger>
 
-		<Logger name="org.hibernate.type" level="TRACE" />
-
+		<Logger name="org.hibernate" level="TRACE" />
+		
+		<Logger name="com.mchange" level="INFO" />
+		
 		<Logger name="org.apache" level="ALL">
 			<AppenderRef ref="rootLogRollingFile" level="ALL" />
 		</Logger>

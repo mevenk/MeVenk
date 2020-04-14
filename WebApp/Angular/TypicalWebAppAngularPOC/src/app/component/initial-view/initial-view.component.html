@@ -1,0 +1,18 @@
+<title>{{getTitle()}}</title>
+<p>initial-view works!</p>
+
+<h1>{{getTitle()}}</h1>
+
+
+<p>
+
+  No of view elements: {{initialViewElements.length}}
+</p>
+
+
+<ul>
+  <li *ngFor="let element of initialViewElements">
+    {{element | formattedString:element.length}}
+  </li>
+
+</ul>
