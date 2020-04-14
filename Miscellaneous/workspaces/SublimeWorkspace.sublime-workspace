@@ -3,6 +3,54 @@
 	{
 		"selected_items":
 		[
+			[
+				"wi",
+				"width\tproperty"
+			],
+			[
+				"s",
+				"style\tAttr"
+			],
+			[
+				"di",
+				"display\tproperty"
+			],
+			[
+				"h",
+				"height\tproperty"
+			],
+			[
+				"het",
+				"height\tproperty"
+			],
+			[
+				"backg",
+				"background-color\tproperty"
+			],
+			[
+				"pa",
+				"padding-right\tproperty"
+			],
+			[
+				"b",
+				"border\tAttr"
+			],
+			[
+				"cel",
+				"cellspacing\tAttr"
+			],
+			[
+				"bo",
+				"border\tproperty"
+			],
+			[
+				"back",
+				"background-color\tproperty"
+			],
+			[
+				"background-c",
+				"background-color\tproperty"
+			]
 		]
 	},
 	"buffers":
@@ -17,10 +65,20 @@
 			}
 		},
 		{
+			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Miscellaneous/MeVenkMiscellaneous.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebAppMiscellaneous.txt",
 			"settings":
 			{
-				"buffer_size": 1268,
+				"buffer_size": 3125,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -34,13 +92,13 @@
 			}
 		},
 		{
-			"contents": "\n\ncorrelationIdDateFormatPattern=dd_MM_yyyy_HH_mm_ss_SSS\n\ntimelyLoggerDateFormatPattern=d/M/y H:m:s.S\n\nsourceBeanDateFormatPattern=dd/MM/yyyy-HH:mm:ss.SSS\n\nmiscDateFormatPattern=dd/MM/yyyy HH:mm:ss.SSS\n\ndatePollingCronExpression=*/30 * * * * *\n\n\n###########################################################\n\n\ntypicalWebAppBeansDataSourceLocation=C:\\\\Users\\\\venky\\\\RABOTA\\\\workspaces\\\\TypicalWebAppWorkspace\\\\TypicalWebapp\\\\typicalWebAppBeansData\n\ntypicalwebappUploadedFilesDirPath=C:\\\\Users\\\\venky\\\\RABOTA\\\\workspaces\\\\TypicalWebAppWorkspace\\\\TypicalWebapp\\\\typicalwebappUploadedFiles\n\n",
+			"contents": "\n\n###########################################################\n\n## Spring Boot\n\n\ndebug=true\ntrace=true\n\nserver.port=13020\n\n\nserver.servlet.context-path=/webapp\nserver.servlet.application-display-name=MeVenk WebApp\n\n\nspring.mvc.view.prefix=/views/\nspring.mvc.view.suffix=.jsp\n\n\n\n\n#spring.mvc.static-path-pattern=src/main/webapp/resources\n\n\n\n#Accurator\n\nmanagement.endpoints.web.exposure.include=*\nmanagement.endpoints.web.base-path=/management-actuator\nmanagement.endpoint.shutdown.enabled=true\n\nmanagement.security.enabled=false\nmanagement.health.defaults.enabled=true\n\nendpoints.beans.id=springbeans\nendpoints.beans.sensitive=false\nendpoints.beans.enabled=true\n\n\n\ninfo.app.name=MeVenk WebApp\ninfo.app.description=This is MeVenk WebApp application\ninfo.app.version=1.0.0\n\n\n###########################################################\n\n\n\n",
 			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/sources/properties/mevenkwebapp.properties",
-			"file_size": 605,
-			"file_write_time": 131947728211243882,
+			"file_size": 886,
+			"file_write_time": 132076305112014067,
 			"settings":
 			{
-				"buffer_size": 585,
+				"buffer_size": 835,
 				"line_ending": "Windows",
 				"scratch": true
 			}
@@ -58,27 +116,10 @@
 			}
 		},
 		{
-			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP.sql",
-			"settings":
-			{
-				"buffer_size": 16987,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_20190222/mevenk_SEQUENCE.sql",
-			"settings":
-			{
-				"buffer_size": 1870,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/appLogs/mevenkWebAppApp.log",
 			"settings":
 			{
-				"buffer_size": 6437,
+				"buffer_size": 594,
 				"line_ending": "Windows"
 			}
 		},
@@ -86,7 +127,7 @@
 			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/configLogs/mevenkWebAppConfig.log",
 			"settings":
 			{
-				"buffer_size": 371651,
+				"buffer_size": 69253,
 				"line_ending": "Windows"
 			}
 		},
@@ -94,7 +135,15 @@
 			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/rootLogs/mevenkWebAppRoot.log",
 			"settings":
 			{
-				"buffer_size": 34292830,
+				"buffer_size": 266301,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/triggerLogs/mevenkWebAppTrigger.log",
+			"settings":
+			{
+				"buffer_size": 135399,
 				"line_ending": "Windows"
 			}
 		}
@@ -111,15 +160,23 @@
 		"selected_items":
 		[
 			[
+				"tab",
+				"TabNine: Open Configuration"
+			],
+			[
+				"install package co",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
 				"ena",
 				"Enable Autorefresh"
 			],
 			[
 				"Package Control: ",
-				"Package Control: Install Package"
-			],
-			[
-				"install ",
 				"Package Control: Install Package"
 			],
 			[
@@ -171,16 +228,54 @@
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_20190222",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/Miscellaneous",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_22022019",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/OLD",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/MeVenkUtils",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/MeVenkUtils/target",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/MeVenkUtils/target/classes",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/MeVenkUtils/target/classes/META-INF",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/MeVenkUtils/target/classes/META-INF/maven",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/rootLogs",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/utilLogs",
-		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp"
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/component",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/component/initial-view",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/pipe",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/pipe/format",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/environments",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/target",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/target/MeVenkWebApp",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/target/MeVenkWebApp/WEB-INF",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/target/MeVenkWebApp/WEB-INF/lib"
 	],
 	"file_history":
 	[
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/pipe/format/formatted-string.pipe.spec.ts",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Angular/TypicalWebAppAngularPOC/src/app/pipe/format/formatted-string.pipe.ts",
+		"/C/Users/venky/AppData/Local/Temp/scp36219/etc/profile.d/customSystemEnvironmentVariables.sh",
+		"/C/Users/venky/AppData/Local/Temp/scp31988/etc/bashrc",
+		"/C/Users/venky/AppData/Local/Temp/7zO475EA1E7/todos.component.ts",
+		"/C/Users/venky/RABOTA/JobChange/Address.txt",
+		"/C/Users/venky/RABOTA/JobChange/EdgeVerve-21072019/GFG.java",
+		"/C/Users/venky/RABOTA/JobChange/EdgeVerve-21072019/Q2S2.c",
+		"/C/Users/venky/RABOTA/JobChange/EdgeVerve-21072019/Q2S1.c",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebServices/MeVenkWebServices/src/main/java/org/mevenk/webservices/MeVenkWebServicesApplication.java",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebServices/MeVenkWebServices/pom.xml",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/pom.xml",
+		"/C/Users/venky/RABOTA/temporary/Mockito.txt",
+		"/C/Users/venky/RABOTA/temporary/Mockito",
+		"/C/Users/venky/RABOTA/temporary/GIT/GIT_TEMPLATE_GENERATED.html",
+		"/C/Users/venky/RABOTA/temporary/GIT/GitLogReport_8-4-2019_7-55-2.diff",
+		"/C/Users/venky/RABOTA/temporary/GIT/GIT_TEMPLATE.html",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebApp/src/main/webapp/resources/core/jquery/jquery-ui/jquery-ui.js",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Utils/sources/git-log-html.c",
+		"/C/Users/venky/RABOTA/temporary/GIT/diffs/100320192058.txt",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP.sql",
+		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_22022019/mevenk_routines.sql",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_22022019.sql",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/DUMP_22022019/24-12-2018_07-22.sql",
 		"/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/DUMP_22022019/24-12-2018_07-22 - Copy.sql",
@@ -221,11 +316,11 @@
 	],
 	"find":
 	{
-		"height": 29.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
-		"height": 105.0,
+		"height": 125.0,
 		"where_history":
 		[
 		]
@@ -235,6 +330,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ehcache",
+			"net.sf",
+			"data",
+			"pool",
+			"MeVenkWebAppValidator",
 			"C:\\Users\\venky\\RABOTA\\workspaces\\MeVenk\\.git"
 		],
 		"highlight": true,
@@ -259,7 +359,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -275,8 +375,8 @@
 						"selection":
 						[
 							[
-								817,
-								817
+								816,
+								816
 							]
 						],
 						"settings":
@@ -287,16 +387,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebAppMiscellaneous.txt",
+					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Miscellaneous/MeVenkMiscellaneous.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1268,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -315,11 +415,39 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/MeVenkWebAppMiscellaneous.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3125,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								934,
+								934
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Database/MevenkDatabaseMiscellaneous.txt",
 					"semi_transient": false,
 					"settings":
@@ -345,16 +473,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/sources/properties/mevenkwebapp.properties",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 585,
+						"buffer_size": 835,
 						"regions":
 						{
 						},
@@ -374,11 +502,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/sources/properties/mevenkwebappDatabase.properties",
 					"semi_transient": false,
 					"settings":
@@ -403,46 +531,44 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP.sql",
+					"buffer": 6,
+					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/appLogs/mevenkWebAppApp.log",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16987,
+						"buffer_size": 594,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10346,
-								10197
+								594,
+								594
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SQL/SQL.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Log4jView/Log4jView.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 4752.0,
+						"translation.y": 73.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/Database/webapp/Dumps/MySQL/mevenk_DUMP_20190222/mevenk_SEQUENCE.sql",
-					"semi_transient": true,
+					"buffer": 7,
+					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/configLogs/mevenkWebAppConfig.log",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1870,
+						"buffer_size": 69253,
 						"regions":
 						{
 						},
@@ -455,38 +581,10 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/SQL/SQL.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/appLogs/mevenkWebAppApp.log",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6437,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6437,
-								6437
-							]
-						],
-						"settings":
-						{
 							"syntax": "Packages/Log4jView/Log4jView.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 745.0,
+						"translation.y": 1.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
@@ -494,39 +592,11 @@
 				},
 				{
 					"buffer": 8,
-					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/configLogs/mevenkWebAppConfig.log",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 371651,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								371651,
-								371651
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Log4jView/Log4jView.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5221.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
 					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/rootLogs/mevenkWebAppRoot.log",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 34292830,
+						"buffer_size": 266301,
 						"regions":
 						{
 						},
@@ -542,10 +612,40 @@
 							"syntax": "Packages/Log4jView/Log4jView.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 432.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/Users/venky/RABOTA/workspaces/MeVenk/WebApp/Logs/triggerLogs/mevenkWebAppTrigger.log",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 135399,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								96035,
+								96035
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Log4jView/Log4jView.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 698.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -553,7 +653,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 29.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -594,7 +694,7 @@
 	"project": "",
 	"replace":
 	{
-		"height": 54.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -632,7 +732,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 284.0,
+	"side_bar_width": 271.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
