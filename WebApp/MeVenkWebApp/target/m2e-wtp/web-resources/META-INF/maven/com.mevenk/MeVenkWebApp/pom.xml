@@ -15,7 +15,7 @@
 		<hibernate.version>5.1.0.Final</hibernate.version>
 		<mysql.connector.version>5.1.9</mysql.connector.version>
 		<aspectj.version>1.8.10</aspectj.version>
-		<log4j.version>2.9.0</log4j.version>
+		<log4j.version>2.13.3</log4j.version>
 	</properties>
 
 	<build>
