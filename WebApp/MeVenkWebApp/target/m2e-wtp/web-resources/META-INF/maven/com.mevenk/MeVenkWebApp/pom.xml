@@ -11,7 +11,7 @@
 
 	<properties>
 		<!-- <springframework.version>4.3.12.RELEASE</springframework.version> -->
-		<springframework.version>5.0.0.RELEASE</springframework.version>
+		<springframework.version>5.2.20.RELEASE</springframework.version>
 		<hibernate.version>5.1.0.Final</hibernate.version>
 		<mysql.connector.version>5.1.9</mysql.connector.version>
 		<aspectj.version>1.8.10</aspectj.version>
